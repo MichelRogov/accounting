@@ -1,12 +1,13 @@
 package com.school.project.service;
 
+import com.school.project.dto.UserDto;
 import com.school.project.model.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    void create(User newUser);
+    void create(UserDto newUser);
 
     User update(User user ,Long id);
 

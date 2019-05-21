@@ -1,5 +1,6 @@
 package com.school.project.service.impl;
 
+import com.school.project.dto.UserDto;
 import com.school.project.exception.UserNotFoundException;
 import com.school.project.model.User;
 import com.school.project.repository.UserRepository;
@@ -15,8 +16,14 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public void create(User newUser) {
-        User user = userRepository.save(newUser);
+    public void create(UserDto newUser) {
+        User user = User.builder()
+                .firstName(newUser.getFirstName())
+                .lastName(newUser.getLastName())
+                .birthDate(newUser.getBirthDate())
+                .group(newUser.getGroup())
+                .build();
+        userRepository.save(user);
     }
 
     @Override
