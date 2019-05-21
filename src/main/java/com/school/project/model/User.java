@@ -1,19 +1,49 @@
 package com.school.project.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
-@Data
 @Table(name="USER")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class User {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue()
+    @GeneratedValue(strategy =GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "FIRST_NAME",nullable = false)
+    private String firstName;
+
+    @Column(name = "LAST_NAME")
+    private String lastName;
+
+    @Column(name = "BIRTH_DATE",nullable = false)
+    private Date birthDate;
+
+    @Column(name = "GROUP_NAME")
+    private String group;
+
+    @CreationTimestamp
+    @Column(name = "CREATED_DATE", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @UpdateTimestamp
+    @Column(name = "UPDATED_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+
 }
