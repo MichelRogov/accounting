@@ -1,17 +1,42 @@
 package com.school.project.service.impl;
 
+import com.school.project.exception.UserNotFoundException;
+import com.school.project.model.User;
+import com.school.project.repository.UserRepository;
 import com.school.project.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Override
-    public void create() {
+    @Autowired
+    UserRepository userRepository;
 
+    @Override
+    public void create(User newUser) {
+        User user = userRepository.save(newUser);
     }
 
     @Override
-    public void update() {
-
+    public User update(User user,Long id) {
+        findUserById(id);
+        user.setId(id);
+        return userRepository.save(user);
     }
+
+    @Override
+    public void delete(Long id) {
+        findUserById(id);
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        Optional<User> byId =userRepository.findById(id);
+        if (!byId.isPresent())throw new UserNotFoundException("User with id :"+id+"is not found");
+        return byId.get();
+    }
+
 }
