@@ -16,21 +16,24 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public void create(UserDto newUser) {
+    public User create(UserDto newUser) {
         User user = User.builder()
                 .firstName(newUser.getFirstName())
                 .lastName(newUser.getLastName())
                 .birthDate(newUser.getBirthDate())
+                .email(newUser.getEmail())
                 .group(newUser.getGroup())
                 .build();
         userRepository.save(user);
+        return user;
     }
 
     @Override
-    public User update(User user,Long id) {
+    public void update(UserDto user, Long id) {
         findUserById(id);
-        user.setId(id);
-        return userRepository.save(user);
+        User userToUpdate = create(user);
+        userToUpdate.setId(id);
+        userRepository.save(userToUpdate);
     }
 
     @Override
@@ -40,10 +43,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long id) {
-        Optional<User> byId =userRepository.findById(id);
-        if (!byId.isPresent())throw new UserNotFoundException("User with id :"+id+"is not found");
-        return byId.get();
+    public UserDto findUserById(Long id) {
+        Optional<User> byId = userRepository.findById(id);
+        if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
+        return convertUserToUserDto(byId.get());
     }
+
+    public UserDto convertUserToUserDto(User userToConvert) {
+        return new UserDto(userToConvert.getFirstName()
+                , userToConvert.getLastName()
+                , userToConvert.getBirthDate(),
+                userToConvert.getEmail(), userToConvert.getGroup());
+    }
+
 
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name="USER")
+@Table(name = "USER")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,17 +18,20 @@ public class User {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy =GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "FIRST_NAME",nullable = false)
+    @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
-    @Column(name = "BIRTH_DATE",nullable = false)
+    @Column(name = "BIRTH_DATE", nullable = false)
     private Date birthDate;
+
+    @Column(name = "EMAIL", nullable = false, unique = true)
+    private String email;
 
     @Column(name = "GROUP_NAME")
     private String group;

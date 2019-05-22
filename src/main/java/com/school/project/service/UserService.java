@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface UserService {
 
-    void create(UserDto newUser);
+    User create(UserDto newUser);
 
-    User update(User user ,Long id);
+    void update(UserDto user, Long id);
 
     void delete(Long id);
 
-    User findUserById(Long id);
+    UserDto findUserById(Long id);
 
-
+    UserDto convertUserToUserDto(User userToConvert);
 }
