@@ -8,6 +8,7 @@ import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Id;
 import java.util.Optional;
 
 @Service
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
         findUserById(id);
         User userToUpdate = create(user);
         userToUpdate.setId(id);
-        userRepository.save(userToUpdate);
+        userRepository.saveAndFlush(userToUpdate);
     }
 
     @Override
