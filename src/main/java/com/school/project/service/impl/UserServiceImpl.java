@@ -8,8 +8,6 @@ import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -24,6 +22,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(newUser.getLastName())
                 .birthDate(newUser.getBirthDate())
                 .email(newUser.getEmail())
+                .phoneNumber(newUser.getPhoneNumber())
                 .group(newUser.getGroup())
                 .build();
         userRepository.save(user);
@@ -37,6 +36,7 @@ public class UserServiceImpl implements UserService {
         userById.setLastName(user.getLastName());
         userById.setBirthDate(user.getBirthDate());
         userById.setEmail(user.getEmail());
+        userById.setPhoneNumber(user.getPhoneNumber());
         userById.setGroup(user.getGroup());
         userRepository.saveAndFlush(userById);
         ;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         return new UserDto(userToConvert.getFirstName()
                 , userToConvert.getLastName()
                 , userToConvert.getBirthDate(),
-                userToConvert.getEmail(), userToConvert.getGroup());
+                userToConvert.getEmail(), userToConvert.getPhoneNumber(),userToConvert.getGroup());
     }
 
 
