@@ -13,7 +13,7 @@ public interface UserService {
 
     void delete(Long id);
 
-    UserDto findUserById(Long id);
+    User findUserById(Long id);
 
     UserDto convertUserToUserDto(User userToConvert);
 }

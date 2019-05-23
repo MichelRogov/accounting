@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Id;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -31,10 +32,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDto user, Long id) {
-        findUserById(id);
-        User userToUpdate = create(user);
-        userToUpdate.setId(id);
-        userRepository.saveAndFlush(userToUpdate);
+        User userById = findUserById(id);
+        userById.setFirstName(user.getFirstName());
+        userById.setLastName(user.getLastName());
+        userById.setBirthDate(user.getBirthDate());
+        userById.setEmail(user.getEmail());
+        userById.setGroup(user.getGroup());
+        userRepository.saveAndFlush(userById);
+        ;
     }
 
     @Override
@@ -44,10 +49,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findUserById(Long id) {
+    public User findUserById(Long id) {
         Optional<User> byId = userRepository.findById(id);
         if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
-        return convertUserToUserDto(byId.get());
+        return byId.get();
     }
 
     public UserDto convertUserToUserDto(User userToConvert) {

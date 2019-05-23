@@ -25,7 +25,8 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getUserByID(@PathVariable long id) {
-        return ResponseEntity.ok().body(userService.findUserById(id));
+        return ResponseEntity.ok()
+                .body(userService.convertUserToUserDto(userService.findUserById(id)));
     }
 
     @GetMapping("/user/users")
@@ -38,7 +39,8 @@ public class UserController {
     @PutMapping("/user/update/{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto useToUpgrade, @PathVariable Long id) {
         userService.update(useToUpgrade, id);
-        return ResponseEntity.ok().body(userService.findUserById(id));
+        return ResponseEntity.ok()
+                .body(userService.convertUserToUserDto(userService.findUserById(id)));
     }
 
     @PostMapping("/user/delete/{id}")
