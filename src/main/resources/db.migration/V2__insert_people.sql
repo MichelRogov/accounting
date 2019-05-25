@@ -1,5 +1,5 @@
-insert into PERSON (ID, NAME) values (1, 'Axel');
-    insert into PERSON (ID, NAME) values (2, 'Mr. Foo');
-    insert into PERSON (ID, NAME) values (3, 'Ms. Bar');
+insert into PERSON (ID, NAME) values (1, 'IVAN');
+    insert into PERSON (ID, NAME) values (2, 'ALEX');
+    insert into PERSON (ID, NAME) values (3, 'ANTON');
 
 
