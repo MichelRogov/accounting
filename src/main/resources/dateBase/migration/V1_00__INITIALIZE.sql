@@ -1,28 +1,29 @@
 create table USER
 (
     ID           bigint      not null auto_increment,
-    NAME         varchar(50)
-/*    EMAIL        varchar(50) not null,
+    NAME         varchar(50),
+    EMAIL        varchar(50) not null,
     PASSWORD     varchar(50) not null,
     CREATED_DATE datetime    not null,
     UPDATED_DATE datetime    not null,
     primary key (ID)
-*/
+
 );
 create table WALLET
 (
     ID       bigint      not null auto_increment,
-    USER_ID  bigint
-/*    CURRENCY_TYPE integer not null,
+    USER_ID  bigint,
+ /*   CURRENCY_TYPE integer not null,*/
     primary key (ID)
-*/
+
 );
 create table CATEGORY
 (
     ID            bigint      not null auto_increment,
-/*    CATEGORY_TYPE integer     not null,*/
-    NAME          varchar(50) not null
-/*    primary key (ID)*/
+    CATEGORY_TYPE integer     not null,
+    NAME          varchar(50) not null,
+    primary key (ID)
+
 );
 create table TRANSACTION
 (
@@ -38,8 +39,8 @@ create table TRANSACTION
 );
 
 alter table USER
-/*   add constraint USER_EMAIL unique (EMAIL);
-alter table CATEGORY*/
+   add constraint USER_EMAIL unique (EMAIL);
+alter table CATEGORY
     add constraint CATEGORY_NAME unique (NAME);
 
 alter table WALLET
