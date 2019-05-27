@@ -2,7 +2,10 @@ package com.school.project.service.impl;
 
 import com.school.project.dto.UserDto;
 import com.school.project.exception.UserNotFoundException;
+import com.school.project.model.AccountType;
 import com.school.project.model.User;
+import com.school.project.model.UserAccount;
+import com.school.project.repository.UserAccountRepository;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserAccountRepository userAccountRepository;
 
     @Override
     public User create(UserDto newUser) {
@@ -26,7 +31,16 @@ public class UserServiceImpl implements UserService {
                 .group(newUser.getGroup())
                 .build();
         userRepository.save(user);
+        createUserAccount(user,"STUDENT");
         return user;
+    }
+    public void createUserAccount(User user,String accountType){
+        UserAccount userAccount=UserAccount.builder()
+        .userId(user)
+                .accountRole(AccountType.valueOf(accountType))
+                .build();
+        userAccountRepository.save(userAccount);
+
     }
 
     @Override

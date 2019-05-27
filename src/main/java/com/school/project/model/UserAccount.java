@@ -1,12 +1,15 @@
 package com.school.project.model;
 
+import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @Entity
+@Builder
 @Table(name = "USER_ACCOUNT")
 public class UserAccount {
 
@@ -15,14 +18,17 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "USER_ID", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "USER_ID",nullable = false,unique = true)
     private User userId;
 
+    @CreationTimestamp
     @Column(name = "REGISTRATION_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
-    @Enumerated
-    @Column(name = "ACCOUNT_ROLE", nullable = false)
+    @Column(name = "ACCOUNT_ROLE")
+    @Enumerated(EnumType.STRING)
     private AccountType accountRole;
 
 
