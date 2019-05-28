@@ -36,9 +36,6 @@ public class User {
     @Column(name = "PHONE_NUMBER",nullable = false)
     private String phoneNumber;
 
-    @Column(name = "GROUP_NAME",nullable = false)
-    private String group;
-
     @CreationTimestamp
     @Column(name = "CREATED_DATE", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

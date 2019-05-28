@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
                 .birthDate(newUser.getBirthDate())
                 .email(newUser.getEmail())
                 .phoneNumber(newUser.getPhoneNumber())
-                .group(newUser.getGroup())
                 .build();
         userRepository.save(user);
         createUserAccount(user,"STUDENT");
@@ -51,7 +50,6 @@ public class UserServiceImpl implements UserService {
         userById.setBirthDate(user.getBirthDate());
         userById.setEmail(user.getEmail());
         userById.setPhoneNumber(user.getPhoneNumber());
-        userById.setGroup(user.getGroup());
         userRepository.saveAndFlush(userById);
         ;
     }
@@ -72,8 +70,9 @@ public class UserServiceImpl implements UserService {
     public UserDto convertUserToUserDto(User userToConvert) {
         return new UserDto(userToConvert.getFirstName()
                 , userToConvert.getLastName()
-                , userToConvert.getBirthDate(),
-                userToConvert.getEmail(), userToConvert.getPhoneNumber(),userToConvert.getGroup());
+                , userToConvert.getBirthDate()
+                , userToConvert.getEmail()
+                , userToConvert.getPhoneNumber());
     }
 
 
