@@ -15,12 +15,12 @@ public class UserAccount {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "USER_ID",nullable = false, unique = true)
-    private User userId;
+    @JoinColumn(name = "USER_ID",nullable = false)
+    private User user;
 
     @CreationTimestamp
     @Column(name = "REGISTRATION_DATE", nullable = false)

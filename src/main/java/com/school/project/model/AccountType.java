@@ -1,13 +1,14 @@
 package com.school.project.model;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import javax.persistence.Entity;
+
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
 
 @Table(name = "ACCOUNT_TYPE")
 public enum AccountType {
-    TEACHER,
-    ADMIN,
-    STUDENT;
+    TEACHER(1, "Teacher"),
+    ADMIN(2, "Admin"),
+    STUDENT(3, "Student");
+
+    AccountType(Integer id, String name) {
+    }
+
 }
