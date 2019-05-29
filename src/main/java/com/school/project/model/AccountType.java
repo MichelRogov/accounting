@@ -10,6 +10,4 @@ public enum AccountType {
     TEACHER,
     ADMIN,
     STUDENT;
-
-  
 }

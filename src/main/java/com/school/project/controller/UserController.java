@@ -29,21 +29,21 @@ public class UserController {
                 .body(userService.convertUserToUserDto(userService.findUserById(id)));
     }
 
-    @GetMapping("/user/users")
+    @GetMapping("/user")
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(s -> userService.convertUserToUserDto(s))
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("/user/update/{id}")
+    @PutMapping("/user/{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto useToUpgrade, @PathVariable Long id) {
         userService.update(useToUpgrade, id);
         return ResponseEntity.ok()
                 .body(userService.convertUserToUserDto(userService.findUserById(id)));
     }
 
-    @PostMapping("/user/delete/{id}")
+    @DeleteMapping("/user/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }

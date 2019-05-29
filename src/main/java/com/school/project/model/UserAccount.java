@@ -19,7 +19,7 @@ public class UserAccount {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "USER_ID",nullable = false,unique = true)
+    @JoinColumn(name = "USER_ID",nullable = false, unique = true)
     private User userId;
 
     @CreationTimestamp
