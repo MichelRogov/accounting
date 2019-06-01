@@ -1,8 +1,15 @@
 package com.school.project.service;
 
+import com.school.project.dto.UserDto;
+import com.school.project.model.User;
+
 public interface UserService {
 
-    void create ();
+    User create(User user);
 
-    void update ();
+    void update(UserDto useDto, Long id);
+
+    void delete(Long id);
+
+    User getUserById(Long id);
 }
