@@ -1,4 +1,4 @@
-create table USER
+create table ACCOUNT_TYPE
 (
 ID           bigint  not null_auto_increment,
 NAME         varchar(50),
