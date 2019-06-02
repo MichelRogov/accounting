@@ -4,6 +4,7 @@ import com.school.project.dto.UserDto;
 import com.school.project.exception.UserNotFoundException;
 import com.school.project.model.AccountType;
 import com.school.project.model.User;
+import com.school.project.repository.UserAccountRepository;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.UserAccountService;
 import com.school.project.service.UserService;
@@ -18,6 +19,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     UserAccountService userAccountService;
+    @Autowired
+    UserAccountRepository userAccountRepository;
 
 
     @Override
@@ -36,12 +39,12 @@ public class UserServiceImpl implements UserService {
         userById.setEmail(user.getEmail());
         userById.setPhoneNumber(user.getPhoneNumber());
         userRepository.saveAndFlush(userById);
-        ;
     }
 
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
+        userAccountRepository.deleteById(id);
     }
 
     @Override
