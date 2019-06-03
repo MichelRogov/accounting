@@ -28,7 +28,7 @@ public class UserController {
         userService.create(convertUserDtoToUser(userDto));
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getUserByID(@PathVariable long id) {
         return ResponseEntity.ok()
                 .body(convertUserToUserDto(userService.getUserById(id)));
