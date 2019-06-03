@@ -1,7 +1,7 @@
 package com.school.project.controller;
 
 import com.school.project.dto.UserDto;
-import com.school.project.model.User;
+import com.school.project.model.user.User;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;

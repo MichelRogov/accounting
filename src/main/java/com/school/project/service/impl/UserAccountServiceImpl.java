@@ -1,8 +1,8 @@
 package com.school.project.service.impl;
 
-import com.school.project.model.AccountType;
-import com.school.project.model.User;
-import com.school.project.model.UserAccount;
+import com.school.project.model.user.AccountType;
+import com.school.project.model.user.User;
+import com.school.project.model.user.UserAccount;
 import com.school.project.repository.UserAccountRepository;
 import com.school.project.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
