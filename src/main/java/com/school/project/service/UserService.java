@@ -5,11 +5,12 @@ import com.school.project.model.User;
 
 public interface UserService {
 
-    User create(User user);
+    User create(User User);
 
-    void update(UserDto useDto, Long id);
+    void update(UserDto user, Long id);
 
     void delete(Long id);
 
     User getUserById(Long id);
+
 }

@@ -28,7 +28,7 @@ public class UserController {
         userService.create(convertUserDtoToUser(userDto));
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getUserByID(@PathVariable long id) {
         return ResponseEntity.ok()
                 .body(convertUserToUserDto(userService.getUserById(id)));
@@ -37,7 +37,7 @@ public class UserController {
     @GetMapping("/users")
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(s -> convertUserToUserDto((User) s))
+                .map(s -> convertUserToUserDto(s))
                 .collect(Collectors.toList());
     }
 

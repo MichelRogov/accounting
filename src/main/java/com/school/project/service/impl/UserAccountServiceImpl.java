@@ -15,7 +15,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccount createUserAccount(User user, AccountType accountType) {
         UserAccount userAccount=UserAccount.builder()
-                .user((org.apache.catalina.User) user)
+                .user(user)
                 .accountRole(accountType)
                 .build();
         userAccountRepository.save(userAccount);

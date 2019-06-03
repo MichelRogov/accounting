@@ -6,8 +6,4 @@ public class UserNotFoundException extends RuntimeException {
         super(msg);
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/I-03
