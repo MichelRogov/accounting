@@ -28,9 +28,3 @@ alter table USER_ACCOUNT
 alter table  USER_ACCOUNT
     add constraint USER_ACCOUNT_USER_ID_USER_ID
         foreign key (USER_ID) references USER(ID) ON DELETE CASCADE;
-
-
-
-
-
-
