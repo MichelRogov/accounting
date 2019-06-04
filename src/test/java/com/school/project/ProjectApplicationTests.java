@@ -1,4 +1,3 @@
-
 package com.school.project;
 
 import org.junit.Test;
