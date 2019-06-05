@@ -1,7 +1,7 @@
 package com.school.project.service;
 
 import com.school.project.dto.UserDto;
-import com.school.project.model.User;
+import com.school.project.model.entities.User;
 
 public interface UserService {
 

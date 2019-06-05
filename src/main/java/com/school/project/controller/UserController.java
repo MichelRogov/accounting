@@ -1,7 +1,7 @@
 package com.school.project.controller;
 
 import com.school.project.dto.UserDto;
-import com.school.project.model.User;
+import com.school.project.model.entities.User;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -53,8 +53,12 @@ public class UserController {
         userService.delete(id);
     }
 
-    private User convertUserDtoToUser(UserDto userDto){return modelMapper.map(userDto,User.class);}
+    private User convertUserDtoToUser(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
+    }
 
-    private UserDto convertUserToUserDto(User user){ return modelMapper.map(user,UserDto.class); }
+    private UserDto convertUserToUserDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
 
 }
