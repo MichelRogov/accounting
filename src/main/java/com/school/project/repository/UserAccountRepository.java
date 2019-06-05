@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
+
     @Transactional
     void deleteUserAccountByUserId(Long id);
+
 }

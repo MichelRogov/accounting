@@ -24,7 +24,7 @@ public class UserAccount {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "USER_ID",nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @CreationTimestamp
@@ -35,6 +35,5 @@ public class UserAccount {
     @Column(name = "ACCOUNT_ROLE")
     @Enumerated(EnumType.STRING)
     private UserAccountType accountRole;
-
 
 }

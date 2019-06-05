@@ -9,4 +9,5 @@ public class Module {
     private Integer hours;
     private List<Subject> subjects;
     private Double price;
+
 }

@@ -2,8 +2,8 @@ package com.school.project.service.impl;
 
 import com.school.project.dto.UserDto;
 import com.school.project.exception.UserNotFoundException;
-import com.school.project.model.types.UserAccountType;
 import com.school.project.model.entities.User;
+import com.school.project.model.types.UserAccountType;
 import com.school.project.repository.UserAccountRepository;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.UserAccountService;
@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     UserRepository userRepository;
     @Autowired

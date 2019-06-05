@@ -53,8 +53,12 @@ public class UserController {
         userService.delete(id);
     }
 
-    private User convertUserDtoToUser(UserDto userDto){return modelMapper.map(userDto,User.class);}
+    private User convertUserDtoToUser(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
+    }
 
-    private UserDto convertUserToUserDto(User user){ return modelMapper.map(user,UserDto.class); }
+    private UserDto convertUserToUserDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
 
 }
