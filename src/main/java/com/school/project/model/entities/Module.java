@@ -1,4 +1,4 @@
-package com.school.project.model.module;
+package com.school.project.model.entities;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.school.project.model.module;
+package com.school.project.model.entities;
 
 public class Subject {
 

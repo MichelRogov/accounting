@@ -1,4 +1,4 @@
-package com.school.project.model.user;
+package com.school.project.model.entities;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

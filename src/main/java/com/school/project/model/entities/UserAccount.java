@@ -1,5 +1,6 @@
-package com.school.project.model.user;
+package com.school.project.model.entities;
 
+import com.school.project.model.types.UserAccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class UserAccount {
 
     @Column(name = "ACCOUNT_ROLE")
     @Enumerated(EnumType.STRING)
-    private AccountType accountRole;
+    private UserAccountType accountRole;
 
 
 }

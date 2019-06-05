@@ -1,6 +1,4 @@
-package com.school.project.model.lesson;
-
-import com.school.project.model.user.User;
+package com.school.project.model.entities;
 
 public class Attendance {
     private Long id;

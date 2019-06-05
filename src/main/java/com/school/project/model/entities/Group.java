@@ -1,7 +1,4 @@
-package com.school.project.model.lesson;
-
-import com.school.project.model.module.Module;
-import com.school.project.model.user.User;
+package com.school.project.model.entities;
 
 import java.util.Date;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.school.project.service.impl;
 
-import com.school.project.model.user.AccountType;
-import com.school.project.model.user.User;
-import com.school.project.model.user.UserAccount;
+import com.school.project.model.types.UserAccountType;
+import com.school.project.model.entities.User;
+import com.school.project.model.entities.UserAccount;
 import com.school.project.repository.UserAccountRepository;
 import com.school.project.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     UserAccountRepository userAccountRepository;
     @Override
-    public UserAccount createUserAccount(User user, AccountType accountType) {
+    public UserAccount createUserAccount(User user, UserAccountType userAccountType) {
         UserAccount userAccount=UserAccount.builder()
                 .user(user)
-                .accountRole(accountType)
+                .accountRole(userAccountType)
                 .build();
         userAccountRepository.save(userAccount);
         return userAccount;
