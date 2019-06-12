@@ -21,7 +21,7 @@ public class Group {
     private Long id;
     @Column(name = "START_DATE", nullable = false)
     private Date startDate;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "MODULE_ID", nullable = false)
     private Module module;
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
