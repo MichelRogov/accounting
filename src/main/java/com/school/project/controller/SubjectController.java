@@ -31,7 +31,7 @@ public class SubjectController {
         return subjectService.getAllSubjects();
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/subjects/{id}")
     public ResponseEntity<Subject> updateSubject(@RequestBody Subject subject, @PathVariable Long id) {
         subjectService.updateSubject(subject, id);
         return ResponseEntity.ok()
