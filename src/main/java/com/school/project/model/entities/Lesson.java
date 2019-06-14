@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @Entity
 @Table(name = "LESSON")
 @Data
@@ -17,26 +19,23 @@ import java.util.Date;
 public class Lesson {
 
     @Id
-    @Column(name = "LESSON_ID")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name="THEMA", nullable = false)
+    @Column(name = "THEMA", nullable = false)
     private String thema;
-
     @ManyToOne
     @JoinColumn(name = "SUBJECT_ID", nullable = false)
     private Subject subject;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "DATE",nullable = false)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "LESSON_DATE", nullable = false)
     private Date date;
-
     @OneToOne
-    @JoinTable(name = "LESSON_GROUP",joinColumns = {@JoinColumn(name = "ID",nullable = false)})
+    @JoinColumn(name = "GROUP_ID", nullable = false)
     private Group group;
-    @ManyToOne
-    @JoinColumn(name ="USER_ID", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "TEACHER_ID", nullable = false)
     private User teacher;
 
 }

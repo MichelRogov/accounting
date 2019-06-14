@@ -21,10 +21,9 @@ public class Attendance {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "LESSON_ID",nullable = false)
+    @JoinColumn(name = "LESSON_ID", nullable = false)
     private Lesson lesson;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 

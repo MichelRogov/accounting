@@ -18,20 +18,17 @@ import java.util.List;
 public class Module {
 
     @Id
-    @Column(name = "MODULE_ID")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "NAME",nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
-
-    @Column(name = "HOURS",nullable = false)
+    @Column(name = "HOURS", nullable = false)
     private Integer hours;
-
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinTable(name ="SUBJECT_MODULE",joinColumns = {@JoinColumn(name = "MODULE_ID")},inverseJoinColumns = {@JoinColumn(name="SUBJECT_ID")})
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Subject.class)
+    @JoinTable(name = "MODULE_SUBJECT", joinColumns = {@JoinColumn(name = "MODULE_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SUBJECT_ID")})
     private List<Subject> subjects;
-
     @Column(name = "PRICE")
     private Double price;
 

@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class Subject {
 
     @Id
-    @Column(name = "SUBJECT_ID")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NAME",nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
 }

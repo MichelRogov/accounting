@@ -1,34 +1,33 @@
 package com.school.project.model.entities;
 
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 @Entity
-@Table(name = "GROUP")
+@Table(name = "`GROUP`")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Group {
+
     @Id
-    @Column(name="ID", unique = true,nullable = false)
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @CreationTimestamp
-    @Column(name = "START_DATE", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "START_DATE", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
-
-    @ManyToOne
-    @JoinColumn(name = "MODULE_ID")
+    @OneToOne
+    @JoinColumn(name = "MODULE_ID", nullable = false)
     private Module module;
-
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinTable(name ="GROUP_USER",joinColumns = {@JoinColumn(name = "ID")},inverseJoinColumns = {@JoinColumn(name="USER_ID")})
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @JoinTable(name = "GROUP_USER", joinColumns = {@JoinColumn(name = "GROUP_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "USER_ID")})
     private List<User> users;
 
 }
