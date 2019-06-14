@@ -1,7 +1,10 @@
 package com.school.project.service.impl;
 
+import com.school.project.dao.RoleDao;
+import com.school.project.dao.UserDao;
 import com.school.project.dto.UserDto;
 import com.school.project.exception.UserNotFoundException;
+import com.school.project.model.Role;
 import com.school.project.model.entities.User;
 import com.school.project.model.types.UserAccountType;
 import com.school.project.repository.UserAccountRepository;
@@ -9,9 +12,12 @@ import com.school.project.repository.UserRepository;
 import com.school.project.service.UserAccountService;
 import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,6 +28,27 @@ public class UserServiceImpl implements UserService {
     UserAccountService userAccountService;
     @Autowired
     UserAccountRepository userAccountRepository;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private RoleDao roleDao;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
+    @Override
+    public void save(User user){
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleDao.getOne(1L));
+        user.setRoles(roles);
+        userDao.save(user);
+    }
+
+    public User findByUsername(String username){
+
+        return userDao.findByUsername(username);
+    }
 
 
     @Override

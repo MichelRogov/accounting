@@ -1,5 +1,6 @@
 package com.school.project.service.impl;
 
+import com.school.project.dao.UserDao;
 import com.school.project.model.entities.User;
 import com.school.project.model.entities.UserAccount;
 import com.school.project.model.types.UserAccountType;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     UserAccountRepository userAccountRepository;
