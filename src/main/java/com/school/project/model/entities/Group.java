@@ -25,7 +25,7 @@ public class Group {
     @OneToOne
     @JoinColumn(name = "MODULE_ID", nullable = false)
     private Module module;
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinTable(name = "GROUP_USER", joinColumns = {@JoinColumn(name = "GROUP_ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID")})
     private List<User> users;

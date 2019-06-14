@@ -25,7 +25,7 @@ public class Module {
     private String name;
     @Column(name = "HOURS", nullable = false)
     private Integer hours;
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Subject.class)
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Subject.class)
     @JoinTable(name = "MODULE_SUBJECT", joinColumns = {@JoinColumn(name = "MODULE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SUBJECT_ID")})
     private List<Subject> subjects;

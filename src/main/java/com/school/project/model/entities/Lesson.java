@@ -34,6 +34,7 @@ public class Lesson {
     @OneToOne
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private Group group;
+
     @OneToOne
     @JoinColumn(name = "TEACHER_ID", nullable = false)
     private User teacher;
