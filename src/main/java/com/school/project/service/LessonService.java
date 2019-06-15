@@ -2,7 +2,9 @@ package com.school.project.service;
 
 import com.school.project.dto.LessonDto;
 import com.school.project.model.entities.Lesson;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface LessonService {
     Lesson createLesson(Lesson lesson);
     Lesson getLesson (Long id);
