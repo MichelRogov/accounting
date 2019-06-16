@@ -7,7 +7,6 @@ import com.school.project.repository.UserAccountRepository;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.UserAccountService;
 import com.school.project.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    ModelMapper modelMapper;
     @Autowired
     UserRepository userRepository;
     @Autowired
