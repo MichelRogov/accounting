@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,10 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user, Long id) {
-        User userById;
-        Optional<User> byId = userRepository.findById(id);
-        if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
-        else userById = byId.get();
+        User userById = getUserById(id);
         userById.setFirstName(user.getFirstName());
         userById.setLastName(user.getLastName());
         userById.setBirthDate(user.getBirthDate());
@@ -61,8 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers(){
-        return userRepository.findAll().stream()
-                .collect(Collectors.toList());
+        return userRepository.findAll();
     }
 
 }
