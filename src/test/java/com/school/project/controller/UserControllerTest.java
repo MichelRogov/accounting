@@ -2,7 +2,6 @@ package com.school.project.controller;
 
 
 import com.school.project.model.entities.User;
-import com.school.project.repository.UserRepository;
 import com.school.project.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,9 +21,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /*
  * Unit test with dependency mocked.
@@ -40,9 +38,6 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
-
-    @MockBean
-    private UserRepository userRepository;
 
     @Test
     public void testGetUserById() throws Exception {
