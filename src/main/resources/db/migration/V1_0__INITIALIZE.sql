@@ -4,7 +4,7 @@ create table USER
     FIRST_NAME   varchar(50) not null,
     LAST_NAME    varchar(50) not null,
     BIRTH_DATE   datetime    not null,
-    EMAIL        varchar(50) not null unique ,
+    EMAIL        varchar(50) not null,
     PHONE_NUMBER varchar(50)      not null,
     CREATED_DATE datetime    not null,
     UPDATED_DATE datetime    not null,
