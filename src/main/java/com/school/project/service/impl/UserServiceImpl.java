@@ -33,13 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user, Long id) {
-        User userById = getUserById(id);
-        userById.setFirstName(user.getFirstName());
-        userById.setLastName(user.getLastName());
-        userById.setBirthDate(user.getBirthDate());
-        userById.setEmail(user.getEmail());
-        userById.setPhoneNumber(user.getPhoneNumber());
-        userRepository.saveAndFlush(userById);
+        user.setId(getUserById(id).getId());
+        userRepository.saveAndFlush(user);
     }
 
     @Override
