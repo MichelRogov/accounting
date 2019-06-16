@@ -1,6 +1,5 @@
 package com.school.project.service.impl;
 
-import com.school.project.dto.UserDto;
 import com.school.project.exception.UserNotFoundException;
 import com.school.project.model.entities.User;
 import com.school.project.model.types.UserAccountType;
@@ -30,15 +29,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User create(UserDto userDto) {
-        User userForCreate = convertUserDtoToUser(userDto);
-        userRepository.save(userForCreate);
-        userAccountService.createUserAccount(userForCreate, UserAccountType.STUDENT);
-        return userForCreate;
+    public User create(User user) {
+        userRepository.save(user);
+        userAccountService.createUserAccount(user, UserAccountType.STUDENT);
+        return user;
     }
 
     @Override
-    public void update(UserDto user, Long id) {
+    public void update(User user, Long id) {
         User userById;
         Optional<User> byId = userRepository.findById(id);
         if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
@@ -58,23 +56,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(Long id) {
+    public User getUserById(Long id) {
         Optional<User> byId = userRepository.findById(id);
         if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
-        return convertUserToUserDto(byId.get());
+        return byId.get();
     }
 
     @Override
-    public List<UserDto> getAllUsers(){
+    public List<User> getAllUsers(){
         return userRepository.findAll().stream()
-                .map(s -> convertUserToUserDto(s))
                 .collect(Collectors.toList());
     }
-    private User convertUserDtoToUser(UserDto userDto) {
-        return modelMapper.map(userDto, User.class);
-    }
 
-    private UserDto convertUserToUserDto(User user) {
-        return modelMapper.map(user, UserDto.class);
-    }
 }

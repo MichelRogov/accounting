@@ -1,20 +1,19 @@
 package com.school.project.service;
 
-import com.school.project.dto.UserDto;
 import com.school.project.model.entities.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    User create(UserDto userDto);
+    User create(User user);
 
-    void update(UserDto user, Long id);
+    void update(User user, Long id);
 
     void delete(Long id);
 
-    UserDto getUserById(Long id);
+    User getUserById(Long id);
 
-    List<UserDto> getAllUsers();
+    List<User> getAllUsers();
 
 }
