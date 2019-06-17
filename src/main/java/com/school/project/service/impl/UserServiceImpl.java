@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserAccountRepository userAccountRepository;
 
-
     @Override
     public User create(User user) {
         userRepository.save(user);
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         Optional<User> byId = userRepository.findById(id);
-        if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
+        if (!userRepository.existsById(id)) throw new UserNotFoundException("User with id :" + id + "is not found");
         return byId.get();
     }
 
