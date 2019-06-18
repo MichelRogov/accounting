@@ -14,12 +14,12 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @PostMapping("/subjects")
+    @PostMapping("/subject")
     public void createSubject(@RequestBody Subject subject) {
         subjectService.createSubject(subject);
     }
 
-    @GetMapping("/subjects/{id}")
+    @GetMapping("/subject/{id}")
     public ResponseEntity<Subject> getSubjectByID(@PathVariable long id) {
         return ResponseEntity.ok()
                 .body(subjectService.getSubjectById(id));
@@ -30,7 +30,7 @@ public class SubjectController {
         return subjectService.getAllSubjects();
     }
 
-    @PutMapping("/subjects/{id}")
+    @PutMapping("/subject/{id}")
     public ResponseEntity<Subject> updateSubject(@RequestBody Subject subject, @PathVariable Long id) {
         subjectService.updateSubject(subject, id);
         return ResponseEntity.ok()
