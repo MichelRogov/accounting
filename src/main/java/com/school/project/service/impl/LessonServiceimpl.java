@@ -8,11 +8,14 @@ import com.school.project.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+
 @Component
 public class LessonServiceimpl implements LessonService {
 
     private final LessonRepository lessonRepository;
+
     @Autowired
     public LessonServiceimpl(LessonRepository lessonRepository) {
         this.lessonRepository = lessonRepository;
@@ -31,26 +34,26 @@ public class LessonServiceimpl implements LessonService {
     }
 
     @Override
-    public Lesson getLessonByGroup(Long id) {
-        Optional<Lesson> lessonByGroupId = lessonRepository.getLessonByGroupId(id);
-        if (!lessonByGroupId.isPresent()) throw new LessonNotFoundException("Lesson with id : " + id + "is not found");
-        return lessonByGroupId.get();
+    public List<Lesson> getAllLessonByGroup(Long id) {
+        List<Lesson> lessonByGroupId = lessonRepository.getAllByGroupId(id);
+        if (lessonByGroupId.isEmpty()) throw new LessonNotFoundException("Lesson with Group id : " + id + "is not found");
+        return lessonByGroupId;
     }
 
     @Override
-    public Lesson getLessonByTeacher(Long id) {
-        Optional<Lesson> lessonByTeacherId = lessonRepository.getLessonByTeacherId(id);
-        if (!lessonByTeacherId.isPresent())
-            throw new LessonNotFoundException("Lesson with id : " + id + "is not found");
-        return lessonByTeacherId.get();
+    public List<Lesson> getAllLessonByTeacher(Long id) {
+        List<Lesson> lessonByTeacherId = lessonRepository.getAllByByTeacherId(id);
+        if (lessonByTeacherId.isEmpty())
+            throw new LessonNotFoundException("Lessonw with Teacher id : " + id + "is not found");
+        return lessonByTeacherId;
     }
 
     @Override
-    public Lesson getLessonBySubject(Long id) {
-        Optional<Lesson> lessonBySubjectId = lessonRepository.getLessonBySubjectId(id);
-        if (!lessonBySubjectId.isPresent())
-            throw new LessonNotFoundException("Lesson with id : " + id + "is not found");
-        return lessonBySubjectId.get();
+    public List<Lesson> getAllLessonBySubject(Long id) {
+        List<Lesson> lessonBySubjectId = lessonRepository.getAllBySubjectId(id);
+        if (lessonBySubjectId.isEmpty())
+            throw new LessonNotFoundException("Lessons with Subject id : " + id + "is not found");
+        return lessonBySubjectId;
     }
 
     @Override

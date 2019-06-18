@@ -4,12 +4,19 @@ import com.school.project.dto.LessonDto;
 import com.school.project.model.entities.Lesson;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface LessonService {
     Lesson createLesson(Lesson lesson);
-    Lesson getLesson (Long id);
-    Lesson getLessonByGroup (Long id);
-    Lesson getLessonByTeacher(Long id);
-    Lesson getLessonBySubject(Long id);
+
+    Lesson getLesson(Long id);
+
+    List<Lesson> getAllLessonByGroup(Long id);
+
+    List<Lesson> getAllLessonByTeacher(Long id);
+
+    List<Lesson> getAllLessonBySubject(Long id);
+
     Lesson updateLesson(LessonDto lessonDto);
 }
