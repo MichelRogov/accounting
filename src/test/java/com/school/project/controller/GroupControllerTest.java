@@ -21,7 +21,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -47,8 +46,6 @@ public class GroupControllerTest {
         mvc.perform(get("/group/" + 6)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())//good for simple debugging
-                .andExpect(jsonPath("$.id").value(6))
                 .andExpect(jsonPath("$.module.hours").value(100))
                 .andExpect(jsonPath("$.module.price").value(500.0));
         //check for all fields returned by the call
