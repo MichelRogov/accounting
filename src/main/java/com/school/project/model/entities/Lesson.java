@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class Lesson {
 
     @Id
@@ -24,11 +27,14 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "SUBJECT_ID", nullable = false)
     private Subject subject;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LESSON_DATE", nullable = false)
     private Date date;
     @OneToOne
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private Group group;
+
     @OneToOne
     @JoinColumn(name = "TEACHER_ID", nullable = false)
     private User teacher;
