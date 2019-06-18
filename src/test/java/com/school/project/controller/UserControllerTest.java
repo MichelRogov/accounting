@@ -64,32 +64,10 @@ public class UserControllerTest {
         verify(userService).create(new User(null, "Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678", null, null));
     }
 
-    @Test
-    public void testGetAllUsers() {
-    }
-
-    @Test
-    public void testUpdateUser() throws Exception {
-
-        mvc.perform(put("/users/" +1)
-                .content(NEW_USER_TO_UPDATE_JSON_STRING)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-        verify(userService).update(user1, 1L);
-    }
-
-    @Test
-    public void testDeleteUser() {
-    }
-
-    private User user1 = new User(1L, "Sasha", "Stepanov", new Date(), "oleksandr@example.com", "+49333300", new Date(), new Date());
-
     private User getSampleUser() {
         return new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date());
     }
 
     private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
-
-    private static String NEW_USER_TO_UPDATE_JSON_STRING = "{\"firstName\":\"Sasha\",\"lastName\":\"Stepanov\",\"email\":\"oleksandr_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
 }
