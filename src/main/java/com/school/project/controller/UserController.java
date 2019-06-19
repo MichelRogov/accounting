@@ -23,8 +23,7 @@ public class UserController {
 
     @PostMapping("/users")
     public void createUser(@RequestBody UserDto userDto) {
-        User user = convertUserDtoToUser(userDto);
-        userService.create(user);
+        userService.create(convertUserDtoToUser(userDto));
     }
 
     @GetMapping("/users/{id}")
@@ -42,8 +41,8 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto useDto, @PathVariable Long id) {
-        userService.update(convertUserDtoToUser(useDto), id);
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
+        userService.update(convertUserDtoToUser(userDto), id);
         return ResponseEntity.ok()
                 .body(convertUserToUserDto(userService.getUserById(id)));
     }
