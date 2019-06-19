@@ -14,9 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 public class GroupDto {
 
+    private Long id;
+
     private Date startDate;
 
     private Module module;
 
-    private List<User> users;
+    private List<Long> usersID;
 }
