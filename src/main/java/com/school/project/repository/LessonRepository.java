@@ -13,7 +13,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     List<Lesson> getAllByGroupId(Long id);
 
     @Transactional
-    List<Lesson> getAllByByTeacherId(Long id);
+    List<Lesson> getAllByTeacherId(Long id);
 
     @Transactional
     List<Lesson> getAllBySubjectId(Long id);

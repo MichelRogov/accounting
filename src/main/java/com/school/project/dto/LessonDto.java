@@ -1,8 +1,8 @@
 package com.school.project.dto;
 
-import com.school.project.model.entities.Group;
 import com.school.project.model.entities.Subject;
-import com.school.project.model.entities.User;
+import com.school.project.web.GroupWeb;
+import com.school.project.web.UserWeb;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,6 @@ public class LessonDto {
     private String thema;
     private Subject subject;
     private Date date;
-    private Group group;
-    private User teacher;
+    private GroupWeb group;
+    private UserWeb teacher;
 }
