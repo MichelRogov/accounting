@@ -15,8 +15,8 @@ import java.util.Date;
 public class LessonDto {
     private Long id;
     private String thema;
-    private Subject subject;
+    private Long subjectId;
     private Date date;
-    private GroupWeb group;
-    private UserWeb teacher;
+    private Long groupId;
+    private Long teacherId;
 }

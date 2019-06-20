@@ -64,7 +64,7 @@ public class LessonController {
     }
 
     @PutMapping("/lessons/{id}")
-    public ResponseEntity<LessonDto> updateUser(@RequestBody LessonDto lessonDto, @PathVariable Long id) {
+    public ResponseEntity<LessonDto> updateLesson(@RequestBody LessonDto lessonDto, @PathVariable Long id) {
         lessonService.updateLesson(convertLessonDtoToLesson(lessonDto), id);
         return ResponseEntity.ok()
                 .body(convertLessonToLessonDto(lessonService.getLesson(id)));
