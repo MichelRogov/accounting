@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping
 public class SubjectController {
+
     @Autowired
     SubjectService subjectService;
 
