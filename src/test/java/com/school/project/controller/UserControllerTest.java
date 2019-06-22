@@ -5,6 +5,7 @@ import com.school.project.model.entities.User;
 import com.school.project.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,8 +21,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,43 +41,6 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void testGetUserById() throws Exception {
-        when(userService.getUserById(1L)).thenReturn(getSampleUser());
-
-        mvc.perform(get("/users/" + 1)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print())//good for simple debugging
-                .andExpect(jsonPath("$.firstName").value("sergey"))
-                .andExpect(jsonPath("$.lastName").value("lukichev"));
-
-        verify(userService.getUserById(1L));
-        //check for all fields returned by the call
-    }
-
-   /* @Test
-    public void getAllUsers() throws Exception {
-        when(userService.getAllUsers()).thenReturn(getSampleUserList());
-
-        mvc.perform(get("/users")
-        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.[0].id").value(1L))
-                .andExpect(jsonPath("$.[0].firstName").value("sergey"))
-                .andExpect(jsonPath("$.[0].lastName").value("lukichev"))
-                .andExpect(jsonPath("$.[0].email").value("sergey@example.com"))
-                .andExpect(jsonPath("$.[0].phoneNumber").value("+49333300"))
-                .andExpect(jsonPath("$.[1].id").value(2L))
-                .andExpect(jsonPath("$.[1].firstName").value("ivan"))
-                .andExpect(jsonPath("$.[1].lastName").value("pupkin"))
-                .andExpect(jsonPath("$.[1].email").value("ivan@example.com"))
-                .andExpect(jsonPath("$.[1].phoneNumber").value("+380501413552"));
-
-        verify(userService.getAllUsers());
-    }*/
-
-    @Test
     public void testCreateNewUser() throws Exception {
 
         mvc.perform(post("/users")
@@ -91,9 +54,59 @@ public class UserControllerTest {
         verify(userService).create(new User(null, "Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678", null, null));
     }
 
+    @Test
+    public void updateUser() throws Exception {
+
+        mvc.perform(put("/users/" + 1)
+                .content(NEW_USER_FOR_UPDATE_JSON_STRING)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        verify(userService, Mockito.times(1)).update(getSampleUserToUpdate(), 1L);
+    }
+
+    @Test
+    public void testGetUserById() throws Exception {
+        when(userService.getUserById(1L)).thenReturn(getSampleUser());
+
+        mvc.perform(get("/users/" + 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())//good for simple debugging
+                .andExpect(jsonPath("$.firstName").value("sergey"))
+                .andExpect(jsonPath("$.lastName").value("lukichev"));
+
+        //check for all fields returned by the call
+    }
+
+    @Test
+    public void getAllUsers() throws Exception {
+        when(userService.getAllUsers()).thenReturn(getSampleUserList());
+
+        mvc.perform(get("/users")
+        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].firstName").value("sergey"))
+                .andExpect(jsonPath("$.[0].lastName").value("lukichev"))
+                .andExpect(jsonPath("$.[0].email").value("sergey@example.com"))
+                .andExpect(jsonPath("$.[0].phoneNumber").value("+49333300"))
+                .andExpect(jsonPath("$.[1].firstName").value("ivan"))
+                .andExpect(jsonPath("$.[1].lastName").value("pupkin"))
+                .andExpect(jsonPath("$.[1].email").value("ivan@example.com"))
+                .andExpect(jsonPath("$.[1].phoneNumber").value("+380501413552"));
+    }
+
     private User getSampleUser() {
         return new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date());
     }
+
+    private User getSampleUserToUpdate() {
+        return new User(null, "Alex", "Pupkin",null, "ivan_@mail.ru", "+380504332211", null, null);
+    }
+
+    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Alex\",\"lastName\":\"Pupkin\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"+380504332211\"}";
 
     private List<User> getSampleUserList() {
         List<User> users = Arrays.asList(new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date()),
@@ -103,7 +116,4 @@ public class UserControllerTest {
 
     private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
-    @Test
-    public void updateUser() {
-    }
 }

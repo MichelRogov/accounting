@@ -41,10 +41,9 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
+    public ResponseEntity updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
         userService.update(convertUserDtoToUser(userDto), id);
-        return ResponseEntity.ok()
-                .body(convertUserToUserDto(userService.getUserById(id)));
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/users/{id}")
