@@ -14,11 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,8 +50,32 @@ public class UserControllerTest {
                 .andDo(print())//good for simple debugging
                 .andExpect(jsonPath("$.firstName").value("sergey"))
                 .andExpect(jsonPath("$.lastName").value("lukichev"));
+
+        verify(userService.getUserById(1L));
         //check for all fields returned by the call
     }
+
+   /* @Test
+    public void getAllUsers() throws Exception {
+        when(userService.getAllUsers()).thenReturn(getSampleUserList());
+
+        mvc.perform(get("/users")
+        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].id").value(1L))
+                .andExpect(jsonPath("$.[0].firstName").value("sergey"))
+                .andExpect(jsonPath("$.[0].lastName").value("lukichev"))
+                .andExpect(jsonPath("$.[0].email").value("sergey@example.com"))
+                .andExpect(jsonPath("$.[0].phoneNumber").value("+49333300"))
+                .andExpect(jsonPath("$.[1].id").value(2L))
+                .andExpect(jsonPath("$.[1].firstName").value("ivan"))
+                .andExpect(jsonPath("$.[1].lastName").value("pupkin"))
+                .andExpect(jsonPath("$.[1].email").value("ivan@example.com"))
+                .andExpect(jsonPath("$.[1].phoneNumber").value("+380501413552"));
+
+        verify(userService.getAllUsers());
+    }*/
 
     @Test
     public void testCreateNewUser() throws Exception {
@@ -68,6 +95,15 @@ public class UserControllerTest {
         return new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date());
     }
 
+    private List<User> getSampleUserList() {
+        List<User> users = Arrays.asList(new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date()),
+                new User(2L, "ivan", "pupkin", new Date(), "ivan@example.com", "+380501413552", new Date(), new Date()));
+        return users;
+    }
+
     private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
+    @Test
+    public void updateUser() {
+    }
 }
