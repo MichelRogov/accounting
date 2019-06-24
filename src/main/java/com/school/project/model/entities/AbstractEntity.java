@@ -12,28 +12,28 @@ import java.util.Objects;
 
 
 
-public abstract class AbstractEntity extends AbstractBaseEntity implements Serializable {
+public abstract class AbstractEntity extends AbstractBaseEntity {
 
-    private String createdDate;
-    private String updatedDate;
-
+    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @Column(name = "created_date", length = 20)
+    private String createdDate;
+
+
+    @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    /**
-     * Sets createdAt before insert
-     */
+    @Column(name = "updated_date", length = 20)
+    private String updatedDate;
+
     @PrePersist
-    public void setCreationDate() {
+    public void setCreatedDate() {
         this.createdAt = new Date();
     }
 
-    /**
-     * Sets updatedAt before update
-     */
     @PreUpdate
     public void setChangeDate() {
         this.updatedAt = new Date();
