@@ -18,15 +18,19 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     GroupRepository groupRepository;
+
+    @Autowired
     UserRepository userRepository;
 
     @Override
-    public Group create(Group group){
+    public Group createUpdate(Group group){
+
         return groupRepository.save(group);
     }
 
     @Override
-    public Group getGroupById(Long id) {
+    public Group getById(Long id) {
+
         Optional<Group> byId = groupRepository.findById(id);
         if (!byId.isPresent()) {
             throw new GroupNotFoundException("Group with id " + id + " was not found");
@@ -35,21 +39,23 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> getAllGroups() {
+    public List<Group> getAll() {
+
         return groupRepository.findAll();
     }
 
     @Override
-    public Group addUserToGroup(Long id) {
-        Optional<User> userById = userRepository.findById(id);
+    public Group addUser(Long groupId, Long userId) {
+
+        Optional<User> userById = userRepository.findById(userId);
         if (!userById.isPresent()) {
-            throw new UserNotFoundException("User with id " + id + " was not found");
+            throw new UserNotFoundException("User with id " + userId + " was not found");
         }
-        Group group = getGroupById(id);
-        List <User> users = group.getUsers();
+        Group group = getById(groupId);
+        List <User> users = group.getUserList();
         users.add(userById.get());
 
-        return group;
+        return createUpdate(group);
     }
 
 }

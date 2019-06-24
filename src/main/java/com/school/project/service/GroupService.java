@@ -1,17 +1,16 @@
 package com.school.project.service;
 
 import com.school.project.model.entities.Group;
-import com.school.project.model.entities.User;
 
 import java.util.List;
 
 public interface GroupService {
 
-    Group create(Group group);
+    Group createUpdate(Group group);
 
-    Group getGroupById(Long id);
+    Group getById(Long id);
 
-    List<Group> getAllGroups();
+    List<Group> getAll();
 
-    Group addUserToGroup(Long id);
+    Group addUser(Long groupId, Long userId);
 }

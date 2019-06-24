@@ -1,7 +1,5 @@
 package com.school.project.dto;
 
-import com.school.project.model.entities.Module;
-import com.school.project.model.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +16,7 @@ public class GroupDto {
 
     private Date startDate;
 
-    private Module module;
+    private Long moduleId;
 
-    private List<Long> usersID;
+    private List<UserDto> userList;
 }
