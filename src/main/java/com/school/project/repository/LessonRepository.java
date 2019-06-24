@@ -13,6 +13,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     List<Lesson> getAllByTeacherId(Long id);
 
-    List<Lesson> getAllBySubjectId(Long id);
+    List<Lesson> getAllBySubjectsId(Long id);
 
 }

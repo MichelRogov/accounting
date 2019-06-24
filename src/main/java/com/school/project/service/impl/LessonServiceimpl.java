@@ -53,16 +53,17 @@ public class LessonServiceimpl implements LessonService {
 
     @Override
     public List<Lesson> getAllLessonBySubject(Long id) {
-        List<Lesson> lessonBySubjectId = lessonRepository.getAllBySubjectId(id);
+        List<Lesson> lessonBySubjectId = lessonRepository.getAllBySubjectsId(id);
+        System.out.println(lessonBySubjectId);
         if (lessonBySubjectId.isEmpty())
             throw new LessonNotFoundException("Lessons with Subject id : " + id + " is not found");
         return lessonBySubjectId;
     }
 
     @Override
-    public Lesson updateLesson(Lesson lessonToUpdate, Long id) {
+    public void updateLesson(Lesson lessonToUpdate, Long id) {
         lessonToUpdate.setId(id);
-        return lessonRepository.saveAndFlush(lessonToUpdate);
+        lessonRepository.saveAndFlush(lessonToUpdate);
     }
 
     @Override

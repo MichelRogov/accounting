@@ -18,7 +18,7 @@ public interface LessonService {
 
     List<Lesson> getAllLessonBySubject(Long id);
 
-    Lesson updateLesson(Lesson lesson,Long id);
+    void updateLesson(Lesson lesson,Long id);
 
     List<Lesson> getAllLessons();
 }

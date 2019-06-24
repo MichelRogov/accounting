@@ -5,9 +5,9 @@ import com.school.project.model.entities.Lesson;
 import com.school.project.service.LessonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,11 +15,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping
 public class LessonController {
-    private final LessonService lessonService;
 
-    public LessonController(LessonService lessonService) {
-        this.lessonService = lessonService;
-    }
+    @Autowired
+    LessonService lessonService;
 
     @Autowired
     ModelMapper modelMapper;
@@ -59,15 +57,14 @@ public class LessonController {
 
     @GetMapping("/lessons/subject/{id}")
     public ResponseEntity<List<LessonDto>> getAllLessonsBySubject(@PathVariable long id) {
+        System.out.println(lessonService.getAllLessonBySubject(id) + "subject ");
         return ResponseEntity.ok().body(lessonService.getAllLessonBySubject(id)
                 .stream().map(s -> convertLessonToLessonDto(s)).collect(Collectors.toList()));
     }
 
     @PutMapping("/lessons/{id}")
-    public ResponseEntity<LessonDto> updateLesson(@RequestBody LessonDto lessonDto, @PathVariable Long id) {
+    public void updateLesson(@RequestBody LessonDto lessonDto, @PathVariable Long id) {
         lessonService.updateLesson(convertLessonDtoToLesson(lessonDto), id);
-        return ResponseEntity.ok()
-                .body(convertLessonToLessonDto(lessonService.getLesson(id)));
     }
 
     private Lesson convertLessonDtoToLesson(LessonDto lessonDto) {
