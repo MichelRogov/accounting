@@ -1,7 +1,6 @@
-package db.migration;
+package com.school.project.controller;
 
 
-import com.school.project.controller.LessonController;
 import com.school.project.dto.LessonDto;
 import com.school.project.model.entities.*;
 import com.school.project.service.LessonService;
@@ -37,14 +36,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LessonController.class)
 @Import(ModelMapper.class)
 public class LessonControllerTest {
-
-  /*  @Autowired
+    @Autowired
     private MockMvc mvc;
-
+    @Autowired
+    ModelMapper modelMapper;
     static Date date;
-
     private static String NEW_LESSON_JSON_STRING2;
-
     @MockBean
     private LessonService lessonService;
 
@@ -54,7 +51,8 @@ public class LessonControllerTest {
     @BeforeClass
     public static void beforeTest() throws ParseException {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"date\":\"2019-05-04T00:00:00\",\"groupId\":3,\"teacherId\":3}";
+        //NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"date\":\"2019-05-04T00:00:00\",\"groupId\":3,\"teacherId\":3}";
+        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"groupId\":3,\"teacherId\":3}";
 
     }
 
@@ -151,23 +149,24 @@ public class LessonControllerTest {
 
     @Test
     public void testCreateNewLesson() throws Exception {
-        when(lessonService.createLesson(getTestLesson())).thenReturn(getTestLesson());
+        when(lessonService.createLesson(getRealTestLesson())).thenReturn(getTestLesson());
         LessonDto lessonDto = getTestLessonDto();
         mvc.perform(post("/lessons", lessonDto)
                 .content(NEW_LESSON_JSON_STRING2)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        Date date = format.parse("2019-05-04");
-        verify(lessonService).createLesson(new Lesson(12L, "Angular",
-                new ArrayList<Subject>(), date,
-                new Group(3L, new Date(), new Module(), new ArrayList<User>()),
-                new User(2L, null, null, new Date(), null, null, new Date(), new Date())));
+//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//        Date date = format.parse("2019-05-04T");
+        verify(lessonService).createLesson(new Lesson(null, "Angular",
+                new Subject(3L, null), null,
+                new Group(3L, null, null, null),
+                new User(3L, null, null, null, null, null, null, null)));
     }
 
     @Test
     public void testUpdateLesson() throws Exception {
+        when(lessonService.updateLesson(getLessonToUpdate(), 12L)).thenReturn(getTestLesson());
         mvc.perform(put("/lessons/" + 12L).content(NEW_LESSON_JSON_STRING2)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -186,19 +185,31 @@ public class LessonControllerTest {
 
         return new Lesson(12L,
                 "JS",
-                new ArrayList<Subject>(),
+                new Subject(3l, "QA"),
                 date,
                 new Group(3L, new Date(), new Module(), new ArrayList<User>()),
                 new User(2L, null, null, new Date(), null, null, new Date(), new Date()));
     }
 
-    *//*private LessonDto getTestLessonDto() throws Exception {
+    private Lesson getRealTestLesson() throws Exception {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            date = format.parse("2019-05-04");
+
+            return new Lesson(null,
+                    "Angular",
+                    new Subject(3l, null),
+                    null,
+                    new Group(3L, null, null, null),
+                    new User(3L, null, null, null, null, null, null, null));
+        }
+
+    private LessonDto getTestLessonDto() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-        LessonDto lessonDto = new LessonDto(null, "JS", new ArrayList<Long>(), date, 3L, 4L);
+        LessonDto lessonDto = new LessonDto(null, "JS", 3L, date, 3L, 4L);
         return lessonDto;
 
-    }*//*
+    }
 
     private Lesson getLessonToUpdate() throws Exception {
 
@@ -207,7 +218,7 @@ public class LessonControllerTest {
 
         return new Lesson(12L,
                 "Angular",
-                new ArrayList<Subject>(),
+                new Subject(5l, "QA"),
                 date,
                 new Group(6L, new Date(), new Module(), new ArrayList<User>()),
                 new User(5L, null, null, new Date(), null, null, new Date(), new Date()));
@@ -219,18 +230,18 @@ public class LessonControllerTest {
         List<Lesson> listToTest = new ArrayList<>();
         Lesson l1 = new Lesson(12L,
                 "JS",
-                new ArrayList<Subject>(),
+                new Subject(3l, "QA"),
                 date,
                 new Group(3L, new Date(), new Module(), new ArrayList<User>()),
                 new User(2L, null, null, new Date(), null, null, new Date(), new Date()));
         Lesson l2 = new Lesson(11L,
                 "JS",
-                new ArrayList<Subject>(),
+                new Subject(3l, "QA"),
                 date,
                 new Group(3L, new Date(), new Module(), new ArrayList<User>()),
                 new User(2L, null, null, new Date(), null, null, new Date(), new Date()));
         Collections.addAll(listToTest, l1, l2);
         return listToTest;
-    }*/
+    }
 
 }
