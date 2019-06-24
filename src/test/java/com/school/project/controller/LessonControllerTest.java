@@ -51,8 +51,7 @@ public class LessonControllerTest {
     @BeforeClass
     public static void beforeTest() throws ParseException {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        //NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"date\":\"2019-05-04T00:00:00\",\"groupId\":3,\"teacherId\":3}";
-        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"groupId\":3,\"teacherId\":3}";
+        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"date\":\"2019-05-04T00:00:00\",\"groupId\":3,\"teacherId\":3}";
 
     }
 
@@ -149,19 +148,19 @@ public class LessonControllerTest {
 
     @Test
     public void testCreateNewLesson() throws Exception {
-        when(lessonService.createLesson(getRealTestLesson())).thenReturn(getTestLesson());
+        when(lessonService.createLesson(getTestLesson())).thenReturn(getTestLesson());
         LessonDto lessonDto = getTestLessonDto();
         mvc.perform(post("/lessons", lessonDto)
                 .content(NEW_LESSON_JSON_STRING2)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        Date date = format.parse("2019-05-04T");
-        verify(lessonService).createLesson(new Lesson(null, "Angular",
-                new Subject(3L, null), null,
-                new Group(3L, null, null, null),
-                new User(3L, null, null, null, null, null, null, null)));
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = format.parse("2019-05-04");
+        verify(lessonService).createLesson(new Lesson(12L, "Angular",
+                new ArrayList<Subject>(), date,
+                new Group(3L, new Date(), new Module(), new ArrayList<User>()),
+                new User(2L, null, null, new Date(), null, null, new Date(), new Date())));
     }
 
     @Test
