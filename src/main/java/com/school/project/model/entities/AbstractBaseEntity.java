@@ -16,15 +16,7 @@ import java.util.Objects;
 @Table(name = "ABSTRACTBASEENTITY")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public abstract class AbstractBaseEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Version
-    private Long version;
 
 
 }
