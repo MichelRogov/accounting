@@ -26,7 +26,7 @@ public class Lesson {
     @Column(name = "THEMA", nullable = false)
     private String thema;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Subject.class)
+    @OneToMany(targetEntity = Subject.class)
     @JoinTable(name = "LESSON_SUBJECT", joinColumns = {@JoinColumn(name = "LESSON_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SUBJECT_ID")})
     private List<Subject> subjects;

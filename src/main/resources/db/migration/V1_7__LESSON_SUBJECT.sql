@@ -1,5 +1,7 @@
 alter table LESSON
     drop FOREIGN KEY LESSON_SUBJECT_ID_SUBJECT_ID;
+alter table LESSON
+    drop COLUMN SUBJECT_ID;
 
 create table LESSON_SUBJECT
 (

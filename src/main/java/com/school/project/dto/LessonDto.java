@@ -20,7 +20,7 @@ public class LessonDto {
 
     private Date date;
 
-    private Long groupId;
+    private GroupDto group;
 
-    private Long teacherId;
+    private UserDto teacher;
 }

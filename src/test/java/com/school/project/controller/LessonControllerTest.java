@@ -1,7 +1,6 @@
 package com.school.project.controller;
 
 
-import com.school.project.dto.LessonDto;
 import com.school.project.model.entities.*;
 import com.school.project.service.LessonService;
 import org.junit.BeforeClass;
@@ -21,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -29,19 +29,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/*
- * Unit test with dependency mocked.
- */
 @RunWith(SpringRunner.class)
 @WebMvcTest(LessonController.class)
 @Import(ModelMapper.class)
 public class LessonControllerTest {
+
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    ModelMapper modelMapper;
+
     static Date date;
+
     private static String NEW_LESSON_JSON_STRING2;
+
     @MockBean
     private LessonService lessonService;
 
@@ -49,10 +48,9 @@ public class LessonControllerTest {
     }
 
     @BeforeClass
-    public static void beforeTest() throws ParseException {
+    public static void beforeTest() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjectId\":3,\"date\":\"2019-05-04T00:00:00\",\"groupId\":3,\"teacherId\":3}";
-
+        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjects\":[{\"id\":2},{\"id\":3}],\"date\":\"2019-05-04T00:00:00.000+0000\",\"group\":{\"id\":3},\"teacher\":{\"id\":3}}";
     }
 
     @Test
@@ -62,13 +60,46 @@ public class LessonControllerTest {
         mvc.perform(get("/lessons/" + 12)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())//good for simple debugging
+                .andDo(print())
                 .andExpect(jsonPath("$.id").value(12))
-                .andExpect(jsonPath("$.subjectId").value(3))
+                .andExpect(jsonPath("$.thema").value("Angular"))
+                .andExpect(jsonPath("$.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.groupId").value(3))
-                .andExpect(jsonPath("$.teacherId").value(2));
-        //check for all fields returned by the call
+                .andExpect(jsonPath("$.group.id").value(3))
+                .andExpect(jsonPath("$.group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.group.module.id").value(1))
+                .andExpect(jsonPath("$.group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.group.module.hours").value(70))
+                .andExpect(jsonPath("$.group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.group.module.price").value(300))
+                .andExpect(jsonPath("$.group.users[0].id").value(1))
+                .andExpect(jsonPath("$.group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.group.users[1].id").value(2))
+                .andExpect(jsonPath("$.group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.teacher.id").value(3))
+                .andExpect(jsonPath("$.teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.teacher.phoneNumber").value("12345678"));
 
     }
 
@@ -78,15 +109,84 @@ public class LessonControllerTest {
         mvc.perform(get("/lessons").contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].id").value(12))
-                .andExpect(jsonPath("$.[0].subjectId").value(3))
+                .andExpect(jsonPath("$.[0].thema").value("JS"))
+                .andExpect(jsonPath("$.[0].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[0].groupId").value(3))
-                .andExpect(jsonPath("$.[0].teacherId").value(2))
+                .andExpect(jsonPath("$.[0].group.id").value(3))
+                .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.module.id").value(1))
+                .andExpect(jsonPath("$.[0].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[0].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[0].group.module.price").value(300))
+                .andExpect(jsonPath("$.[0].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[0].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[0].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[0].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[0].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[0].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.id").value(3))
+                .andExpect(jsonPath("$.[0].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[0].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[0].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[0].teacher.phoneNumber").value("12345678"))
                 .andExpect(jsonPath("$.[1].id").value(11))
-                .andExpect(jsonPath("$.[1].subjectId").value(3))
+                .andExpect(jsonPath("$.[1].thema").value("Angular"))
+                .andExpect(jsonPath("$.[1].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[1].groupId").value(3))
-                .andExpect(jsonPath("$.[1].teacherId").value(2));
+                .andExpect(jsonPath("$.[1].group.id").value(3))
+                .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.module.id").value(1))
+                .andExpect(jsonPath("$.[1].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[1].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[1].group.module.price").value(300))
+                .andExpect(jsonPath("$.[1].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[1].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[1].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[1].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[1].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[1].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.id").value(3))
+                .andExpect(jsonPath("$.[1].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[1].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[1].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[1].teacher.phoneNumber").value("12345678"));
+
     }
 
     @Test
@@ -97,15 +197,83 @@ public class LessonControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].id").value(12))
-                .andExpect(jsonPath("$.[0].subjectId").value(3))
+                .andExpect(jsonPath("$.[0].thema").value("JS"))
+                .andExpect(jsonPath("$.[0].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[0].groupId").value(3))
-                .andExpect(jsonPath("$.[0].teacherId").value(2))
+                .andExpect(jsonPath("$.[0].group.id").value(3))
+                .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.module.id").value(1))
+                .andExpect(jsonPath("$.[0].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[0].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[0].group.module.price").value(300))
+                .andExpect(jsonPath("$.[0].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[0].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[0].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[0].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[0].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[0].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.id").value(3))
+                .andExpect(jsonPath("$.[0].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[0].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[0].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[0].teacher.phoneNumber").value("12345678"))
                 .andExpect(jsonPath("$.[1].id").value(11))
-                .andExpect(jsonPath("$.[1].subjectId").value(3))
+                .andExpect(jsonPath("$.[1].thema").value("Angular"))
+                .andExpect(jsonPath("$.[1].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[1].groupId").value(3))
-                .andExpect(jsonPath("$.[1].teacherId").value(2));
+                .andExpect(jsonPath("$.[1].group.id").value(3))
+                .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.module.id").value(1))
+                .andExpect(jsonPath("$.[1].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[1].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[1].group.module.price").value(300))
+                .andExpect(jsonPath("$.[1].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[1].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[1].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[1].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[1].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[1].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.id").value(3))
+                .andExpect(jsonPath("$.[1].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[1].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[1].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[1].teacher.phoneNumber").value("12345678"));
     }
 
     @Test
@@ -116,15 +284,83 @@ public class LessonControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].id").value(12))
-                .andExpect(jsonPath("$.[0].subjectId").value(3))
+                .andExpect(jsonPath("$.[0].thema").value("JS"))
+                .andExpect(jsonPath("$.[0].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[0].groupId").value(3))
-                .andExpect(jsonPath("$.[0].teacherId").value(2))
+                .andExpect(jsonPath("$.[0].group.id").value(3))
+                .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.module.id").value(1))
+                .andExpect(jsonPath("$.[0].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[0].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[0].group.module.price").value(300))
+                .andExpect(jsonPath("$.[0].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[0].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[0].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[0].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[0].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[0].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.id").value(3))
+                .andExpect(jsonPath("$.[0].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[0].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[0].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[0].teacher.phoneNumber").value("12345678"))
                 .andExpect(jsonPath("$.[1].id").value(11))
-                .andExpect(jsonPath("$.[1].subjectId").value(3))
+                .andExpect(jsonPath("$.[1].thema").value("Angular"))
+                .andExpect(jsonPath("$.[1].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[1].groupId").value(3))
-                .andExpect(jsonPath("$.[1].teacherId").value(2));
+                .andExpect(jsonPath("$.[1].group.id").value(3))
+                .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.module.id").value(1))
+                .andExpect(jsonPath("$.[1].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[1].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[1].group.module.price").value(300))
+                .andExpect(jsonPath("$.[1].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[1].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[1].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[1].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[1].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[1].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.id").value(3))
+                .andExpect(jsonPath("$.[1].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[1].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[1].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[1].teacher.phoneNumber").value("12345678"));
     }
 
     @Test
@@ -133,48 +369,110 @@ public class LessonControllerTest {
         mvc.perform(get("/lessons/subject/" + 3)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$.[0].id").value(12))
-                .andExpect(jsonPath("$.[0].subjectId").value(3))
+                .andExpect(jsonPath("$.[0].thema").value("JS"))
+                .andExpect(jsonPath("$.[0].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[0].groupId").value(3))
-                .andExpect(jsonPath("$.[0].teacherId").value(2))
+                .andExpect(jsonPath("$.[0].group.id").value(3))
+                .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.module.id").value(1))
+                .andExpect(jsonPath("$.[0].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[0].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[0].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[0].group.module.price").value(300))
+                .andExpect(jsonPath("$.[0].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[0].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[0].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[0].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[0].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[0].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[0].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[0].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[0].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.id").value(3))
+                .andExpect(jsonPath("$.[0].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[0].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[0].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[0].teacher.phoneNumber").value("12345678"))
                 .andExpect(jsonPath("$.[1].id").value(11))
-                .andExpect(jsonPath("$.[1].subjectId").value(3))
+                .andExpect(jsonPath("$.[1].thema").value("Angular"))
+                .andExpect(jsonPath("$.[1].subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
                 .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.[1].groupId").value(3))
-                .andExpect(jsonPath("$.[1].teacherId").value(2));
+                .andExpect(jsonPath("$.[1].group.id").value(3))
+                .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.module.id").value(1))
+                .andExpect(jsonPath("$.[1].group.module.name").value("Basic_Java"))
+                .andExpect(jsonPath("$.[1].group.module.hours").value(70))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].id").value(3))
+                .andExpect(jsonPath("$.[1].group.module.subjects[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.module.subjects[1].name").value("FRONTEND"))
+                .andExpect(jsonPath("$.[1].group.module.price").value(300))
+                .andExpect(jsonPath("$.[1].group.users[0].id").value(1))
+                .andExpect(jsonPath("$.[1].group.users[0].firstName").value("Sergey"))
+                .andExpect(jsonPath("$.[1].group.users[0].lastName").value("Petrov"))
+                .andExpect(jsonPath("$.[1].group.users[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].email").value("petrov@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[0].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[0].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[0].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].id").value(2))
+                .andExpect(jsonPath("$.[1].group.users[1].firstName").value("Iurii"))
+                .andExpect(jsonPath("$.[1].group.users[1].lastName").value("Vasiliev"))
+                .andExpect(jsonPath("$.[1].group.users[1].birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].email").value("vasiliev@email.com"))
+                .andExpect(jsonPath("$.[1].group.users[1].phoneNumber").value("12345678"))
+                .andExpect(jsonPath("$.[1].group.users[1].createdDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].group.users[1].updatedDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.id").value(3))
+                .andExpect(jsonPath("$.[1].teacher.firstName").value("Niko"))
+                .andExpect(jsonPath("$.[1].teacher.lastName").value("Teacher"))
+                .andExpect(jsonPath("$.[1].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].teacher.email").value("teacher@email.com"))
+                .andExpect(jsonPath("$.[1].teacher.phoneNumber").value("12345678"));
     }
 
     @Test
     public void testCreateNewLesson() throws Exception {
-        when(lessonService.createLesson(getTestLesson())).thenReturn(getTestLesson());
-        LessonDto lessonDto = getTestLessonDto();
-        mvc.perform(post("/lessons", lessonDto)
+        when(lessonService.createLesson(any(Lesson.class))).thenReturn(getRealTestLesson());
+        mvc.perform(post("/lessons")
                 .content(NEW_LESSON_JSON_STRING2)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
                 .andExpect(status().isOk());
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        Date date = format.parse("2019-05-04");
-        verify(lessonService).createLesson(new Lesson(12L, "Angular",
-                new ArrayList<Subject>(), date,
-                new Group(3L, new Date(), new Module(), new ArrayList<User>()),
-                new User(2L, null, null, new Date(), null, null, new Date(), new Date())));
+        Date date = format.parse("2019-05-04T00:00:00.000");
+        verify(lessonService).createLesson(new Lesson(null, "Angular",
+                getListSubjectsForCreate(), date,
+                new Group(3L, null, null, null),
+                new User(3L, null, null, null, null, null, null, null)));
     }
 
     @Test
     public void testUpdateLesson() throws Exception {
-        when(lessonService.updateLesson(getLessonToUpdate(), 12L)).thenReturn(getTestLesson());
-        mvc.perform(put("/lessons/" + 12L).content(NEW_LESSON_JSON_STRING2)
+        mvc.perform(put("/lessons/" + 12L)
+                .content(NEW_LESSON_JSON_STRING2)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.id").value(12))
-                .andExpect(jsonPath("$.subjectId").value(3))
-                .andExpect(jsonPath("$.date").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("$.groupId").value(3))
-                .andExpect(jsonPath("$.teacherId").value(2));
+                .andDo(print());
         verify(lessonService).updateLesson(getLessonToUpdate(), 12L);
     }
 
@@ -183,44 +481,38 @@ public class LessonControllerTest {
         date = format.parse("2019-05-04");
 
         return new Lesson(12L,
-                "JS",
-                new Subject(3l, "QA"),
+                "Angular",
+                getListSubjects(),
                 date,
-                new Group(3L, new Date(), new Module(), new ArrayList<User>()),
-                new User(2L, null, null, new Date(), null, null, new Date(), new Date()));
+                new Group(3L, date, new Module(1L, "Basic_Java", 70, getListSubjects(), 300.00), getListUsers()),
+                getTeacherForTest());
     }
+
 
     private Lesson getRealTestLesson() throws Exception {
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            date = format.parse("2019-05-04");
-
-            return new Lesson(null,
-                    "Angular",
-                    new Subject(3l, null),
-                    null,
-                    new Group(3L, null, null, null),
-                    new User(3L, null, null, null, null, null, null, null));
-        }
-
-    private LessonDto getTestLessonDto() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-        LessonDto lessonDto = new LessonDto(null, "JS", 3L, date, 3L, 4L);
-        return lessonDto;
 
+        return new Lesson(null,
+                "Angular",
+                getListSubjectsForCreate(),
+                null,
+                new Group(3L, null, null, null),
+                new User(3L, null, null, null, null, null, null, null));
     }
+
 
     private Lesson getLessonToUpdate() throws Exception {
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
 
-        return new Lesson(12L,
+        return new Lesson(null,
                 "Angular",
-                new Subject(5l, "QA"),
+                getListSubjectsForCreate(),
                 date,
-                new Group(6L, new Date(), new Module(), new ArrayList<User>()),
-                new User(5L, null, null, new Date(), null, null, new Date(), new Date()));
+                new Group(3L, null, null, null),
+                new User(3L, null, null, null, null, null, null, null));
     }
 
     private List<Lesson> getListLessonsForTest() throws Exception {
@@ -229,18 +521,54 @@ public class LessonControllerTest {
         List<Lesson> listToTest = new ArrayList<>();
         Lesson l1 = new Lesson(12L,
                 "JS",
-                new Subject(3l, "QA"),
+                getListSubjects(),
                 date,
-                new Group(3L, new Date(), new Module(), new ArrayList<User>()),
-                new User(2L, null, null, new Date(), null, null, new Date(), new Date()));
+                new Group(3L, date,
+                        new Module(1L, "Basic_Java", 70, getListSubjects(), 300.00),
+                        getListUsers()),
+                getTeacherForTest());
         Lesson l2 = new Lesson(11L,
-                "JS",
-                new Subject(3l, "QA"),
+                "Angular",
+                getListSubjects(),
                 date,
-                new Group(3L, new Date(), new Module(), new ArrayList<User>()),
-                new User(2L, null, null, new Date(), null, null, new Date(), new Date()));
+                new Group(3L, date,
+                        new Module(1L, "Basic_Java", 70, getListSubjects(), 300.00),
+                        getListUsers()),
+                getTeacherForTest());
         Collections.addAll(listToTest, l1, l2);
         return listToTest;
     }
 
+    private List<Subject> getListSubjects() {
+        List<Subject> subjects = new ArrayList<>();
+        Subject sb1 = new Subject(3L, "QA");
+        Subject sb2 = new Subject(2L, "FRONTEND");
+        Collections.addAll(subjects, sb1, sb2);
+        return subjects;
+    }
+
+    private List<Subject> getListSubjectsForCreate() {
+        List<Subject> subjects = new ArrayList<>();
+        Subject sb1 = new Subject(2L, null);
+        Subject sb2 = new Subject(3L, null);
+        Collections.addAll(subjects, sb1, sb2);
+        return subjects;
+    }
+
+
+    private List<User> getListUsers() throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        date = format.parse("2019-05-04");
+        User us1 = new User(1L, "Sergey", "Petrov", date, "petrov@email.com", "12345678", date, date);
+        User us2 = new User(2L, "Iurii", "Vasiliev", date, "vasiliev@email.com", "12345678", date, date);
+        List<User> listUsers = new ArrayList<>();
+        Collections.addAll(listUsers, us1, us2);
+        return listUsers;
+    }
+
+    private User getTeacherForTest() throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        date = format.parse("2019-05-04");
+        return new User(3L, "Niko", "Teacher", date, "teacher@email.com", "12345678", date, date);
+    }
 }

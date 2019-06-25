@@ -1,11 +1,8 @@
 package com.school.project.service.impl;
 
-import com.school.project.dto.LessonDto;
 import com.school.project.exception.LessonNotFoundException;
 import com.school.project.model.entities.Lesson;
-import com.school.project.model.entities.User;
 import com.school.project.repository.LessonRepository;
-import com.school.project.repository.UserRepository;
 import com.school.project.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,12 +13,8 @@ import java.util.Optional;
 @Component
 public class LessonServiceimpl implements LessonService {
 
-    private final LessonRepository lessonRepository;
-
     @Autowired
-    public LessonServiceimpl(LessonRepository lessonRepository) {
-        this.lessonRepository = lessonRepository;
-    }
+    LessonRepository lessonRepository;
 
     @Override
     public Lesson createLesson(Lesson lesson) {
@@ -54,7 +47,6 @@ public class LessonServiceimpl implements LessonService {
     @Override
     public List<Lesson> getAllLessonBySubject(Long id) {
         List<Lesson> lessonBySubjectId = lessonRepository.getAllBySubjectsId(id);
-        System.out.println(lessonBySubjectId);
         if (lessonBySubjectId.isEmpty())
             throw new LessonNotFoundException("Lessons with Subject id : " + id + " is not found");
         return lessonBySubjectId;
