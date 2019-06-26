@@ -1,5 +1,6 @@
 package com.school.project.model.entities;
 
+import com.school.project.AbstractEntity.AbstractBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Subject {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Subject extends AbstractBaseEntity {
 
     @Column(name = "NAME", nullable = false)
     private String name;
