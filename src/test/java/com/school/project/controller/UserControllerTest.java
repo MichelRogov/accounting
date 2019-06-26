@@ -55,7 +55,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUser() throws Exception {
+    public void testUpdateUser() throws Exception {
 
         mvc.perform(put("/users/" + 1)
                 .content(NEW_USER_FOR_UPDATE_JSON_STRING)
@@ -81,7 +81,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getAllUsers() throws Exception {
+    public void testGetAllUsers() throws Exception {
         when(userService.getAllUsers()).thenReturn(getSampleUserList());
 
         mvc.perform(get("/users")
@@ -103,10 +103,10 @@ public class UserControllerTest {
     }
 
     private User getSampleUserToUpdate() {
-        return new User(null, "Alex", "Pupkin",null, "ivan_@mail.ru", "+380504332211", null, null);
+        return new User(null, "Alex", "Pupkin",null, "alex_@mail.ru", "+380504332211", null, null);
     }
 
-    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Alex\",\"lastName\":\"Pupkin\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"+380504332211\"}";
+    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Alex\",\"lastName\":\"Pupkin\",\"email\":\"alex_@mail.ru\",\"phoneNumber\":\"+380504332211\"}";
 
     private List<User> getSampleUserList() {
         List<User> users = Arrays.asList(new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date()),
