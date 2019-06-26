@@ -1,13 +1,14 @@
 package com.school.project.model.entities;
 
+import com.school.project.AbstractEntity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 
@@ -17,12 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbstractEntity {
 
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
@@ -38,15 +34,5 @@ public class User {
 
     @Column(name = "PHONE_NUMBER", nullable = false)
     private String phoneNumber;
-
-    @CreationTimestamp
-    @Column(name = "CREATED_DATE", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @UpdateTimestamp
-    @Column(name = "UPDATED_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
 
 }

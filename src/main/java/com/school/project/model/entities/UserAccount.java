@@ -1,14 +1,13 @@
 package com.school.project.model.entities;
 
+import com.school.project.AbstractEntity.AbstractEntity;
 import com.school.project.model.types.UserAccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Data
 @Entity
@@ -16,21 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USER_ACCOUNT")
-public class UserAccount {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserAccount extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-
-    @CreationTimestamp
-    @Column(name = "REGISTRATION_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate;
 
     @Column(name = "ACCOUNT_ROLE")
     @Enumerated(EnumType.STRING)
