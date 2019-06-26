@@ -46,7 +46,7 @@ public class SubjectControllerTest {
         //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
-        verify(subjectService).createSubject(new Subject(null, "QA"));
+        verify(subjectService).create(new Subject(null, "QA"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class SubjectControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        verify(subjectService, Mockito.times(1)).updateSubject(getSampleSubjectToUpdate(), 1L);
+        verify(subjectService, Mockito.times(1)).update(getSampleSubjectToUpdate(), 1L);
     }
 
     public Subject getSampleSubject() {

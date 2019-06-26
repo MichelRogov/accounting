@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface SubjectService {
 
-    Subject createSubject(Subject subject);
+    Subject create(Subject subject);
 
-    void updateSubject(Subject subject, Long id);
+    void update(Subject subject, Long id);
 
     Subject getSubjectById(Long id);
 
