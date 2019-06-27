@@ -56,7 +56,6 @@ public class LessonController {
 
     @GetMapping("/lessons/subject/{id}")
     public ResponseEntity<List<LessonDto>> getAllLessonsBySubject(@PathVariable long id) {
-        System.out.println(lessonService.getAllLessonsBySubject(id) + "subject ");
         return ResponseEntity.ok().body(lessonService.getAllLessonsBySubject(id)
                 .stream().map(s -> convertLessonToLessonDto(s)).collect(Collectors.toList()));
     }

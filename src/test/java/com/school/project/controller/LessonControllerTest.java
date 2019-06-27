@@ -38,6 +38,8 @@ public class LessonControllerTest {
 
     static Date date;
 
+    static Long time;
+
     private static String NEW_LESSON_JSON_STRING2;
 
     @MockBean
@@ -47,9 +49,12 @@ public class LessonControllerTest {
     }
 
     @BeforeClass
-    public static void beforeTest() {
+    public static void beforeTest() throws ParseException {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjects\":[{\"id\":2},{\"id\":3}],\"date\":\"2019-05-04T00:00:00.000+0000\",\"group\":{\"id\":3},\"teacher\":{\"id\":3}}";
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = format.parse("2019-05-04T00:00:00.000");
+        time = date.getTime();
     }
 
     @Test
@@ -66,7 +71,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.subjects[1].id").value(2))
                 .andExpect(jsonPath("$.subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.group.id").value(3))
                 .andExpect(jsonPath("$.group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.group.module.id").value(1))
@@ -113,7 +118,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -152,7 +157,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -201,7 +206,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -240,7 +245,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -288,7 +293,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -327,7 +332,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -364,6 +369,7 @@ public class LessonControllerTest {
 
     @Test
     public void testGetAllLessonsBySubject() throws Exception {
+        System.out.println(time + "vasea");
         when(lessonService.getAllLessonsBySubject(3L)).thenReturn(getListLessonsForTest());
         mvc.perform(get("/lessons/subject/" + 3)
                 .contentType(APPLICATION_JSON))
@@ -374,7 +380,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -413,7 +419,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].date").value("2019-05-04T00:00:00.000+0000"))
+                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -460,7 +466,7 @@ public class LessonControllerTest {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = format.parse("2019-05-04T00:00:00.000");
         verify(lessonService).createLesson(new Lesson(null, "Angular",
-                getListSubjectsForCreate(), date,
+                getListSubjectsForCreate(), null,
                 new Group(3L, null, null, null),
                 new User(3L, null, null, null, null, null, null, null)));
     }
@@ -472,7 +478,7 @@ public class LessonControllerTest {
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
-        verify(lessonService,times(1)).updateLesson(getLessonToUpdate(), 12L);
+        verify(lessonService, times(1)).updateLesson(getLessonToUpdate(), 12L);
     }
 
     private Lesson getTestLesson() throws Exception {
@@ -509,7 +515,7 @@ public class LessonControllerTest {
         return new Lesson(null,
                 "Angular",
                 getListSubjectsForCreate(),
-                date,
+                null,
                 new Group(3L, null, null, null),
                 new User(3L, null, null, null, null, null, null, null));
     }

@@ -32,9 +32,9 @@ public class Lesson {
     private List<Subject> subjects;
 
     @CreationTimestamp
+    @Column(name = "CREATED_DATE", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "LESSON_DATE", nullable = false)
-    private Date date;
+    private Date creationDate;
 
     @OneToOne
     @JoinColumn(name = "GROUP_ID", nullable = false)

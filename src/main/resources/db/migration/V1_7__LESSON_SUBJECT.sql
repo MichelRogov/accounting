@@ -3,6 +3,9 @@ alter table LESSON
 alter table LESSON
     drop COLUMN SUBJECT_ID;
 
+alter table LESSON
+    CHANGE LESSON_DATE CREATED_DATE datetime;
+
 create table LESSON_SUBJECT
 (
     LESSON_ID  bigint not null,
@@ -21,5 +24,5 @@ VALUES (1, 1),
        (4, 2),
        (3, 3),
        (4, 3),
-       (1,2),
-       (2,2);
+       (1, 2),
+       (2, 2);

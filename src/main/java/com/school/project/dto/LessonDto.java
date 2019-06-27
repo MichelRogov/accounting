@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.List;
 
 @Data
@@ -18,7 +19,8 @@ public class LessonDto {
 
     private List<SubjectDto> subjects;
 
-    private Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Long creationDate;
 
     private GroupDto group;
 

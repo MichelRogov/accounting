@@ -31,21 +31,21 @@ public class LessonServiceimpl implements LessonService {
     @Override
     public List<Lesson> getAllLessonsByGroup(Long id) {
         List<Lesson> lessonByGroupId = lessonRepository.getAllByGroupId(id);
-        validationResponseIsNotEmpty(lessonByGroupId,"Group",id);
+        validationResponseIsNotEmpty(lessonByGroupId, "Group", id);
         return lessonByGroupId;
     }
 
     @Override
     public List<Lesson> getAllLessonsByTeacher(Long id) {
         List<Lesson> lessonByTeacherId = lessonRepository.getAllByTeacherId(id);
-        validationResponseIsNotEmpty(lessonByTeacherId,"Teacher",id);
+        validationResponseIsNotEmpty(lessonByTeacherId, "Teacher", id);
         return lessonByTeacherId;
     }
 
     @Override
     public List<Lesson> getAllLessonsBySubject(Long id) {
         List<Lesson> lessonBySubjectId = lessonRepository.getAllBySubjectsId(id);
-        validationResponseIsNotEmpty(lessonBySubjectId,"Subject",id);
+        validationResponseIsNotEmpty(lessonBySubjectId, "Subject", id);
         return lessonBySubjectId;
     }
 
