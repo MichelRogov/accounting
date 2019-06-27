@@ -12,11 +12,11 @@ public interface LessonService {
 
     Lesson getLesson(Long id);
 
-    List<Lesson> getAllLessonByGroup(Long id);
+    List<Lesson> getAllLessonsByGroup(Long id);
 
-    List<Lesson> getAllLessonByTeacher(Long id);
+    List<Lesson> getAllLessonsByTeacher(Long id);
 
-    List<Lesson> getAllLessonBySubject(Long id);
+    List<Lesson> getAllLessonsBySubject(Long id);
 
     void updateLesson(Lesson lesson,Long id);
 

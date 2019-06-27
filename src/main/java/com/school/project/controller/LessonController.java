@@ -43,21 +43,21 @@ public class LessonController {
 
     @GetMapping("/lessons/group/{id}")
     public ResponseEntity<List<LessonDto>> getAllLessonsByGroup(@PathVariable long id) {
-        return ResponseEntity.ok().body(lessonService.getAllLessonByGroup(id)
+        return ResponseEntity.ok().body(lessonService.getAllLessonsByGroup(id)
                 .stream().map(s -> convertLessonToLessonDto(s)).collect(Collectors.toList()));
 
     }
 
     @GetMapping("/lessons/teacher/{id}")
     public ResponseEntity<List<LessonDto>> getAllLessonsByTeacher(@PathVariable long id) {
-        return ResponseEntity.ok().body(lessonService.getAllLessonByTeacher(id)
+        return ResponseEntity.ok().body(lessonService.getAllLessonsByTeacher(id)
                 .stream().map(s -> convertLessonToLessonDto(s)).collect(Collectors.toList()));
     }
 
     @GetMapping("/lessons/subject/{id}")
     public ResponseEntity<List<LessonDto>> getAllLessonsBySubject(@PathVariable long id) {
-        System.out.println(lessonService.getAllLessonBySubject(id) + "subject ");
-        return ResponseEntity.ok().body(lessonService.getAllLessonBySubject(id)
+        System.out.println(lessonService.getAllLessonsBySubject(id) + "subject ");
+        return ResponseEntity.ok().body(lessonService.getAllLessonsBySubject(id)
                 .stream().map(s -> convertLessonToLessonDto(s)).collect(Collectors.toList()));
     }
 

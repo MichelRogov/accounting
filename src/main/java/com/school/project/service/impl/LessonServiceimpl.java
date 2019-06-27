@@ -29,26 +29,23 @@ public class LessonServiceimpl implements LessonService {
     }
 
     @Override
-    public List<Lesson> getAllLessonByGroup(Long id) {
+    public List<Lesson> getAllLessonsByGroup(Long id) {
         List<Lesson> lessonByGroupId = lessonRepository.getAllByGroupId(id);
-        if (lessonByGroupId.isEmpty())
-            throw new LessonNotFoundException("Lesson with Group id : " + id + " is not found");
+        validationResponseIsNotEmpty(lessonByGroupId,"Group",id);
         return lessonByGroupId;
     }
 
     @Override
-    public List<Lesson> getAllLessonByTeacher(Long id) {
+    public List<Lesson> getAllLessonsByTeacher(Long id) {
         List<Lesson> lessonByTeacherId = lessonRepository.getAllByTeacherId(id);
-        if (lessonByTeacherId.isEmpty())
-            throw new LessonNotFoundException("Lessonw with Teacher id : " + id + " is not found");
+        validationResponseIsNotEmpty(lessonByTeacherId,"Teacher",id);
         return lessonByTeacherId;
     }
 
     @Override
-    public List<Lesson> getAllLessonBySubject(Long id) {
+    public List<Lesson> getAllLessonsBySubject(Long id) {
         List<Lesson> lessonBySubjectId = lessonRepository.getAllBySubjectsId(id);
-        if (lessonBySubjectId.isEmpty())
-            throw new LessonNotFoundException("Lessons with Subject id : " + id + " is not found");
+        validationResponseIsNotEmpty(lessonBySubjectId,"Subject",id);
         return lessonBySubjectId;
     }
 
@@ -62,4 +59,10 @@ public class LessonServiceimpl implements LessonService {
     public List<Lesson> getAllLessons() {
         return lessonRepository.findAll();
     }
+
+    public void validationResponseIsNotEmpty(List<Lesson> input, String name, Long id) {
+        if (input.isEmpty())
+            throw new LessonNotFoundException("Lessons with " + name + " id : " + id + " is not found");
+    }
 }
+

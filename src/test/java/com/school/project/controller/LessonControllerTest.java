@@ -6,7 +6,6 @@ import com.school.project.service.LessonService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -191,7 +190,7 @@ public class LessonControllerTest {
 
     @Test
     public void testGetAllLessonsByGroup() throws Exception {
-        when(lessonService.getAllLessonByGroup(3L)).thenReturn(getListLessonsForTest());
+        when(lessonService.getAllLessonsByGroup(3L)).thenReturn(getListLessonsForTest());
         mvc.perform(get("/lessons/group/" + 3)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -278,7 +277,7 @@ public class LessonControllerTest {
 
     @Test
     public void testGetAllLessonsByTeacher() throws Exception {
-        when(lessonService.getAllLessonByTeacher(2L)).thenReturn(getListLessonsForTest());
+        when(lessonService.getAllLessonsByTeacher(2L)).thenReturn(getListLessonsForTest());
         mvc.perform(get("/lessons/teacher/" + 2)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -365,7 +364,7 @@ public class LessonControllerTest {
 
     @Test
     public void testGetAllLessonsBySubject() throws Exception {
-        when(lessonService.getAllLessonBySubject(3L)).thenReturn(getListLessonsForTest());
+        when(lessonService.getAllLessonsBySubject(3L)).thenReturn(getListLessonsForTest());
         mvc.perform(get("/lessons/subject/" + 3)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
