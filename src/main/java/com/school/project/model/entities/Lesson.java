@@ -1,6 +1,6 @@
 package com.school.project.model.entities;
 
-import com.school.project.AbstractEntity.AbstractEntity;
+import com.school.project.base.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class Lesson extends AbstractEntity {
 
     @Column(name = "THEMA", nullable = false)

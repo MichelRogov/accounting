@@ -19,4 +19,5 @@ public class GroupDto {
     private Module module;
 
     private List<User> users;
+
 }

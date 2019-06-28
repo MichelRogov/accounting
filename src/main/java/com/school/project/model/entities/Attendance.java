@@ -1,6 +1,6 @@
 package com.school.project.model.entities;
 
-import com.school.project.AbstractEntity.AbstractBaseEntity;
+import com.school.project.base.AbstractBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +19,7 @@ public class Attendance extends AbstractBaseEntity {
     @OneToOne
     @JoinColumn(name = "LESSON_ID", nullable = false)
     private Lesson lesson;
+
     @OneToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
