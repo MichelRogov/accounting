@@ -61,11 +61,11 @@ public class UserControllerTest {
         //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
-        verify(userService).create(new User(null, "Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678", null, null));
+        verify(userService).create(new User("Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678"));
     }
 
     private User getSampleUser() {
-        return new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date());
+        return new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300");
     }
 
     private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
