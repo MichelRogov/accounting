@@ -3,8 +3,6 @@ alter table LESSON
 alter table LESSON
     drop COLUMN SUBJECT_ID;
 
-alter table LESSON
-    CHANGE LESSON_DATE CREATED_DATE datetime;
 
 create table LESSON_SUBJECT
 (

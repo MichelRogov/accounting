@@ -45,9 +45,6 @@ public class LessonControllerTest {
     @MockBean
     private LessonService lessonService;
 
-    public LessonControllerTest() throws Exception {
-    }
-
     @BeforeClass
     public static void beforeTest() throws ParseException {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
@@ -71,7 +68,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.subjects[1].id").value(2))
                 .andExpect(jsonPath("$.subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.group.id").value(3))
                 .andExpect(jsonPath("$.group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.group.module.id").value(1))
@@ -118,7 +115,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[0].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -157,7 +154,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[1].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -206,7 +203,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[0].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -245,7 +242,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[1].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -293,7 +290,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[0].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -332,7 +329,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[1].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -374,13 +371,14 @@ public class LessonControllerTest {
         mvc.perform(get("/lessons/subject/" + 3)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(jsonPath("$.[0].id").value(12))
                 .andExpect(jsonPath("$.[0].thema").value("JS"))
                 .andExpect(jsonPath("$.[0].subjects[0].id").value(3))
                 .andExpect(jsonPath("$.[0].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[0].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[0].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[0].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[0].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[0].group.id").value(3))
                 .andExpect(jsonPath("$.[0].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[0].group.module.id").value(1))
@@ -419,7 +417,7 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].subjects[0].name").value("QA"))
                 .andExpect(jsonPath("$.[1].subjects[1].id").value(2))
                 .andExpect(jsonPath("$.[1].subjects[1].name").value("FRONTEND"))
-                .andExpect(jsonPath("$.[1].creationDate").value(time.longValue()))
+                .andExpect(jsonPath("$.[1].createdDate").value(time.longValue()))
                 .andExpect(jsonPath("$.[1].group.id").value(3))
                 .andExpect(jsonPath("$.[1].group.startDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].group.module.id").value(1))
@@ -465,10 +463,10 @@ public class LessonControllerTest {
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = format.parse("2019-05-04T00:00:00.000");
-        verify(lessonService).createLesson(new Lesson(null, "Angular",
-                getListSubjectsForCreate(), null,
-                new Group(3L, null, null, null),
-                new User(3L, null, null, null, null, null, null, null)));
+        verify(lessonService).createLesson(new Lesson("Angular",
+                getListSubjectsForCreate(),
+                new Group(null, null, null),
+                new User(null, null, null, null, null)));
     }
 
     @Test
@@ -485,12 +483,16 @@ public class LessonControllerTest {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
 
-        return new Lesson(12L,
+        Lesson lesson = new Lesson(
                 "Angular",
                 getListSubjects(),
-                date,
-                new Group(3L, date, new Module(1L, "Basic_Java", 70, getListSubjects(), 300.00), getListUsers()),
+                getGroupForTest(),
                 getTeacherForTest());
+        lesson.setId(12L);
+        lesson.setCreatedDate(date);
+        lesson.setUpdatedDate(date);
+
+        return lesson;
     }
 
 
@@ -498,12 +500,11 @@ public class LessonControllerTest {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
 
-        return new Lesson(null,
+        return new Lesson(
                 "Angular",
                 getListSubjectsForCreate(),
-                null,
-                new Group(3L, null, null, null),
-                new User(3L, null, null, null, null, null, null, null));
+                new Group(null, null, null),
+                new User(null, null, null, null, null));
     }
 
 
@@ -512,50 +513,49 @@ public class LessonControllerTest {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
 
-        return new Lesson(null,
+        return new Lesson(
                 "Angular",
                 getListSubjectsForCreate(),
-                null,
-                new Group(3L, null, null, null),
-                new User(3L, null, null, null, null, null, null, null));
+                new Group(null, null, null),
+                new User(null, null, null, null, null));
     }
 
     private List<Lesson> getListLessonsForTest() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
         List<Lesson> listToTest = new ArrayList<>();
-        Lesson l1 = new Lesson(12L,
+        Lesson l1 = new Lesson(
                 "JS",
                 getListSubjects(),
-                date,
-                new Group(3L, date,
-                        new Module(1L, "Basic_Java", 70, getListSubjects(), 300.00),
-                        getListUsers()),
+                getGroupForTest(),
                 getTeacherForTest());
-        Lesson l2 = new Lesson(11L,
+        l1.setId(12L);
+        l1.setCreatedDate(date);
+        Lesson l2 = new Lesson(
                 "Angular",
                 getListSubjects(),
-                date,
-                new Group(3L, date,
-                        new Module(1L, "Basic_Java", 70, getListSubjects(), 300.00),
-                        getListUsers()),
+                getGroupForTest(),
                 getTeacherForTest());
+        l2.setId(11L);
+        l2.setCreatedDate(date);
         Collections.addAll(listToTest, l1, l2);
         return listToTest;
     }
 
     private List<Subject> getListSubjects() {
         List<Subject> subjects = new ArrayList<>();
-        Subject sb1 = new Subject(3L, "QA");
-        Subject sb2 = new Subject(2L, "FRONTEND");
+        Subject sb1 = new Subject("QA");
+        sb1.setId(3L);
+        Subject sb2 = new Subject("FRONTEND");
+        sb2.setId(2L);
         Collections.addAll(subjects, sb1, sb2);
         return subjects;
     }
 
     private List<Subject> getListSubjectsForCreate() {
         List<Subject> subjects = new ArrayList<>();
-        Subject sb1 = new Subject(2L, null);
-        Subject sb2 = new Subject(3L, null);
+        Subject sb1 = new Subject(null);
+        Subject sb2 = new Subject(null);
         Collections.addAll(subjects, sb1, sb2);
         return subjects;
     }
@@ -564,9 +564,15 @@ public class LessonControllerTest {
     private List<User> getListUsers() throws ParseException {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-        User us1 = new User(1L, "Sergey", "Petrov", date, "petrov@email.com", "12345678", date, date);
-        User us2 = new User(2L, "Iurii", "Vasiliev", date, "vasiliev@email.com", "12345678", date, date);
+        User us1 = new User("Sergey", "Petrov", date, "petrov@email.com", "12345678");
+        User us2 = new User("Iurii", "Vasiliev", date, "vasiliev@email.com", "12345678");
         List<User> listUsers = new ArrayList<>();
+        us1.setId(1L);
+        us1.setCreatedDate(date);
+        us1.setUpdatedDate(date);
+        us2.setId(2L);
+        us2.setCreatedDate(date);
+        us2.setUpdatedDate(date);
         Collections.addAll(listUsers, us1, us2);
         return listUsers;
     }
@@ -574,6 +580,22 @@ public class LessonControllerTest {
     private User getTeacherForTest() throws ParseException {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-        return new User(3L, "Niko", "Teacher", date, "teacher@email.com", "12345678", date, date);
+        User teacher = new User("Niko", "Teacher", date, "teacher@email.com", "12345678");
+        teacher.setId(3L);
+        return teacher;
+    }
+
+    private Group getGroupForTest() throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        date = format.parse("2019-05-04");
+        Group group = new Group(getModuleForTest(), date, getListUsers());
+        group.setId(3L);
+        return group;
+    }
+
+    private Module getModuleForTest() {
+        Module module = new Module("Basic_Java", 70, getListSubjects(), 300.00);
+        module.setId(1L);
+        return module;
     }
 }

@@ -17,7 +17,7 @@ public class LessonDto {
 
     private List<SubjectDto> subjects;
 
-    private Long creationDate;
+    private Long createdDate;
 
     private GroupDto group;
 
