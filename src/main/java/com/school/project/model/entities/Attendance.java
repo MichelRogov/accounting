@@ -1,5 +1,6 @@
 package com.school.project.model.entities;
 
+import com.school.project.base.AbstractBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,16 +14,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Attendance {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Attendance extends AbstractBaseEntity {
 
     @OneToOne
     @JoinColumn(name = "LESSON_ID", nullable = false)
     private Lesson lesson;
+
     @OneToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;

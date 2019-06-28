@@ -51,7 +51,7 @@ public class UserControllerTest {
         //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
-        verify(userService).create(new User(null, "Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678", null, null));
+        verify(userService).create(new User("Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678"));
     }
 
     @Test
@@ -96,21 +96,25 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.[1].lastName").value("pupkin"))
                 .andExpect(jsonPath("$.[1].email").value("ivan@example.com"))
                 .andExpect(jsonPath("$.[1].phoneNumber").value("+380501413552"));
+        //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        //Date date = format.parse("2019-05-04T00:00:00");
+        //dates are a bit tricky, lets omit them for now
+        verify(userService, Mockito.times(1)).getAllUsers();
     }
 
     private User getSampleUser() {
-        return new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date());
+        return new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300");
     }
 
     private User getSampleUserToUpdate() {
-        return new User(null, "Alex", "Pupkin",null, "alex_@mail.ru", "+380504332211", null, null);
+        return new User("Alex", "Pupkin",null, "alex_@mail.ru", "+380504332211");
     }
 
     private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Alex\",\"lastName\":\"Pupkin\",\"email\":\"alex_@mail.ru\",\"phoneNumber\":\"+380504332211\"}";
 
     private List<User> getSampleUserList() {
-        List<User> users = Arrays.asList(new User(1L, "sergey", "lukichev", new Date(), "sergey@example.com", "+49333300", new Date(), new Date()),
-                new User(2L, "ivan", "pupkin", new Date(), "ivan@example.com", "+380501413552", new Date(), new Date()));
+        List<User> users = Arrays.asList(new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300"),
+                new User("ivan", "pupkin", new Date(), "ivan@example.com", "+380501413552"));
         return users;
     }
 
