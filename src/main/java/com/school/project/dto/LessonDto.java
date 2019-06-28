@@ -19,7 +19,6 @@ public class LessonDto {
 
     private List<SubjectDto> subjects;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Long creationDate;
 
     private GroupDto group;
