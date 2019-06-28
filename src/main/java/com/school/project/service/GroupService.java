@@ -11,4 +11,5 @@ public interface GroupService {
     Group getGroupById(Long id);
 
     List<Group> getAllGroups();
+
 }

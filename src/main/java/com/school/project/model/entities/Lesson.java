@@ -1,5 +1,6 @@
 package com.school.project.model.entities;
 
+import com.school.project.base.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Lesson {
+public class Lesson extends AbstractEntity{
 
     @Id
     @Column(name = "ID")

@@ -22,12 +22,12 @@ public class GroupController {
     private GroupService groupService;
 
     @PostMapping("/group")
-    public Group createGroup(@RequestBody GroupDto groupDto){
+    public Group createGroup(@RequestBody GroupDto groupDto) {
         return groupService.create(convertGroupDtoToGroup(groupDto));
     }
 
     @GetMapping("/group/{id}")
-    public ResponseEntity<GroupDto> getGroupByID(@PathVariable long id){
+    public ResponseEntity<GroupDto> getGroupByID(@PathVariable long id) {
         return ResponseEntity.ok()
                 .body(convertGroupToGroupDto(groupService.getGroupById(id)));
     }
@@ -39,11 +39,11 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    private Group convertGroupDtoToGroup(GroupDto groupDto){
+    private Group convertGroupDtoToGroup(GroupDto groupDto) {
         return modelMapper.map(groupDto, Group.class);
     }
 
-    private GroupDto convertGroupToGroupDto(Group group){
+    private GroupDto convertGroupToGroupDto(Group group) {
         return modelMapper.map(group, GroupDto.class);
     }
 }
