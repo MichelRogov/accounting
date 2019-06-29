@@ -48,7 +48,7 @@ public class LessonControllerTest {
     @BeforeClass
     public static void beforeTest() throws ParseException {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjects\":[{\"id\":2},{\"id\":3}],\"date\":\"2019-05-04T00:00:00.000+0000\",\"group\":{\"id\":3},\"teacher\":{\"id\":3}}";
+        NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjects\":[{\"id\":2},{\"id\":3}],\"group\":{\"id\":3},\"teacher\":{\"id\":3}}";
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = format.parse("2019-05-04T00:00:00.000");
         time = date.getTime();
