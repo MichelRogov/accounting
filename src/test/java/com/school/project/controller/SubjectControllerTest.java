@@ -62,7 +62,7 @@ public class SubjectControllerTest {
     }
 
     @Test
-    public void getAllSubjects() throws Exception {
+    public void testGetAllSubjects() throws Exception {
         when(subjectService.getAllSubjects()).thenReturn(getSampleSubjectList());
 
         mvc.perform(get("/subjects")
