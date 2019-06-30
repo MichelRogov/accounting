@@ -98,9 +98,9 @@ public class SubjectControllerTest {
         return subjects;
     }
     private static String NEW_SUBJECT_FOR_UPDATE_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
+
     private Subject getSampleSubjectToUpdate() {
         return new Subject("QA");
     }
-
 
 }
