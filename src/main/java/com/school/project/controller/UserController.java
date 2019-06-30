@@ -2,7 +2,6 @@ package com.school.project.controller;
 
 import com.school.project.dto.UserDto;
 import com.school.project.model.entities.User;
-import com.school.project.repository.UserRepository;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +14,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping
 public class UserController {
+
     @Autowired
     ModelMapper modelMapper;
+
     @Autowired
     UserService userService;
-    @Autowired
-    UserRepository userRepository;
 
     @PostMapping("/users")
     public void createUser(@RequestBody UserDto userDto) {
-
         userService.create(convertUserDtoToUser(userDto));
     }
 
@@ -36,16 +34,16 @@ public class UserController {
 
     @GetMapping("/users")
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream()
+        return userService.getAllUsers()
+                .stream()
                 .map(s -> convertUserToUserDto(s))
                 .collect(Collectors.toList());
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto useDto, @PathVariable Long id) {
-        userService.update(useDto, id);
-        return ResponseEntity.ok()
-                .body(convertUserToUserDto(userService.getUserById(id)));
+    public ResponseEntity updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
+        userService.update(convertUserDtoToUser(userDto), id);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/users/{id}")

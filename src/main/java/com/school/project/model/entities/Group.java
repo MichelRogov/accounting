@@ -1,5 +1,6 @@
 package com.school.project.model.entities;
 
+import com.school.project.base.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,20 +14,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Group {
-
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "START_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate;
+public class Group extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "MODULE_ID", nullable = false)
     private Module module;
+
+    @Column(name = "START_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
 
     @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinTable(name = "GROUP_USER", joinColumns = {@JoinColumn(name = "GROUP_ID")},
