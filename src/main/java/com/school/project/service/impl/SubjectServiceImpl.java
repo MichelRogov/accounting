@@ -25,10 +25,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void update(Subject subject, Long id) {
-        Subject subjectById = getSubjectById(id);
-        subjectById.setId(subject.getId());
-        subjectById.setName(subject.getName());
-        subjectRepository.saveAndFlush(subjectById);
+        subject.setId(getSubjectById(id).getId());
+        subjectRepository.saveAndFlush(subject);
     }
 
     @Override

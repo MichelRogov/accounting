@@ -22,8 +22,11 @@ public class SubjectController {
     SubjectService subjectService;
 
     @PostMapping("/subject")
-    public void createSubject(@RequestBody SubjectDto subjectDto) {
-        subjectService.create(convertSubjectDtoToSubject(subjectDto));}
+    public ResponseEntity<SubjectDto> createSubject(@RequestBody SubjectDto subjectDto) {
+        return ResponseEntity.ok()
+                .body(convertSubjectToSubjectDto(subjectService
+                        .create(convertSubjectDtoToSubject(subjectDto))));
+    }
 
     @GetMapping("/subject/{id}")
     public ResponseEntity<SubjectDto> getSubjectById(@PathVariable long id) {

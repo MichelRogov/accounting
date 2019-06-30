@@ -94,13 +94,10 @@ public class SubjectControllerTest {
     private static String NEW_SUBJECT_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
 
     private List<Subject> getSampleSubjectList(){
-        List<Subject> subjects = Arrays.asList(new Subject(1L, "QA") ,
-                new Subject(2L, "Frontend"));
+        List<Subject> subjects = Arrays.asList(new Subject(1L, "QA"), new Subject(2L, "Frontend"));
         return subjects;
     }
-
     private static String NEW_SUBJECT_FOR_UPDATE_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
-
     private Subject getSampleSubjectToUpdate() {
         return new Subject(null, "QA");
     }
