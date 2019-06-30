@@ -46,7 +46,7 @@ public class SubjectControllerTest {
         //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
-        verify(subjectService).create(new Subject(null, "QA"));
+        verify(subjectService).create(new Subject("QA"));
     }
 
     @Test
@@ -88,18 +88,18 @@ public class SubjectControllerTest {
     }
 
     public Subject getSampleSubject() {
-        return new Subject(1L, "QA");
+        return new Subject("QA");
     }
 
     private static String NEW_SUBJECT_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
 
     private List<Subject> getSampleSubjectList(){
-        List<Subject> subjects = Arrays.asList(new Subject(1L, "QA"), new Subject(2L, "Frontend"));
+        List<Subject> subjects = Arrays.asList(new Subject("QA"), new Subject("Frontend"));
         return subjects;
     }
     private static String NEW_SUBJECT_FOR_UPDATE_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
     private Subject getSampleSubjectToUpdate() {
-        return new Subject(null, "QA");
+        return new Subject("QA");
     }
 
 
