@@ -38,6 +38,6 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<Subject> getAllSubjects() {
-        return subjectRepository.findAll().stream().collect(Collectors.toList());
+        return subjectRepository.findAll();
     }
 }

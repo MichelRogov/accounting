@@ -37,7 +37,7 @@ public class SubjectControllerTest {
     private SubjectService subjectService;
 
     @Test
-    public void createNewSubject() throws Exception {
+    public void testCreateNewSubject() throws Exception {
         mvc.perform(post("/subject")
                 .content(NEW_SUBJECT_JSON_STRING)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -50,7 +50,7 @@ public class SubjectControllerTest {
     }
 
     @Test
-    public void getSubjectByID() throws Exception {
+    public void testGetSubjectByID() throws Exception {
         when(subjectService.getSubjectById(1L)).thenReturn(getSampleSubject());
 
         mvc.perform(get("/subject/" + 1)
@@ -76,7 +76,7 @@ public class SubjectControllerTest {
     }
 
     @Test
-    public void updateSubject() throws Exception {
+    public void testUpdateSubject() throws Exception {
 
         mvc.perform(put("/subjects/" + 1)
                 .content(NEW_SUBJECT_FOR_UPDATE_JSON_STRING)
