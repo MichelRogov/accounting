@@ -54,6 +54,7 @@ public class UserControllerTest {
         //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
+        //ggg
         verify(userService).create(new User("Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678"));
     }
 
