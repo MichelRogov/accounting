@@ -2,13 +2,11 @@ package com.school.project.controller;
 
 import com.school.project.dto.SubjectDto;
 import com.school.project.model.entities.Subject;
-import com.school.project.model.entities.User;
 import com.school.project.repository.SubjectRepository;
-import com.school.project.repository.UserRepository;
 import com.school.project.service.SubjectService;
-import com.school.project.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,14 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,7 +52,7 @@ public class SubjectControllerTest {
     @Test
     public void testGetSubjectById2() throws Exception {
         when(subjectService.getSubjectById(2L))
-                .thenReturn(new Subject(2L, "FRONTEND"));
+                .thenReturn(new Subject( "FRONTEND"));
 
         mvc.perform(get("/subjects/" + 2)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -74,7 +67,7 @@ public class SubjectControllerTest {
     @Test
     public void testGetSubjectById() throws Exception {
         when(subjectService.getSubjectById(1L))
-                .thenReturn(new Subject(1L, "BACKEND"));
+                .thenReturn(new Subject("BACKEND"));
 
         mvc.perform(get("/subjects/" + 1)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -86,7 +79,4 @@ public class SubjectControllerTest {
         //check for all fields returned by the call
     }
 
-
-
 }
-

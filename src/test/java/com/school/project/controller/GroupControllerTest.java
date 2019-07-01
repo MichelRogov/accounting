@@ -21,9 +21,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /*
  * Unit test with dependency mocked.
@@ -62,12 +61,12 @@ public class GroupControllerTest {
         //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
-        verify(groupService).create(new Group(null, null, new Module(null, "Java-Advance", 400, null, 700.0),null));
+        verify(groupService).create(new Group(new Module("Java-Advance", 400, null, 700.0), null, null));
     }
 
     private Group getSampleGroup() {
-        Module module = new Module(null,"Java-Basic",100,null,500.0);
-        return new Group(6L,  new Date(), module,null);
+        Module module = new Module("Java-Basic", 100, null, 500.0);
+        return new Group(module, null, null);
     }
 
     private static String NEW_GROUP_JSON_STRING = "{\"module\":{\"name\":\"Java-Advance\",\"hours\":\"400\",\"price\":\"700\"}}";

@@ -45,7 +45,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         Optional<User> byId = userRepository.findById(id);
-        if (!byId.isPresent()) throw new UserNotFoundException("User with id :" + id + "is not found");
+        if (!byId.isPresent()) throw new UserNotFoundException("User with id : " + id + " is not found");
+        return byId.get();
+    }
+
+    @Override
+    public User getUserByIdParam(Long id) {
+        Optional<User> byId = userRepository.findById(id);
+        if (!byId.isPresent()) throw new UserNotFoundException("User with id : " + id + " is not found");
+        return byId.get();
+    }
+
+    @Override
+    public User getUserByLastName(String lastName) {
+        Optional<User> byId = userRepository.findAll().stream().filter( user -> user.getLastName().equalsIgnoreCase(lastName) ).findFirst();
+        if (!byId.isPresent()) throw new UserNotFoundException("User with lastname : " + lastName + " is not found");
         return byId.get();
     }
 
