@@ -3,6 +3,7 @@ package com.school.project.controller;
 import com.school.project.dto.GroupDto;
 import com.school.project.model.entities.Group;
 import com.school.project.service.GroupService;
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +23,18 @@ public class GroupController {
     private GroupService groupService;
 
     @PostMapping("/group")
-    public ResponseEntity <Group> createGroup(@RequestBody GroupDto groupDto){
+    public ResponseEntity<GroupDto> createGroup(@RequestBody GroupDto groupDto) {
         return ResponseEntity.ok()
-                .body(groupService.createUpdate(convertGroupDtoToGroup(groupDto)));
+                .body(convertGroupToGroupDto(groupService.createUpdate(convertGroupDtoToGroup(groupDto))));
     }
 
     @PutMapping("/group/{groupId}/add/{userId}")
-    public void addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId){
+    public void addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId) throws NotFoundException {
         ResponseEntity.ok().body(convertGroupToGroupDto(groupService.addUser(groupId, userId)));
     }
 
     @GetMapping("/group/{id}")
-    public ResponseEntity<GroupDto> getGroupById(@PathVariable Long id){
+    public ResponseEntity<GroupDto> getGroupById(@PathVariable Long id) throws NotFoundException {
         return ResponseEntity.ok()
                 .body(convertGroupToGroupDto(groupService.getById(id)));
     }
@@ -45,13 +46,13 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    private Group convertGroupDtoToGroup(GroupDto groupDto){
+    private Group convertGroupDtoToGroup(GroupDto groupDto) {
 
         return modelMapper.map(groupDto, Group.class);
     }
 
 
-    private GroupDto convertGroupToGroupDto(Group group){
+    private GroupDto convertGroupToGroupDto(Group group) {
 
         return modelMapper.map(group, GroupDto.class);
     }
