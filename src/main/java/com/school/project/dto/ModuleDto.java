@@ -10,6 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ModuleDto {
 
+    Long id;
+
     private String name;
 
     private Integer hours;
