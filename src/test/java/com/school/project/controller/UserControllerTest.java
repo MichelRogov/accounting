@@ -89,7 +89,7 @@ public class UserControllerTest {
         when(userService.getAllUsers()).thenReturn(getSampleUserList());
 
         mvc.perform(get("/users")
-        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].firstName").value("sergey"))
@@ -115,8 +115,8 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
-                //.andExpect(jsonPath("$.firstName").value("Tanya"))
-                //.andExpect(jsonPath("$.lastName").value("Pawlova"));;
+        //.andExpect(jsonPath("$.firstName").value("Tanya"))
+        //.andExpect(jsonPath("$.lastName").value("Pawlova"));;
         //verify(userService).update( getUpdatedUser(), 1L);
         // when(userService.update(user, 9L )).thenReturn(getUpdatedUser())
         verify(userService, Mockito.times(1)).update(getUpdatedUser(), 1L);
@@ -131,11 +131,11 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].firstName").value("Ivan"))
                 .andExpect(jsonPath("$.[0].lastName").value("Ivanov"))
-            .andExpect(jsonPath("$.[1].firstName").value("Nikolay"))
+                .andExpect(jsonPath("$.[1].firstName").value("Nikolay"))
                 .andExpect(jsonPath("$.[1].lastName").value("Nikolayev"))
                 .andExpect(jsonPath("$.[3].firstName").value("Mark"))
                 .andExpect(jsonPath("$.[3].lastName").value("Markov"))
-            .andExpect(jsonPath("$.[2].firstName").value("Stas"))
+                .andExpect(jsonPath("$.[2].firstName").value("Stas"))
                 .andExpect(jsonPath("$.[2].lastName").value("Stasov"));
 
     }
@@ -148,7 +148,7 @@ public class UserControllerTest {
         userList.add(new User( "Nikolay", "Nikolayev", new Date(), "nikolay@mail.ru", "+17612345679"));
         userList.add(new User( "Stas", "Stasov", new Date(), "stas@mail.ru", "+49333300"));
         userList.add(new User( "Mark", "Markov", new Date(), "mark@mail.ru", "+49333300"));
-return userList;
+        return userList;
     }
 
     private User getUpdatedUser() {
@@ -175,3 +175,4 @@ return userList;
     private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\", \"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
     private static String UPDATE_USER_JSON_STRING = "{\"firstName\":\"Tanya\", \"lastName\":\"Pawlova\", \"birthDate\":\"0\", \"email\":\"ivan@mail.ru\",\"phoneNumber\":\"178912\"}";
 }
+
