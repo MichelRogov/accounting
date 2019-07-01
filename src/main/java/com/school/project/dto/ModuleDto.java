@@ -4,19 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupDto {
+public class ModuleDto {
 
-    private Long id;
+    private String name;
 
-    private Date startDate;
+    private Integer hours;
 
-    private Long moduleId;
-
-    private List<UserDto> users;
+    private List<SubjectDto> subjects;
 }
