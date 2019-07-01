@@ -2,6 +2,8 @@ package com.school.project.controller;
 
 import com.school.project.dto.UserDto;
 import com.school.project.model.entities.User;
+import com.school.project.model.types.UserAccountType;
+import com.school.project.service.UserAccountService;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,20 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserAccountService userAccountService;
+
     @PostMapping("/users")
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.create(convertUserDtoToUser(userDto));
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok()
+                .body(convertUserToUserDto(userService
+                        .create(convertUserDtoToUser(userDto))));
+    }
+
+    @PutMapping("/users/userAccount/{id}")
+    public ResponseEntity updateUserAccountType(@PathVariable long id, @RequestBody UserAccountType userAccountType){
+        userAccountService.getUserAccountById(id).setAccountRole(userAccountType);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/users/{id}")

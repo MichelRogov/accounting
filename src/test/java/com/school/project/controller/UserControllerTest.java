@@ -42,7 +42,7 @@ public class UserControllerTest {
 
     @Test
     public void testCreateNewUser() throws Exception {
-
+        when(userService.create(getSampleUserToUpdate())).thenReturn(getSampleUserToUpdate());
         mvc.perform(post("/users")
                 .content(NEW_USER_JSON_STRING)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -107,10 +107,10 @@ public class UserControllerTest {
     }
 
     private User getSampleUserToUpdate() {
-        return new User("Alex", "Pupkin",null, "alex_@mail.ru", "+380504332211");
+        return new User("Ivan", "Ivanov",null, "ivan_@mail.ru", "17612345678");
     }
 
-    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Alex\",\"lastName\":\"Pupkin\",\"email\":\"alex_@mail.ru\",\"phoneNumber\":\"+380504332211\"}";
+    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
     private List<User> getSampleUserList() {
         List<User> users = Arrays.asList(new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300"),
