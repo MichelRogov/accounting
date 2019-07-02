@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ModuleDto {
 
-    Long id;
+    private Long id;
 
     private String name;
 
