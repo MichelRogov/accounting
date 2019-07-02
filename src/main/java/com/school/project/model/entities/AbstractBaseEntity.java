@@ -1,4 +1,4 @@
-package com.school.project.base;
+package com.school.project.model.entities;
 
 import lombok.AccessLevel;
 import lombok.Getter;

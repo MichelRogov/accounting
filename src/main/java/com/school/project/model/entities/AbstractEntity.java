@@ -1,5 +1,6 @@
-package com.school.project.base;
+package com.school.project.model.entities;
 
+import com.school.project.model.entities.AbstractBaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
