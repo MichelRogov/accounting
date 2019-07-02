@@ -17,4 +17,6 @@ public class ModuleDto {
     private Integer hours;
 
     private List<SubjectDto> subjects;
+
+    private Double price;
 }
