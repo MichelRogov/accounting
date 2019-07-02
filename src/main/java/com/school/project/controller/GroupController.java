@@ -3,7 +3,6 @@ package com.school.project.controller;
 import com.school.project.dto.GroupDto;
 import com.school.project.model.entities.Group;
 import com.school.project.service.GroupService;
-import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +28,13 @@ public class GroupController {
     }
 
     @PutMapping("/group/{groupId}/add/{userId}")
-    public void addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId) throws NotFoundException {
-        ResponseEntity.ok().body(convertGroupToGroupDto(groupService.addUser(groupId, userId)));
+    public void addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId) {
+        groupService.addUser(groupId,userId);
+        ResponseEntity.ok().build();
     }
 
     @GetMapping("/group/{id}")
-    public ResponseEntity<GroupDto> getGroupById(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<GroupDto> getGroupById(@PathVariable Long id) {
         return ResponseEntity.ok()
                 .body(convertGroupToGroupDto(groupService.getById(id)));
     }
@@ -47,13 +47,11 @@ public class GroupController {
     }
 
     private Group convertGroupDtoToGroup(GroupDto groupDto) {
-
         return modelMapper.map(groupDto, Group.class);
     }
 
 
     private GroupDto convertGroupToGroupDto(Group group) {
-
         return modelMapper.map(group, GroupDto.class);
     }
 }

@@ -1,11 +1,12 @@
 package com.school.project.service.impl;
 
+import com.school.project.exception.GroupNotFoundException;
 import com.school.project.model.entities.Group;
 import com.school.project.model.entities.User;
 import com.school.project.repository.GroupRepository;
 import com.school.project.repository.UserRepository;
 import com.school.project.service.GroupService;
-import javassist.NotFoundException;
+import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +22,20 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public Group createUpdate(Group group) {
-
         return groupRepository.save(group);
     }
 
     @Override
-    public Group getById(Long id) throws NotFoundException {
-
+    public Group getById(Long id) {
         Optional<Group> byId = groupRepository.findById(id);
-        validationFinderById(byId, "Group", id);
+        if (!byId.isPresent()) {
+            throw new GroupNotFoundException("Group with id " + id + " was not found");
+        }
         return byId.get();
     }
 
@@ -41,22 +45,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group addUser(Long groupId, Long userId) throws NotFoundException {
-
-        Optional<User> userById = userRepository.findById(userId);
-        validationFinderById(userById, "User", userId);
-
+    public Group addUser(Long groupId, Long userId) {
+        User userById = userService.getUserById(userId);
         Group group = getById(groupId);
         List<User> users = group.getUserList();
-        users.add(userById.get());
-
+        users.add(userById);
         return groupRepository.save(group);
-    }
-
-
-    public void validationFinderById(Optional optional, String name, Long id) throws NotFoundException {
-        if (!optional.isPresent())
-            throw new NotFoundException(name + "with id : " + id + " is not found");
     }
 
 }
