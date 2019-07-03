@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttendanceDto {
 
+    private Long id;
+
     private LessonDto lesson;
 
     private UserDto user;
