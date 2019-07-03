@@ -19,10 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -104,7 +108,6 @@ public class GroupControllerTest {
     private static String NEW_GROUP_JSON_STRING = "{\"id\":\"2\",\"startDate\":\"1556928000000\"}";
     private static String ADD_USER_TO_GROUP_JSON_STRING_ = "{\"id\":\"null\",\"startDate\":\"2019-11-01T00:00:00.000+0000\",\"userList\":\"[\"{\"id\":\"7\",\"firstName\":\"Misha\",\"lastName\":\"Mishin\",\"birthDate\":\"1980-05-05T00:00:00.000+0000\",\"email\":\"misha@mail.ru\",\"phoneNumber\":\"0491234567\",\"createDate\":\"2019-10-10T00:00:00.000+0000\", \"updateDate\":\"2019-10-11T00:00:00.000+0000\"}";
 
-
     private Group getRealTestGroup() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
@@ -114,7 +117,6 @@ public class GroupControllerTest {
 
         return group;
     }
-
 
     private Group getGroupWIthAddedUser() throws Exception {
         Date birthDate = format.parse("1980-05-05");
