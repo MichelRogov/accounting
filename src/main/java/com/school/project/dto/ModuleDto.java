@@ -10,9 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 public class ModuleDto {
 
+    private Long id;
+
     private String name;
 
     private Integer hours;
 
     private List<SubjectDto> subjects;
+
+    private Double price;
 }
