@@ -18,4 +18,5 @@ public class GroupDto {
     private Long moduleId;
 
     private List<UserDto> userList;
+
 }

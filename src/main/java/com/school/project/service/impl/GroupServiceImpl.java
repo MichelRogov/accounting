@@ -4,7 +4,6 @@ import com.school.project.exception.GroupNotFoundException;
 import com.school.project.model.entities.Group;
 import com.school.project.model.entities.User;
 import com.school.project.repository.GroupRepository;
-import com.school.project.repository.UserRepository;
 import com.school.project.service.GroupService;
 import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     GroupRepository groupRepository;
-
-    @Autowired
-    UserRepository userRepository;
 
     @Autowired
     UserService userService;

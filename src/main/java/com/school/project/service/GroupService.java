@@ -13,4 +13,5 @@ public interface GroupService {
     List<Group> getAll();
 
     Group addUser(Long groupId, Long userId);
+
 }

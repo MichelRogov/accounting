@@ -29,7 +29,7 @@ public class GroupController {
 
     @PutMapping("/group/{groupId}/add/{userId}")
     public void addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId) {
-        groupService.addUser(groupId,userId);
+        groupService.addUser(groupId, userId);
         ResponseEntity.ok().build();
     }
 
@@ -50,9 +50,8 @@ public class GroupController {
         return modelMapper.map(groupDto, Group.class);
     }
 
-
     private GroupDto convertGroupToGroupDto(Group group) {
         return modelMapper.map(group, GroupDto.class);
     }
-}
 
+}
