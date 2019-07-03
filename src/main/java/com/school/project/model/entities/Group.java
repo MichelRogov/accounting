@@ -27,6 +27,6 @@ public class Group extends AbstractEntity {
     @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinTable(name = "GROUP_USER", joinColumns = {@JoinColumn(name = "GROUP_ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID")})
-    private List<User> users;
+    private List<User> userList;
 
 }

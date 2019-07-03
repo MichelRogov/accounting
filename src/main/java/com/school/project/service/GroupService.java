@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface GroupService {
 
-    Group create(Group group);
+    Group createUpdate(Group group);
 
-    Group getGroupById(Long id);
+    Group getById(Long id);
 
-    List<Group> getAllGroups();
+    List<Group> getAll();
+
+    Group addUser(Long groupId, Long userId);
 
 }
