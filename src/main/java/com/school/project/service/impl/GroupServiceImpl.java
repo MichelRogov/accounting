@@ -2,8 +2,10 @@ package com.school.project.service.impl;
 
 import com.school.project.exception.GroupNotFoundException;
 import com.school.project.model.entities.Group;
+import com.school.project.model.entities.User;
 import com.school.project.repository.GroupRepository;
 import com.school.project.service.GroupService;
+import com.school.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +18,16 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     GroupRepository groupRepository;
 
+    @Autowired
+    UserService userService;
+
     @Override
-    public Group create(Group group) {
+    public Group createUpdate(Group group) {
         return groupRepository.save(group);
     }
 
     @Override
-    public Group getGroupById(Long id) {
+    public Group getById(Long id) {
         Optional<Group> byId = groupRepository.findById(id);
         if (!byId.isPresent()) {
             throw new GroupNotFoundException("Group with id " + id + " was not found");
@@ -31,8 +36,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> getAllGroups() {
+    public List<Group> getAll() {
         return groupRepository.findAll();
+    }
+
+    @Override
+    public Group addUser(Long groupId, Long userId) {
+        User userById = userService.getUserById(userId);
+        Group group = getById(groupId);
+        List<User> users = group.getUserList();
+        users.add(userById);
+        return groupRepository.save(group);
     }
 
 }
