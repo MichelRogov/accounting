@@ -34,4 +34,11 @@ public class UserAccountServiceImpl implements UserAccountService {
         return byId.get();
     }
 
+    @Override
+    public UserAccount getUserAccountByUserId(Long id) {
+        Optional<UserAccount> userAccountByUserId = userAccountRepository.getUserAccountByUserId(id);
+        if (!userAccountByUserId.isPresent()) throw new UserAccountNotFoundException("User account with id : " + id + " is not found");
+        return userAccountByUserId.get();
+    }
+
 }

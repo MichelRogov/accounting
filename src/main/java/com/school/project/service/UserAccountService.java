@@ -10,4 +10,6 @@ public interface UserAccountService {
 
     UserAccount getUserAccountById(Long id);
 
+    UserAccount getUserAccountByUserId(Long id);
+
 }

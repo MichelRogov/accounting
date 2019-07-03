@@ -33,10 +33,20 @@ public class UserController {
                         .create(convertUserDtoToUser(userDto))));
     }
 
-    @PutMapping("/users/userAccount/{id}")
-    public ResponseEntity updateUserAccountType(@PathVariable long id, @RequestBody UserAccountType userAccountType){
-        userAccountService.getUserAccountById(id).setAccountRole(userAccountType);
+    @PutMapping("/users/userAccounts/{id}")
+    public ResponseEntity updateUserAccountType(@PathVariable long id, @RequestBody int accountType){
+        userAccountService.getUserAccountByUserId(id).setAccountRole(chooseType(accountType));
         return ResponseEntity.ok().build();
+    }
+
+    private UserAccountType chooseType(int accountType){
+        if(accountType==1){
+            return UserAccountType.TEACHER;
+        }
+        if(accountType==2){
+            return UserAccountType.ADMIN;
+        }
+        return UserAccountType.STUDENT;
     }
 
     @GetMapping("/users/{id}")
