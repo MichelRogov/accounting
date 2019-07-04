@@ -23,7 +23,7 @@ public class Module extends AbstractBaseEntity {
     @Column(name = "HOURS", nullable = false)
     private Integer hours;
 
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Subject.class)
+    @ManyToMany(targetEntity = Subject.class)
     @JoinTable(name = "MODULE_SUBJECT", joinColumns = {@JoinColumn(name = "MODULE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SUBJECT_ID")})
     private List<Subject> subjects;
