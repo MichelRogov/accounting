@@ -1,6 +1,6 @@
 package com.school.project.model.entities;
 
-import com.school.project.base.AbstractEntity;
+import com.school.project.model.base.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
