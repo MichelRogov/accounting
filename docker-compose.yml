@@ -8,17 +8,18 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_ROOT_HOST=%
     restart: always
     ports:
       - "3306:3306"
-    network_mode: host
+   # network_mode: host
   app:
     container_name: accounting
     build: .
     ports:
       - "8099:8099"
-   # links:
-   #   - db
+    links:
+      - db
     environment:
       - MYSQL_DBHOST=db:3306
     restart: always
