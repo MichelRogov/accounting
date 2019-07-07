@@ -58,7 +58,7 @@ public class ModuleControllerTest {
     @Test
 
     public void testUpdateModule() throws Exception {
-        mvc.perform(put("/modules?id=" + 1L)
+        mvc.perform(put("/modules/" + 1L)
                 .content(NEW_MODULE_JSON_STRING)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -69,7 +69,7 @@ public class ModuleControllerTest {
     @Test
     public void testGetModuleById() throws Exception {
         when(moduleService.getModuleById(1L)).thenReturn(getTestModule());
-        mvc.perform(get("/modules?id=" + 1L)
+        mvc.perform(get("/modules/" + 1L)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -79,7 +79,7 @@ public class ModuleControllerTest {
     @Test
     public void testGetModuleByName() throws Exception {
         when(moduleService.getModuleByName("JAVA-3")).thenReturn(getTestModule());
-        mvc.perform(get("/modules/?name=" + "JAVA-3")
+        mvc.perform(get("/modules/names/" + "JAVA-3")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print())

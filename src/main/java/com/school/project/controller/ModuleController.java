@@ -27,18 +27,18 @@ public class ModuleController {
                 .createModule(convertModuleDtoToModule(moduleDto))));
     }
 
-    @PutMapping("/modules")
-    public void updateModule(@RequestBody ModuleDto moduleDto, @RequestParam("id") @PathVariable Long id) {
+    @PutMapping("/modules/{id}")
+    public void updateModule(@RequestBody ModuleDto moduleDto, @PathVariable Long id) {
         moduleService.updateModule(convertModuleDtoToModule(moduleDto), id);
     }
 
-    @GetMapping("/modules")
-    public ResponseEntity<ModuleDto> getModuleById(@RequestParam("id") @PathVariable long id) {
+    @GetMapping("/modules/{id}")
+    public ResponseEntity<ModuleDto> getModuleById(@PathVariable long id) {
         return ResponseEntity.ok().body(convertModuleToModuleDto(moduleService.getModuleById(id)));
     }
 
-    @GetMapping("/modules/")
-    public ResponseEntity<ModuleDto> getModuleByName(@RequestParam("name") @PathVariable String name) {
+    @GetMapping("/modules/names/{name}")
+    public ResponseEntity<ModuleDto> getModuleByName(@PathVariable String name) {
         return ResponseEntity.ok().body(convertModuleToModuleDto(moduleService.getModuleByName(name)));
     }
 

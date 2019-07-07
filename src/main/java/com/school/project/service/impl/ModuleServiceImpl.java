@@ -30,15 +30,14 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public Module getModuleById(Long id) {
         Optional<Module> byId = moduleRepository.findById(id);
-        if (!byId.isPresent()) throw new ModuleNotFoundeException("Module with id : " + id + "is not found");
+        validateResponseIsPresent(byId, id);
         return byId.get();
     }
 
     @Override
     public Module getModuleByName(String name) {
         Optional<Module> moduleByName = moduleRepository.getModuleByName(name);
-        if (!moduleByName.isPresent())
-            throw new ModuleNotFoundeException("Module with name : " + name + " is not found");
+        validateResponseIsPresent(moduleByName, name);
         return moduleByName.get();
     }
 
@@ -48,5 +47,12 @@ public class ModuleServiceImpl implements ModuleService {
         if (moduleBySubjects.isEmpty())
             throw new ModuleNotFoundeException("Modules with Subject Id : " + id + " is not found");
         return moduleBySubjects;
+    }
+
+    public void validateResponseIsPresent(Optional<Module> module, Object object) {
+        String identifier = object instanceof String ? "name" : "id";
+
+        if (!module.isPresent())
+            throw new ModuleNotFoundeException("Module with " + identifier + " " + object + " is not found");
     }
 }
