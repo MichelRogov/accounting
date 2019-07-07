@@ -1,6 +1,6 @@
 package com.school.project.model.entities;
 
-import com.school.project.base.AbstractEntity;
+import com.school.project.model.AbstractEntity;
 import com.school.project.model.types.UserAccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
