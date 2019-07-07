@@ -12,5 +12,5 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
 
     Optional<Module> getModuleByName(String name);
 
-    List<Module> getModuleBySubjectsId(Long id);
+    Optional<List<Module>> getModuleBySubjectsId(Long id);
 }

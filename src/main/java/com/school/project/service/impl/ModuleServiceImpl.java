@@ -30,29 +30,26 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public Module getModuleById(Long id) {
         Optional<Module> byId = moduleRepository.findById(id);
-        validateResponseIsPresent(byId, id);
+        validateResponseIsPresent(byId, "id :");
         return byId.get();
     }
 
     @Override
     public Module getModuleByName(String name) {
         Optional<Module> moduleByName = moduleRepository.getModuleByName(name);
-        validateResponseIsPresent(moduleByName, name);
+        validateResponseIsPresent(moduleByName, " name :");
         return moduleByName.get();
     }
 
     @Override
     public List<Module> getModuleBySubject(Long id) {
-        List<Module> moduleBySubjects = moduleRepository.getModuleBySubjectsId(id);
-        if (moduleBySubjects.isEmpty())
-            throw new ModuleNotFoundeException("Modules with Subject Id : " + id + " is not found");
-        return moduleBySubjects;
+        Optional<List<Module>> moduleBySubjects = moduleRepository.getModuleBySubjectsId(id);
+        validateResponseIsPresent(moduleBySubjects,"Subject id :");
+        return moduleBySubjects.get();
     }
 
-    public void validateResponseIsPresent(Optional<Module> module, Object object) {
-        String identifier = object instanceof String ? "name" : "id";
-
+    public void validateResponseIsPresent(Optional<?> module, String field) {
         if (!module.isPresent())
-            throw new ModuleNotFoundeException("Module with " + identifier + " " + object + " is not found");
+            throw new ModuleNotFoundeException("Module with " + field + " is not found");
     }
 }
