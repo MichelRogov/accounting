@@ -48,7 +48,6 @@ public class ModuleController {
                 .stream().map(s -> convertModuleToModuleDto(s)).collect(Collectors.toList()));
     }
 
-
     private ModuleDto convertModuleToModuleDto(Module module) {
         return modelMapper.map(module, ModuleDto.class);
     }
