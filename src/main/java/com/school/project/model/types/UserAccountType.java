@@ -8,4 +8,15 @@ public enum UserAccountType {
 
     UserAccountType(Integer id, String name) {
     }
+
+    public static UserAccountType getTypeById(Integer id) {
+        if (id==1){
+            return UserAccountType.TEACHER;
+        }
+        if (id==2){
+            return UserAccountType.ADMIN;
+        }
+        return UserAccountType.STUDENT;
+    }
+
 }

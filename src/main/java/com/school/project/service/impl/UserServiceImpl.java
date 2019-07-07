@@ -1,7 +1,9 @@
 package com.school.project.service.impl;
 
+import com.school.project.exception.UserAccountNotFoundException;
 import com.school.project.exception.UserNotFoundException;
 import com.school.project.model.entities.User;
+import com.school.project.model.entities.UserAccount;
 import com.school.project.model.types.UserAccountType;
 import com.school.project.repository.UserAccountRepository;
 import com.school.project.repository.UserRepository;
@@ -28,6 +30,20 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         userAccountService.createUserAccount(user, UserAccountType.STUDENT);
         return user;
+    }
+
+    @Override
+    public void updateAccountRole(Long userId, Integer statusId){
+        UserAccount account = getUserAccountByUserId(userId);
+        account.setAccountRole(UserAccountType.getTypeById(statusId));
+        userAccountRepository.saveAndFlush(account);
+    }
+
+    @Override
+    public UserAccount getUserAccountByUserId(Long id) {
+        Optional<UserAccount> account = userAccountRepository.getUserAccountByUserId(id);
+        if (!account.isPresent()) throw new UserAccountNotFoundException("User account with userId : " + id + " is not found");
+        return account.get();
     }
 
     @Override

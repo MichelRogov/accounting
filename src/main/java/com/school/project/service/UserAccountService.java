@@ -8,8 +8,4 @@ public interface UserAccountService {
 
     UserAccount createUserAccount(User user, UserAccountType userAccountType);
 
-    UserAccount getUserAccountById(Long id);
-
-    UserAccount getUserAccountByUserId(Long id);
-
 }

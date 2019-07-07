@@ -13,6 +13,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
     @Transactional
     void deleteUserAccountByUserId(Long id);
 
-    Optional<UserAccount> getUserAccountByUserId(Long id);
+    Optional<UserAccount> getUserAccountByUserId (Long id);
 
 }
