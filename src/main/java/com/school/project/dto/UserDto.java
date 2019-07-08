@@ -3,7 +3,11 @@ package com.school.project.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -13,14 +17,23 @@ public class UserDto {
 
     private Long id;
 
+    @NotNull
+    @Length(min = 2, max = 20)
     private String firstName;
 
+    @NotNull
+    @Length(min = 2, max = 20)
     private String lastName;
 
+    @NotNull
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private Date birthDate;
 
+    @NotNull
+    @Email
     private String email;
 
+    @NotNull
     private String phoneNumber;
 
 }
