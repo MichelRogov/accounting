@@ -23,8 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /*
  * Unit test with dependency mocked.
@@ -74,8 +73,9 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())//good for simple debugging
-                .andExpect(jsonPath("$.firstName").value("sergey"))
-                .andExpect(jsonPath("$.lastName").value("lukichev"));
+        .andExpect(content().string(RESULT_GET_JSON_USER));
+                //.andExpect(jsonPath("$.firstName").value("sergey"))
+                //.andExpect(jsonPath("$.lastName").value("lukichev"));
 
         //check for all fields returned by the call
     }
@@ -103,7 +103,11 @@ public class UserControllerTest {
     }
 
     private User getSampleUser() {
-        return new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300");
+        User user = new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300");
+        Date date = new Date(0L);
+        user.setId(1L);
+        user.setBirthDate(date);
+        return user;
     }
 
     private User getSampleUserToUpdate() {
@@ -117,6 +121,8 @@ public class UserControllerTest {
                 new User("ivan", "pupkin", new Date(), "ivan@example.com", "+380501413552"));
         return users;
     }
+
+    private static String RESULT_GET_JSON_USER = "{\"id\":1,\"firstName\":\"sergey\",\"lastName\":\"lukichev\",\"birthDate\":\"1970-01-01T00:00:00.000+0000\",\"email\":\"sergey@example.com\",\"phoneNumber\":\"+49333300\"}";
 
     private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
