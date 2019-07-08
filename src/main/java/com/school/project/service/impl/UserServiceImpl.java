@@ -33,20 +33,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateAccountRole(Long userId, Integer statusId){
-        UserAccount account = getUserAccountByUserId(userId);
-        account.setAccountRole(UserAccountType.getTypeById(statusId));
-        userAccountRepository.saveAndFlush(account);
-    }
-
-    @Override
-    public UserAccount getUserAccountByUserId(Long id) {
-        Optional<UserAccount> account = userAccountRepository.getUserAccountByUserId(id);
-        if (!account.isPresent()) throw new UserAccountNotFoundException("User account with userId : " + id + " is not found");
-        return account.get();
-    }
-
-    @Override
     public void update(User user, Long id) {
         user.setId(getUserById(id).getId());
         userRepository.saveAndFlush(user);

@@ -2,7 +2,6 @@ package com.school.project.controller;
 
 import com.school.project.dto.UserDto;
 import com.school.project.model.entities.User;
-import com.school.project.service.UserAccountService;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    UserAccountService userAccountService;
 
     @PostMapping("/users")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
@@ -49,12 +45,6 @@ public class UserController {
     @PutMapping("/users/{id}")
     public ResponseEntity updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
         userService.update(convertUserDtoToUser(userDto), id);
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("/users/{userId}/status/{statusId}")
-    public ResponseEntity updateAccountRole(@PathVariable Long userId, @PathVariable Integer statusId){
-        userService.updateAccountRole(userId, statusId);
         return ResponseEntity.ok().build();
     }
 

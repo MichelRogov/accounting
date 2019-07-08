@@ -8,4 +8,8 @@ public interface UserAccountService {
 
     UserAccount createUserAccount(User user, UserAccountType userAccountType);
 
+    void updateAccountRole(Long userId, Integer statusId);
+
+    UserAccount getUserAccountByUserId(Long id);
+
 }
