@@ -17,7 +17,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     AttendanceRepository attendanceRepository;
 
     @Override
-    public Attendance create (Attendance attendance) {
+    public Attendance create(Attendance attendance) {
         return attendanceRepository.save(attendance);
     }
 
@@ -28,25 +28,35 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public Attendance filterByLesson(Long id) {
-        return null;
+    public List<Attendance> filterByLesson(Long id) {
+        Optional<List<Attendance>> attendancesByLessonId = attendanceRepository.getAttendancesByLessonId(id);
+        validateResponseIsPresent(attendancesByLessonId, "filtred by Lesson ");
+        return attendancesByLessonId.get();
     }
 
     @Override
     public List<Attendance> filterByUser(Long id) {
-        return null;
+        Optional<List<Attendance>> attendancesByUserId = attendanceRepository.getAttendancesByUserId(id);
+        validateResponseIsPresent(attendancesByUserId, " filtred by User");
+        return attendancesByUserId.get();
     }
 
     @Override
     public List<Attendance> filterByGroup(Long id) {
-        return null;
+        Optional<List<Attendance>> attendancesByGroupId = attendanceRepository.getAttendancesByLesson_GroupId(id);
+        validateResponseIsPresent(attendancesByGroupId, "filtred by Group");
+        return attendancesByGroupId.get();
     }
 
     @Override
     public Attendance getAttendnceById(long id) {
         Optional<Attendance> byId = attendanceRepository.findById(id);
-        if(!byId.isPresent()) throw new AttendanceNotFoundExсeption("Atten with id "+id +" is not found");
-
+        if (!byId.isPresent()) throw new AttendanceNotFoundExсeption("Atten with id " + id + " is not found");
         return byId.get();
+    }
+
+    public void validateResponseIsPresent(Optional<?> attendace, String field) {
+        if (!attendace.isPresent())
+            throw new AttendanceNotFoundExсeption("Attendance  " + field + " is not found");
     }
 }

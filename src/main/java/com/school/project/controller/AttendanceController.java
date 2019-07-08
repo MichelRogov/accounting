@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping
 public class AttendanceController {
@@ -18,14 +21,14 @@ public class AttendanceController {
     @Autowired
     ModelMapper modelMapper;
 
-    @PostMapping("/attendance")
+    @PostMapping("/attendances")
     public ResponseEntity<AttendanceDto> create(@RequestBody AttendanceDto attendanceDto) {
         return ResponseEntity.ok()
                 .body(convertAttendanceToAttendanceDto(attendanceService
                         .create(convertAttendanceDtoToAttendance(attendanceDto))));
     }
 
-    @PutMapping("attendance/{id}")
+    @PutMapping("attendances/{id}")
     public void update(@RequestBody AttendanceDto attendanceDto, @PathVariable Long id) {
         attendanceService.update(convertAttendanceDtoToAttendance(attendanceDto), id);
         ResponseEntity.ok().build();
@@ -34,6 +37,24 @@ public class AttendanceController {
     @GetMapping("/attendances/{id}")
     public ResponseEntity<AttendanceDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok().body(convertAttendanceToAttendanceDto(attendanceService.getAttendnceById(id)));
+    }
+
+    @GetMapping("/attendances/group/{id}")
+    public ResponseEntity<List<AttendanceDto>> filterByGroup(@PathVariable Long id) {
+        return ResponseEntity.ok().body(attendanceService.filterByGroup(id).stream()
+                .map(s -> convertAttendanceToAttendanceDto(s)).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/attendances/lesson/{id}")
+    public ResponseEntity<List<AttendanceDto>> filterByLesson(@PathVariable Long id) {
+        return ResponseEntity.ok().body(attendanceService.filterByLesson(id).stream()
+                .map(s -> convertAttendanceToAttendanceDto(s)).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/attendances/user/{id}")
+    public ResponseEntity<List<AttendanceDto>> filterByUser(@PathVariable Long id) {
+        return ResponseEntity.ok().body(attendanceService.filterByUser(id).stream()
+                .map(s -> convertAttendanceToAttendanceDto(s)).collect(Collectors.toList()));
     }
 
     private Attendance convertAttendanceDtoToAttendance(AttendanceDto attendanceDto) {

@@ -12,7 +12,7 @@ public interface AttendanceService {
 
     void update (Attendance attendance, Long id);
 
-    Attendance filterByLesson (Long id);
+    List<Attendance> filterByLesson (Long id);
 
     List<Attendance> filterByUser (Long id);
 
