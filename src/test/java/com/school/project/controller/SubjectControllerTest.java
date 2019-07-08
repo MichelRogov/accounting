@@ -66,7 +66,6 @@ public class SubjectControllerTest {
     @Test
     public void testGetAllSubjects() throws Exception {
         when(subjectService.getAllSubjects()).thenReturn(getSampleSubjectList());
-
         mvc.perform(get("/subjects")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -101,7 +100,7 @@ public class SubjectControllerTest {
         sb.setId(1L);
         Subject sb1 = new Subject("Frontend");
         sb1.setId(2L);
-        List<Subject> subjects = Arrays.asList(sb,sb1);
+        List<Subject> subjects = Arrays.asList(sb, sb1);
         return subjects;
     }
 
