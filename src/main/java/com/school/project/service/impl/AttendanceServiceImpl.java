@@ -1,5 +1,6 @@
 package com.school.project.service.impl;
 
+import com.school.project.exception.AttendanceNotFoundExсeption;
 import com.school.project.model.entities.Attendance;
 import com.school.project.repository.AttendanceRepository;
 import com.school.project.service.AttendanceService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -38,5 +40,13 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public List<Attendance> filterByGroup(Long id) {
         return null;
+    }
+
+    @Override
+    public Attendance getAttendnceById(long id) {
+        Optional<Attendance> byId = attendanceRepository.findById(id);
+        if(!byId.isPresent()) throw new AttendanceNotFoundExсeption("Atten with id "+id +" is not found");
+
+        return byId.get();
     }
 }

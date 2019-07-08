@@ -4,6 +4,7 @@ import com.school.project.model.entities.Attendance;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface AttendanceService {
@@ -16,4 +17,6 @@ public interface AttendanceService {
     List<Attendance> filterByUser (Long id);
 
     List<Attendance> filterByGroup (Long id);
+
+    Attendance getAttendnceById (long id);
 }

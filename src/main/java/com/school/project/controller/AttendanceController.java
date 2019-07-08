@@ -19,23 +19,28 @@ public class AttendanceController {
     ModelMapper modelMapper;
 
     @PostMapping("/attendance")
-    public ResponseEntity<AttendanceDto> create (@RequestBody AttendanceDto attendanceDto){
+    public ResponseEntity<AttendanceDto> create(@RequestBody AttendanceDto attendanceDto) {
         return ResponseEntity.ok()
                 .body(convertAttendanceToAttendanceDto(attendanceService
-                .create(convertAttendanceDtoToAttendance(attendanceDto))));
+                        .create(convertAttendanceDtoToAttendance(attendanceDto))));
     }
 
     @PutMapping("attendance/{id}")
-    public void update (@RequestBody AttendanceDto attendanceDto, @PathVariable Long id){
-        attendanceService.update(convertAttendanceDtoToAttendance (attendanceDto), id);
+    public void update(@RequestBody AttendanceDto attendanceDto, @PathVariable Long id) {
+        attendanceService.update(convertAttendanceDtoToAttendance(attendanceDto), id);
         ResponseEntity.ok().build();
     }
 
-    private Attendance convertAttendanceDtoToAttendance (AttendanceDto attendanceDto){
+    @GetMapping("/attendances/{id}")
+    public ResponseEntity<AttendanceDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(convertAttendanceToAttendanceDto(attendanceService.getAttendnceById(id)));
+    }
+
+    private Attendance convertAttendanceDtoToAttendance(AttendanceDto attendanceDto) {
         return modelMapper.map(attendanceDto, Attendance.class);
     }
 
-    private AttendanceDto convertAttendanceToAttendanceDto (Attendance attendance){
+    private AttendanceDto convertAttendanceToAttendanceDto(Attendance attendance) {
         return modelMapper.map(attendance, AttendanceDto.class);
     }
 }
