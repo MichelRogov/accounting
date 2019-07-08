@@ -2,6 +2,7 @@ package com.school.project.controller;
 
 import com.school.project.model.entities.Group;
 import com.school.project.model.entities.Module;
+import com.school.project.model.entities.Subject;
 import com.school.project.model.entities.User;
 import com.school.project.service.GroupService;
 import org.junit.BeforeClass;
@@ -29,7 +30,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /*
@@ -45,6 +46,15 @@ public class GroupControllerTest {
 
     @MockBean
     private GroupService groupService;
+
+    private static String NEW_GROUP_JSON_STRING = "{\"id\":2,\"startDate\":1556928000000," +
+            "\"module\":{\"id\":2,\"name\":\"Java-Basic\",\"hours\":100,\"subjects\":[{\"id\":1,\"name\":\"BACKEND\"}],\"price\":500.0}," +
+            "\"userList\":[{\"id\":1,\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}]}";
+    private static String NEW_GROUP_JSON_STRING_WITH_ID = "{\"id\":2,\"startDate\":1556928000000," +
+            "\"module\":{\"id\":2,\"name\":\"Java-Basic\",\"hours\":100,\"subjects\":[{\"id\":1,\"name\":\"BACKEND\"}],\"price\":500.0}," +
+            "\"userList\":[{\"id\":1,\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}]}";
+    private static String ADD_USER_TO_GROUP_JSON_STRING_ = "{\"id\":\"null\",\"startDate\":\"2019-11-01T00:00:00.000+0000\"," +
+            "\"userList\":\"[\"{\"id\":\"7\",\"firstName\":\"Misha\",\"lastName\":\"Mishin\",\"birthDate\":\"1980-05-05T00:00:00.000+0000\",\"email\":\"misha@mail.ru\",\"phoneNumber\":\"0491234567\",\"createDate\":\"2019-10-10T00:00:00.000+0000\", \"updateDate\":\"2019-10-11T00:00:00.000+0000\"}";
 
     static Date date;
 
@@ -64,15 +74,7 @@ public class GroupControllerTest {
         mvc.perform(get("/group/" + 2)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.moduleId").value(2))
-                .andExpect(jsonPath("$.startDate").value("1556928000000"))
-                .andExpect(jsonPath("$.userList.[0].id").value(1))
-                .andExpect(jsonPath("userList.[0].firstName").value("Sergey"))
-                .andExpect(jsonPath("userList.[0].lastName").value("Petrov"))
-                .andExpect(jsonPath("userList.[0].birthDate").value("2019-05-04T00:00:00.000+0000"))
-                .andExpect(jsonPath("userList.[0].email").value("petrov@email.com"))
-                .andExpect(jsonPath("userList.[0].phoneNumber").value("12345678"));
+                .andExpect(content().string(NEW_GROUP_JSON_STRING_WITH_ID));
     }
 
     @Test
@@ -84,12 +86,12 @@ public class GroupControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
         date = format.parse("2019-05-04");
-        verify(groupService).createUpdate(new Group(null, date, null));
+        verify(groupService).createUpdate(new Group(getModuleForTest(), date, getListUsers()));
     }
 
     @Test
     public void testAddUserToGroup() throws Exception {
-        when(groupService.addUser(2L, 7L)).thenReturn(getGroupWIthAddedUser());
+        when(groupService.addUser(2L, 7L)).thenReturn(getGroupWithAddedUser());
         mvc.perform(put("/group/2/add/7")
                 .content(ADD_USER_TO_GROUP_JSON_STRING_)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -98,15 +100,11 @@ public class GroupControllerTest {
 
     private Group getSampleGroup() throws ParseException {
         date = format.parse("2019-05-04");
-        Module module = new Module("Java-Basic", 100, null, 500.0);
-        module.setId(2L);
-        Group group = new Group(module, date, getListUsers());
+        Group group = new Group(getModuleForTest(), date, getListUsers());
         group.setId(2L);
         return group;
     }
 
-    private static String NEW_GROUP_JSON_STRING = "{\"id\":\"2\",\"startDate\":\"1556928000000\"}";
-    private static String ADD_USER_TO_GROUP_JSON_STRING_ = "{\"id\":\"null\",\"startDate\":\"2019-11-01T00:00:00.000+0000\",\"userList\":\"[\"{\"id\":\"7\",\"firstName\":\"Misha\",\"lastName\":\"Mishin\",\"birthDate\":\"1980-05-05T00:00:00.000+0000\",\"email\":\"misha@mail.ru\",\"phoneNumber\":\"0491234567\",\"createDate\":\"2019-10-10T00:00:00.000+0000\", \"updateDate\":\"2019-10-11T00:00:00.000+0000\"}";
 
     private Group getRealTestGroup() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,7 +116,7 @@ public class GroupControllerTest {
         return group;
     }
 
-    private Group getGroupWIthAddedUser() throws Exception {
+    private Group getGroupWithAddedUser() throws Exception {
         Date birthDate = format.parse("1980-05-05");
         Date startDate = format.parse("2019-11-01");
         User addedUser = new User("Misha", "Mishin",
@@ -137,6 +135,25 @@ public class GroupControllerTest {
 
         userList.add(us1);
         return userList;
+    }
+
+    private Module getModuleForTest() {
+        Module module = new Module("Java-Basic", 100, getSubjectListForTest(), 500.0);
+        module.setId(2L);
+        return module;
+    }
+
+    private List<Subject> getSubjectListForTest() {
+        Subject subject = getSubjectForTest(1l, "BACKEND");
+        List<Subject> subjects = new ArrayList<>();
+        subjects.add(subject);
+        return subjects;
+    }
+
+    private Subject getSubjectForTest(Long id, String name) {
+        Subject subject = new Subject(name);
+        subject.setId(id);
+        return subject;
     }
 
 }

@@ -14,15 +14,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(SubjectController.class)
@@ -36,29 +37,30 @@ public class SubjectControllerTest {
     @MockBean
     private SubjectService subjectService;
 
+    private static String NEW_SUBJECT_JSON_STRING = "{\"name\":\"QA\"}";
+
+    private static String NEW_SUBJECT_JSON_STRING_WITH_ID = "{\"id\":1,\"name\":\"QA\"}";
+
+
     @Test
-    public void testCreateNewSubject() throws Exception {
-        mvc.perform(post("/subject")
+    public void testCreateSubject() throws Exception {
+        when(subjectService.create(any(Subject.class))).thenReturn(getSampleSubject());
+        mvc.perform(post("/subjects")
                 .content(NEW_SUBJECT_JSON_STRING)
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk());
-
-        //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        //Date date = format.parse("2019-05-04T00:00:00");
-        //dates are a bit tricky, lets omit them for now
         verify(subjectService).create(new Subject("QA"));
     }
 
     @Test
     public void testGetSubjectByID() throws Exception {
         when(subjectService.getSubjectById(1L)).thenReturn(getSampleSubject());
-
         mvc.perform(get("/subject/" + 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("QA"));
+                .andExpect(content().string(NEW_SUBJECT_JSON_STRING_WITH_ID));
     }
 
     @Test
@@ -69,18 +71,18 @@ public class SubjectControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("QA"))
-                .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.name").value("Frontend"));
+                .andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].name").value("QA"))
+                .andExpect(jsonPath("$.[1].id").value(2))
+                .andExpect(jsonPath("$.[1].name").value("Frontend"));
     }
 
     @Test
     public void testUpdateSubject() throws Exception {
 
-        mvc.perform(put("/subjects/" + 1)
-                .content(NEW_SUBJECT_FOR_UPDATE_JSON_STRING)
-                .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(put("/subjects/" + 1L)
+                .content(NEW_SUBJECT_JSON_STRING_WITH_ID)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print());
 
@@ -88,16 +90,20 @@ public class SubjectControllerTest {
     }
 
     public Subject getSampleSubject() {
-        return new Subject("QA");
+        Subject subject = new Subject("QA");
+        subject.setId(1L);
+        return subject;
     }
 
-    private static String NEW_SUBJECT_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
 
-    private List<Subject> getSampleSubjectList(){
-        List<Subject> subjects = Arrays.asList(new Subject("QA"), new Subject("Frontend"));
+    private List<Subject> getSampleSubjectList() {
+        Subject sb = new Subject("QA");
+        sb.setId(1L);
+        Subject sb1 = new Subject("Frontend");
+        sb1.setId(2L);
+        List<Subject> subjects = Arrays.asList(sb,sb1);
         return subjects;
     }
-    private static String NEW_SUBJECT_FOR_UPDATE_JSON_STRING = "{\"id\":\"1\",\"name\":\"QA\"}";
 
     private Subject getSampleSubjectToUpdate() {
         return new Subject("QA");
