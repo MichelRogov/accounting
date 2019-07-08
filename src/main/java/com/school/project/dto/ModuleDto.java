@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -20,13 +21,13 @@ public class ModuleDto {
     private String name;
 
     @NotNull
-    @Length(max = 300)
+    @Max(300)
     private Integer hours;
 
     @NotNull
     private List<SubjectDto> subjects;
 
     @NotNull
-    @Length(max = 10000)
+    @Max(10000)
     private Double price;
 }
