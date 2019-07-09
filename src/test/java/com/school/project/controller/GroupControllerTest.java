@@ -60,9 +60,6 @@ public class GroupControllerTest {
 
     DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-    public GroupControllerTest() {
-    }
-
     @BeforeClass
     public static void beforeTest() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
@@ -104,7 +101,6 @@ public class GroupControllerTest {
         group.setId(2L);
         return group;
     }
-
 
     private Group getRealTestGroup() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -155,5 +151,4 @@ public class GroupControllerTest {
         subject.setId(id);
         return subject;
     }
-
 }

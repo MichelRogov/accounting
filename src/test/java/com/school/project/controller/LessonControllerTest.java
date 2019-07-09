@@ -175,7 +175,6 @@ public class LessonControllerTest {
                 .andExpect(jsonPath("$.[1].teacher.birthDate").value("2019-05-04T00:00:00.000+0000"))
                 .andExpect(jsonPath("$.[1].teacher.email").value("teacher@email.com"))
                 .andExpect(jsonPath("$.[1].teacher.phoneNumber").value("12345678"));
-
     }
 
     @Test
@@ -454,7 +453,6 @@ public class LessonControllerTest {
         lesson.setId(12L);
         lesson.setCreatedDate(date);
         lesson.setUpdatedDate(date);
-
         return lesson;
     }
 
@@ -462,7 +460,6 @@ public class LessonControllerTest {
     private Lesson getRealTestLesson() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-
         return new Lesson(
                 "Angular",
                 getListSubjectsForCreate(),
@@ -475,7 +472,6 @@ public class LessonControllerTest {
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-
         return new Lesson(
                 "Angular",
                 getListSubjectsForCreate(),

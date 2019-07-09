@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +39,6 @@ public class SubjectControllerTest {
     private static String NEW_SUBJECT_JSON_STRING = "{\"name\":\"QA\"}";
 
     private static String NEW_SUBJECT_JSON_STRING_WITH_ID = "{\"id\":1,\"name\":\"QA\"}";
-
 
     @Test
     public void testCreateSubject() throws Exception {
@@ -84,7 +82,6 @@ public class SubjectControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print());
-
         verify(subjectService, Mockito.times(1)).update(getSampleSubjectToUpdate(), 1L);
     }
 
@@ -93,7 +90,6 @@ public class SubjectControllerTest {
         subject.setId(1L);
         return subject;
     }
-
 
     private List<Subject> getSampleSubjectList() {
         Subject sb = new Subject("QA");
