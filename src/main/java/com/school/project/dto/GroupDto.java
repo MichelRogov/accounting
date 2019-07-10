@@ -20,7 +20,7 @@ public class GroupDto {
     private Long startDate;
 
     @NotNull
-    private Long moduleId;
+    private ModuleDto module;
 
     @NotNull
     private List<UserDto> userList;

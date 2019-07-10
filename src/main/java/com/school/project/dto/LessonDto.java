@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -16,11 +17,11 @@ public class LessonDto {
 
     private Long id;
 
-    @NotNull
+    @NotEmpty
     @Length(min = 2, max = 20)
     private String thema;
 
-    @NotNull
+    @NotEmpty
     private List<SubjectDto> subjects;
 
     @NotNull

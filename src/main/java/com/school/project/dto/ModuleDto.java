@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ModuleDto {
 
     private Long id;
 
-    @NotNull
+    @NotEmpty
     @Length(min = 2, max = 20)
     private String name;
 
@@ -24,10 +25,9 @@ public class ModuleDto {
     @Max(300)
     private Integer hours;
 
-    @NotNull
+    @NotEmpty
     private List<SubjectDto> subjects;
 
     @NotNull
-    @Max(10000)
     private Double price;
 }
