@@ -33,7 +33,6 @@ public class ModuleControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
     @MockBean
     private ModuleService moduleService;
 
@@ -56,7 +55,6 @@ public class ModuleControllerTest {
     }
 
     @Test
-
     public void testUpdateModule() throws Exception {
         mvc.perform(put("/modules/" + 1L)
                 .content(NEW_MODULE_JSON_STRING)
@@ -79,7 +77,7 @@ public class ModuleControllerTest {
     @Test
     public void testGetModuleByName() throws Exception {
         when(moduleService.getModuleByName("JAVA-3")).thenReturn(getTestModule());
-        mvc.perform(get("/modules/names/" + "JAVA-3")
+        mvc.perform(get("/modules/names/JAVA-3")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print())
