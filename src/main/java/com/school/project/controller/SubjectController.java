@@ -21,7 +21,7 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @PostMapping("/subject")
+    @PostMapping("/subjects")
     public ResponseEntity<SubjectDto> createSubject(@RequestBody SubjectDto subjectDto) {
         return ResponseEntity.ok()
                 .body(convertSubjectToSubjectDto(subjectService
@@ -42,7 +42,7 @@ public class SubjectController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("/subject/{id}")
+    @PutMapping("/subjects/{id}")
     public ResponseEntity updateSubject(@RequestBody SubjectDto subjectDto, @PathVariable Long id) {
         subjectService.update(convertSubjectDtoToSubject(subjectDto), id);
         return ResponseEntity.ok()
