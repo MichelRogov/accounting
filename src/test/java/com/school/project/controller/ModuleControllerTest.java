@@ -96,7 +96,6 @@ public class ModuleControllerTest {
 
     private List<Module> getTestListModules() {
         Module module = getTestModule();
-
         Module module1 = new Module("DEVOPS", new Integer(40), getSubjectListForTestGetModuleBySybject(), 850.0);
         module1.setId(2L);
         List<Module> modules = new ArrayList<>();
