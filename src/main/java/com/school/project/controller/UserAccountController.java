@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping
 public class UserAccountController {
@@ -21,5 +20,4 @@ public class UserAccountController {
         userAccountService.updateAccountRole(userId, roleId);
         return ResponseEntity.ok().build();
     }
-
 }

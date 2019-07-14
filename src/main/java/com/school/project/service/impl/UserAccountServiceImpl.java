@@ -35,11 +35,9 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void updateAccountRole(Long userId, Integer statusId){
+    public void updateAccountRole(Long userId, Integer roleId){
         UserAccount account = getUserAccountByUserId(userId);
-        account.setAccountRole(UserAccountType.getTypeById(statusId));
+        account.setAccountRole(UserAccountType.values()[roleId-1]);
         userAccountRepository.saveAndFlush(account);
     }
-
-
 }
