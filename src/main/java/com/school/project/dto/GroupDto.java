@@ -15,7 +15,7 @@ public class GroupDto {
 
     private Long startDate;
 
-    private Long moduleId;
+    private ModuleDto module;
 
     private List<UserDto> userList;
 
