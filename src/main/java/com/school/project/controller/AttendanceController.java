@@ -36,7 +36,7 @@ public class AttendanceController {
 
     @GetMapping("/attendances/{id}")
     public ResponseEntity<AttendanceDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(convertAttendanceToAttendanceDto(attendanceService.getAttendnceById(id)));
+        return ResponseEntity.ok().body(convertAttendanceToAttendanceDto(attendanceService.getAttendanceById(id)));
     }
 
     @GetMapping("/attendances/group/{id}")

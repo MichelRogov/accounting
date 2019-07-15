@@ -49,7 +49,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public Attendance getAttendnceById(long id) {
+    public Attendance getAttendanceById(long id) {
         Optional<Attendance> byId = attendanceRepository.findById(id);
         if (!byId.isPresent()) throw new AttendanceNotFoundExсeption("Atten with id " + id + " is not found");
         return byId.get();
