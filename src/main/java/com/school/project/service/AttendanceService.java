@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface AttendanceService {
-    Attendance create (Attendance attendance);
+    Attendance createAttendance(Attendance attendance);
 
     void update (Attendance attendance, Long id);
 

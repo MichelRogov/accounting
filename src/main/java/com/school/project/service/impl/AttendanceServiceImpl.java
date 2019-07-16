@@ -17,7 +17,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     AttendanceRepository attendanceRepository;
 
     @Override
-    public Attendance create(Attendance attendance) {
+    public Attendance createAttendance(Attendance attendance) {
         return attendanceRepository.save(attendance);
     }
 

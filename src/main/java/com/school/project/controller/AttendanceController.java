@@ -25,10 +25,10 @@ public class AttendanceController {
     public ResponseEntity<AttendanceDto> create(@RequestBody AttendanceDto attendanceDto) {
         return ResponseEntity.ok()
                 .body(convertAttendanceToAttendanceDto(attendanceService
-                        .create(convertAttendanceDtoToAttendance(attendanceDto))));
+                        .createAttendance(convertAttendanceDtoToAttendance(attendanceDto))));
     }
 
-    @PutMapping("attendances/{id}")
+    @PutMapping("/attendances/{id}")
     public void update(@RequestBody AttendanceDto attendanceDto, @PathVariable Long id) {
         attendanceService.update(convertAttendanceDtoToAttendance(attendanceDto), id);
         ResponseEntity.ok().build();
