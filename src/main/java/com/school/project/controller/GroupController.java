@@ -27,7 +27,7 @@ public class GroupController {
                 .body(convertGroupToGroupDto(groupService.createUpdate(convertGroupDtoToGroup(groupDto))));
     }
 
-    @PutMapping("/group/{groupId}/add/{userId}")
+    @PutMapping("/group/{groupId}/{userId}")
     public void addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId) {
         groupService.addUser(groupId, userId);
         ResponseEntity.ok().build();
