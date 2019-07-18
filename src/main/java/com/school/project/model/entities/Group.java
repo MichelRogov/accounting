@@ -1,6 +1,6 @@
 package com.school.project.model.entities;
 
-import com.school.project.base.AbstractEntity;
+import com.school.project.model.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +27,6 @@ public class Group extends AbstractEntity {
     @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinTable(name = "GROUP_USER", joinColumns = {@JoinColumn(name = "GROUP_ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID")})
-    private List<User> users;
+    private List<User> userList;
 
 }

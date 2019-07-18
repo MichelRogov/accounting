@@ -9,14 +9,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupDto {
+public class ModuleDto {
 
     private Long id;
 
-    private Long startDate;
+    private String name;
 
-    private ModuleDto module;
+    private Integer hours;
 
-    private List<UserDto> userList;
+    private List<SubjectDto> subjects;
 
+    private Double price;
 }
