@@ -89,7 +89,7 @@ public class GroupControllerTest {
     @Test
     public void testAddUserToGroup() throws Exception {
         when(groupService.addUser(2L, 7L)).thenReturn(getGroupWithAddedUser());
-        mvc.perform(put("/group/2/add/7")
+        mvc.perform(put("/group/2/7")
                 .content(ADD_USER_TO_GROUP_JSON_STRING_)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

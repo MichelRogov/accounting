@@ -55,7 +55,7 @@ public class LessonControllerTest {
             "\"userList\":[{\"id\":1,\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}," +
             "{\"id\":2,\"firstName\":\"Iurii\",\"lastName\":\"Vasiliev\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"vasiliev@email.com\",\"phoneNumber\":\"12345678\"}]}," +
             "\"teacher\":{\"id\":3,\"firstName\":\"Niko\",\"lastName\":\"Teacher\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"teacher@email.com\",\"phoneNumber\":\"12345678\"}}]";
-    
+
     @MockBean
     private LessonService lessonService;
 
