@@ -1,7 +1,9 @@
 package com.school.project.service.impl;
 
+import com.school.project.exception.UserAccountNotFoundException;
 import com.school.project.exception.UserNotFoundException;
 import com.school.project.model.entities.User;
+import com.school.project.model.entities.UserAccount;
 import com.school.project.model.types.UserAccountType;
 import com.school.project.repository.UserAccountRepository;
 import com.school.project.repository.UserRepository;
