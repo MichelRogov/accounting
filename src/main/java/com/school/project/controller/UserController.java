@@ -1,15 +1,19 @@
 package com.school.project.controller;
 
+import com.school.project.configuration.AppConfiguration;
 import com.school.project.dto.UserDto;
 import com.school.project.model.entities.User;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.school.project.configuration.AppConfiguration.*;
 
 @RestController
 @RequestMapping
@@ -22,7 +26,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Validated(CreateValidation.class) @RequestBody UserDto userDto) {
         return ResponseEntity.ok()
                 .body(convertUserToUserDto(userService
                         .create(convertUserDtoToUser(userDto))));
@@ -43,7 +47,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
+    public ResponseEntity updateUser(@Validated(UpdateValidtion.class) @RequestBody UserDto userDto, @PathVariable Long id) {
         userService.update(convertUserDtoToUser(userDto), id);
         return ResponseEntity.ok().build();
     }

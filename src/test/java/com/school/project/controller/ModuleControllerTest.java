@@ -59,7 +59,7 @@ public class ModuleControllerTest {
 
     public void testUpdateModule() throws Exception {
         mvc.perform(put("/modules/" + 1L)
-                .content(NEW_MODULE_JSON_STRING)
+                .content(NEW_MODULE_WITH_ID_JSON_STRING)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print());

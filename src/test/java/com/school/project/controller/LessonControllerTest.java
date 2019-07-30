@@ -136,7 +136,7 @@ public class LessonControllerTest {
     @Test
     public void testUpdateLesson() throws Exception {
         mvc.perform(put("/lessons/" + 12L)
-                .content(NEW_LESSON_JSON_STRING2)
+                .content(LESSON_JSON_STRING)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -174,11 +174,13 @@ public class LessonControllerTest {
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-        return new Lesson(
+        Lesson ls = new Lesson(
                 "Angular",
-                getListSubjectsForCreate(),
-                new Group(null, null, null),
-                new User(null, null, null, null, null));
+                getListSubjectsForUpdate(),
+                getGroupForTest(),
+                getTeacherForTest());
+        ls.setId(12L);
+        return ls;
     }
 
     private List<Lesson> getListLessonsForTest() throws Exception {
@@ -217,6 +219,14 @@ public class LessonControllerTest {
         List<Subject> subjects = new ArrayList<>();
         Subject sb1 = new Subject(null);
         Subject sb2 = new Subject(null);
+        Collections.addAll(subjects, sb1, sb2);
+        return subjects;
+    }
+
+    private List<Subject> getListSubjectsForUpdate() {
+        List<Subject> subjects = new ArrayList<>();
+        Subject sb1 = new Subject("QA");
+        Subject sb2 = new Subject("FRONTEND");
         Collections.addAll(subjects, sb1, sb2);
         return subjects;
     }

@@ -1,15 +1,19 @@
 package com.school.project.controller;
 
+import com.school.project.configuration.AppConfiguration.CreateValidation;
 import com.school.project.dto.LessonDto;
 import com.school.project.model.entities.Lesson;
 import com.school.project.service.LessonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.school.project.configuration.AppConfiguration.UpdateValidtion;
 
 @RestController
 @RequestMapping
@@ -22,7 +26,7 @@ public class LessonController {
     ModelMapper modelMapper;
 
     @PostMapping("/lessons")
-    public ResponseEntity<LessonDto> createLesson(@RequestBody LessonDto lessonDto) {
+    public ResponseEntity<LessonDto> createLesson(@Validated(CreateValidation.class) @RequestBody LessonDto lessonDto) {
         return ResponseEntity.ok()
                 .body(convertLessonToLessonDto(lessonService
                         .createLesson(convertLessonDtoToLesson(lessonDto))));
@@ -61,7 +65,7 @@ public class LessonController {
     }
 
     @PutMapping("/lessons/{id}")
-    public void updateLesson(@RequestBody LessonDto lessonDto, @PathVariable Long id) {
+    public void updateLesson(@Validated(UpdateValidtion.class) @RequestBody LessonDto lessonDto, @PathVariable Long id) {
         lessonService.updateLesson(convertLessonDtoToLesson(lessonDto), id);
     }
 

@@ -47,7 +47,7 @@ public class GroupControllerTest {
     @MockBean
     private GroupService groupService;
 
-    private static String NEW_GROUP_JSON_STRING = "{\"id\":2,\"startDate\":1556928000000," +
+    private static String NEW_GROUP_JSON_STRING = "{\"startDate\":1556928000000," +
             "\"module\":{\"id\":2,\"name\":\"Java-Basic\",\"hours\":100,\"subjects\":[{\"id\":1,\"name\":\"BACKEND\"}],\"price\":500.0}," +
             "\"userList\":[{\"id\":1,\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}]}";
     private static String NEW_GROUP_JSON_STRING_WITH_ID = "{\"id\":2,\"startDate\":1556928000000," +

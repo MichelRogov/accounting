@@ -3,6 +3,7 @@ package com.school.project.controller;
 
 import com.school.project.model.entities.User;
 import com.school.project.service.UserService;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -15,10 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -40,18 +46,25 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    static Date date;
+
+    @BeforeClass
+    public static void beforeTest() throws ParseException {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        date = format.parse("2019-05-04T00:00:00");
+    }
+
     @Test
     public void testCreateNewUser() throws Exception {
-        when(userService.create(getSampleUserToUpdate())).thenReturn(getSampleUserToUpdate());
+        when(userService.create(any(User.class))).thenReturn(getSampleUserToCreate());
         mvc.perform(post("/users")
                 .content(NEW_USER_JSON_STRING)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-        //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        //Date date = format.parse("2019-05-04T00:00:00");
         //dates are a bit tricky, lets omit them for now
-        verify(userService).create(new User("Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678"));
+        verify(userService).create(new User("sergey", "lukichev", date, "sergey@example.com", "+49333300"));
     }
 
     @Test
@@ -103,14 +116,20 @@ public class UserControllerTest {
     }
 
     private User getSampleUser() {
-        return new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300");
+        return new User("sergey", "lukichev", date, "sergey@example.com", "+49333300");
     }
 
     private User getSampleUserToUpdate() {
-        return new User("Ivan", "Ivanov",null, "ivan_@mail.ru", "17612345678");
+        User user = new User("Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678");
+        user.setId(1L);
+        return user;
     }
 
-    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
+    private User getSampleUserToCreate() throws ParseException {
+        return new User("sergey", "lukichev",date, "sergey@example.com", "+49333300");
+    }
+
+    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"id\":1,\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
     private List<User> getSampleUserList() {
         List<User> users = Arrays.asList(new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300"),
@@ -118,6 +137,6 @@ public class UserControllerTest {
         return users;
     }
 
-    private static String NEW_USER_JSON_STRING = "{\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
+    private static String NEW_USER_JSON_STRING = "{\"firstName\":\"sergey\",\"lastName\":\"lukichev\",\"birthDate\":1556928000000,\"email\":\"sergey@example.com\",\"phoneNumber\":\"+49333300\"}";
 
 }

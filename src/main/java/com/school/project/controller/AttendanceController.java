@@ -1,15 +1,20 @@
 package com.school.project.controller;
 
+import com.school.project.configuration.AppConfiguration;
 import com.school.project.dto.AttendanceDto;
 import com.school.project.model.entities.Attendance;
 import com.school.project.service.AttendanceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.school.project.configuration.AppConfiguration.*;
+import static com.school.project.configuration.AppConfiguration.CreateValidation;
 
 @RestController
 @RequestMapping
@@ -22,14 +27,14 @@ public class AttendanceController {
     ModelMapper modelMapper;
 
     @PostMapping("/attendances")
-    public ResponseEntity<AttendanceDto> create(@RequestBody AttendanceDto attendanceDto) {
+    public ResponseEntity<AttendanceDto> create(@Validated(CreateValidation.class) @RequestBody AttendanceDto attendanceDto) {
         return ResponseEntity.ok()
                 .body(convertAttendanceToAttendanceDto(attendanceService
                         .createAttendance(convertAttendanceDtoToAttendance(attendanceDto))));
     }
 
     @PutMapping("/attendances/{id}")
-    public void update(@RequestBody AttendanceDto attendanceDto, @PathVariable Long id) {
+    public void update(@Validated(UpdateValidtion.class) @RequestBody AttendanceDto attendanceDto, @PathVariable Long id) {
         attendanceService.update(convertAttendanceDtoToAttendance(attendanceDto), id);
         ResponseEntity.ok().build();
     }

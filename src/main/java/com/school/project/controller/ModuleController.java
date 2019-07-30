@@ -1,15 +1,19 @@
 package com.school.project.controller;
 
+import com.school.project.configuration.AppConfiguration;
 import com.school.project.dto.ModuleDto;
 import com.school.project.model.entities.Module;
 import com.school.project.service.ModuleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.school.project.configuration.AppConfiguration.*;
 
 @RestController
 @RequestMapping
@@ -22,13 +26,13 @@ public class ModuleController {
     ModelMapper modelMapper;
 
     @PostMapping("/modules")
-    public ResponseEntity<ModuleDto> createModule(@RequestBody ModuleDto moduleDto) {
+    public ResponseEntity<ModuleDto> createModule(@Validated(CreateValidation.class) @RequestBody ModuleDto moduleDto) {
         return ResponseEntity.ok().body(convertModuleToModuleDto(moduleService
                 .createModule(convertModuleDtoToModule(moduleDto))));
     }
 
     @PutMapping("/modules/{id}")
-    public void updateModule(@RequestBody ModuleDto moduleDto, @PathVariable Long id) {
+    public void updateModule(@Validated(UpdateValidtion.class) @RequestBody ModuleDto moduleDto, @PathVariable Long id) {
         moduleService.updateModule(convertModuleDtoToModule(moduleDto), id);
     }
 
