@@ -1,5 +1,6 @@
 package com.school.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class AttendanceDto {
     @NotNull
     private UserDto user;
 
+    @JsonProperty("isPresent")
     @NotNull
     private boolean isPresent;
 }
