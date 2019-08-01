@@ -6,13 +6,11 @@ import com.school.project.service.GroupService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.school.project.configuration.AppConfiguration.CreateValidation;
 
 @RestController
 @RequestMapping
@@ -25,7 +23,7 @@ public class GroupController {
     private GroupService groupService;
 
     @PostMapping("/group")
-    public ResponseEntity<GroupDto> createGroup(@Validated(CreateValidation.class) @RequestBody GroupDto groupDto) {
+    public ResponseEntity<GroupDto> createGroup(@RequestBody @Valid GroupDto groupDto) {
         return ResponseEntity.ok()
                 .body(convertGroupToGroupDto(groupService.createUpdate(convertGroupDtoToGroup(groupDto))));
     }

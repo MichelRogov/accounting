@@ -40,7 +40,7 @@ public class LessonControllerTest {
 
     static Long time;
 
-    private static String NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjects\":[{\"id\":2},{\"id\":3}],\"group\":{\"id\":3},\"teacher\":{\"id\":3}}";
+    private static String NEW_LESSON_JSON_STRING2 = "{\"thema\":\"Angular\",\"subjects\":[{\"id\":2},{\"id\":3}],\"createdDate\":1556928000000,\"group\":{\"id\":3},\"teacher\":{\"id\":3}}";
 
     private static String LESSON_JSON_STRING = "{\"id\":12,\"thema\":\"Angular\",\"subjects\":[{\"id\":3,\"name\":\"QA\"},{\"id\":2,\"name\":\"FRONTEND\"}],\"createdDate\":1556928000000,\"group\":{\"id\":3,\"startDate\":1556928000000,\"module\":{\"id\":1,\"name\":\"Basic_Java\",\"hours\":70,\"subjects\":[{\"id\":3,\"name\":\"QA\"},{\"id\":2,\"name\":\"FRONTEND\"}],\"price\":300.0},\"userList\":[{\"id\":1,\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"},{\"id\":2,\"firstName\":\"Iurii\",\"lastName\":\"Vasiliev\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"vasiliev@email.com\",\"phoneNumber\":\"12345678\"}]},\"teacher\":{\"id\":3,\"firstName\":\"Niko\",\"lastName\":\"Teacher\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"teacher@email.com\",\"phoneNumber\":\"12345678\"}}";
 
@@ -162,11 +162,13 @@ public class LessonControllerTest {
     private Lesson getRealTestLesson() throws Exception {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         date = format.parse("2019-05-04");
-        return new Lesson(
+        Lesson lesson = new Lesson(
                 "Angular",
                 getListSubjectsForCreate(),
                 new Group(null, null, null),
                 new User(null, null, null, null, null));
+        lesson.setCreatedDate(date);
+        return lesson;
     }
 
 

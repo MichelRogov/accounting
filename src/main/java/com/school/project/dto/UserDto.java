@@ -9,38 +9,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Date;
-
-import static com.school.project.configuration.AppConfiguration.CreateValidation;
-import static com.school.project.configuration.AppConfiguration.UpdateValidtion;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
 
-    @Null(groups = {CreateValidation.class})
-    @NotNull(groups = {UpdateValidtion.class})
     private Long id;
 
-    @NotEmpty(groups = {CreateValidation.class})
+    @NotEmpty
     @Length(min = 2, max = 20)
     private String firstName;
 
-    @NotEmpty(groups = {CreateValidation.class})
+    @NotEmpty
     @Length(min = 2, max = 20)
     private String lastName;
 
-    @NotNull(groups = {CreateValidation.class})
+    @NotNull
     @DateTimeFormat(pattern = "yyyyMMdd")
     private Date birthDate;
 
-    @NotNull(groups = {CreateValidation.class})
+    @NotNull
     @Email
     private String email;
 
-    @NotNull(groups = {CreateValidation.class})
+    @NotNull
     private String phoneNumber;
 
 }

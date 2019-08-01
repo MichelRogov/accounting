@@ -1,20 +1,16 @@
 package com.school.project.controller;
 
-import com.school.project.configuration.AppConfiguration;
 import com.school.project.dto.SubjectDto;
 import com.school.project.model.entities.Subject;
 import com.school.project.service.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.school.project.configuration.AppConfiguration.*;
-import static com.school.project.configuration.AppConfiguration.UpdateValidtion;
 
 @RestController
 @RequestMapping
@@ -27,7 +23,7 @@ public class SubjectController {
     SubjectService subjectService;
 
     @PostMapping("/subjects")
-    public ResponseEntity<SubjectDto> createSubject(@Validated(CreateValidation.class) @RequestBody SubjectDto subjectDto) {
+    public ResponseEntity<SubjectDto> createSubject(@RequestBody @Valid SubjectDto subjectDto) {
         return ResponseEntity.ok()
                 .body(convertSubjectToSubjectDto(subjectService
                         .create(convertSubjectDtoToSubject(subjectDto))));
@@ -48,7 +44,7 @@ public class SubjectController {
     }
 
     @PutMapping("/subjects/{id}")
-    public ResponseEntity updateSubject(@Validated(UpdateValidtion.class) @RequestBody SubjectDto subjectDto, @PathVariable Long id) {
+    public ResponseEntity updateSubject(@RequestBody @Valid SubjectDto subjectDto, @PathVariable Long id) {
         subjectService.update(convertSubjectDtoToSubject(subjectDto), id);
         return ResponseEntity.ok()
                 .build();

@@ -120,7 +120,7 @@ public class UserControllerTest {
     }
 
     private User getSampleUserToUpdate() {
-        User user = new User("Ivan", "Ivanov", null, "ivan_@mail.ru", "17612345678");
+        User user = new User("Ivan", "Ivanov", date, "ivan_@mail.ru", "17612345678");
         user.setId(1L);
         return user;
     }
@@ -129,7 +129,7 @@ public class UserControllerTest {
         return new User("sergey", "lukichev",date, "sergey@example.com", "+49333300");
     }
 
-    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"id\":1,\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
+    private static String NEW_USER_FOR_UPDATE_JSON_STRING = "{\"id\":1,\"firstName\":\"Ivan\",\"lastName\":\"Ivanov\",\"birthDate\":\"2019-05-04T00:00:00.000+0000\",\"email\":\"ivan_@mail.ru\",\"phoneNumber\":\"17612345678\"}";
 
     private List<User> getSampleUserList() {
         List<User> users = Arrays.asList(new User("sergey", "lukichev", new Date(), "sergey@example.com", "+49333300"),
