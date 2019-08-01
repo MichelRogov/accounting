@@ -1,6 +1,6 @@
 package com.school.project.model.entities;
 
-import com.school.project.model.AbstractBaseEntity;
+import com.school.project.model.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Attendance extends AbstractBaseEntity {
+public class Attendance extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "LESSON_ID", nullable = false)
