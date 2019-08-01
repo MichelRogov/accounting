@@ -1,20 +1,16 @@
 package com.school.project.controller;
 
-import com.school.project.configuration.AppConfiguration;
 import com.school.project.dto.UserDto;
 import com.school.project.model.entities.User;
 import com.school.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.school.project.configuration.AppConfiguration.*;
 
 @RestController
 @RequestMapping
