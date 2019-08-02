@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ public class LessonController {
     ModelMapper modelMapper;
 
     @PostMapping("/lessons")
-    public ResponseEntity<LessonDto> createLesson(@RequestBody LessonDto lessonDto) {
+    public ResponseEntity<LessonDto> createLesson(@RequestBody @Valid LessonDto lessonDto) {
         return ResponseEntity.ok()
                 .body(convertLessonToLessonDto(lessonService
                         .createLesson(convertLessonDtoToLesson(lessonDto))));
@@ -61,7 +62,7 @@ public class LessonController {
     }
 
     @PutMapping("/lessons/{id}")
-    public void updateLesson(@RequestBody LessonDto lessonDto, @PathVariable Long id) {
+    public void updateLesson(@RequestBody @Valid LessonDto lessonDto, @PathVariable Long id) {
         lessonService.updateLesson(convertLessonDtoToLesson(lessonDto), id);
     }
 

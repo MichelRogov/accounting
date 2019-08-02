@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,13 @@ public class ModuleController {
     ModelMapper modelMapper;
 
     @PostMapping("/modules")
-    public ResponseEntity<ModuleDto> createModule(@RequestBody ModuleDto moduleDto) {
+    public ResponseEntity<ModuleDto> createModule(@RequestBody @Valid ModuleDto moduleDto) {
         return ResponseEntity.ok().body(convertModuleToModuleDto(moduleService
                 .createModule(convertModuleDtoToModule(moduleDto))));
     }
 
     @PutMapping("/modules/{id}")
-    public void updateModule(@RequestBody ModuleDto moduleDto, @PathVariable Long id) {
+    public void updateModule(@RequestBody @Valid ModuleDto moduleDto, @PathVariable Long id) {
         moduleService.updateModule(convertModuleDtoToModule(moduleDto), id);
     }
 

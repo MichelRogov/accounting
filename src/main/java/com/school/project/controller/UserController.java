@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.ok()
                 .body(convertUserToUserDto(userService
                         .create(convertUserDtoToUser(userDto))));
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity updateUser(@RequestBody UserDto userDto, @PathVariable Long id) {
+    public ResponseEntity updateUser(@RequestBody @Valid UserDto userDto, @PathVariable Long id) {
         userService.update(convertUserDtoToUser(userDto), id);
         return ResponseEntity.ok().build();
     }

@@ -33,6 +33,7 @@ public class ModuleControllerTest {
     @Autowired
     private MockMvc mvc;
 
+
     @MockBean
     private ModuleService moduleService;
 
@@ -55,9 +56,10 @@ public class ModuleControllerTest {
     }
 
     @Test
+
     public void testUpdateModule() throws Exception {
         mvc.perform(put("/modules/" + 1L)
-                .content(NEW_MODULE_JSON_STRING)
+                .content(NEW_MODULE_WITH_ID_JSON_STRING)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -96,6 +98,7 @@ public class ModuleControllerTest {
 
     private List<Module> getTestListModules() {
         Module module = getTestModule();
+
         Module module1 = new Module("DEVOPS", new Integer(40), getSubjectListForTestGetModuleBySybject(), 850.0);
         module1.setId(2L);
         List<Module> modules = new ArrayList<>();

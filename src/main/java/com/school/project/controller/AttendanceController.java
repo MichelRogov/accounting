@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,14 +23,14 @@ public class AttendanceController {
     ModelMapper modelMapper;
 
     @PostMapping("/attendances")
-    public ResponseEntity<AttendanceDto> create(@RequestBody AttendanceDto attendanceDto) {
+    public ResponseEntity<AttendanceDto> create(@RequestBody @Valid AttendanceDto attendanceDto) {
         return ResponseEntity.ok()
                 .body(convertAttendanceToAttendanceDto(attendanceService
                         .createAttendance(convertAttendanceDtoToAttendance(attendanceDto))));
     }
 
     @PutMapping("/attendances/{id}")
-    public void update(@RequestBody AttendanceDto attendanceDto, @PathVariable Long id) {
+    public void update(@RequestBody @Valid AttendanceDto attendanceDto, @PathVariable Long id) {
         attendanceService.update(convertAttendanceDtoToAttendance(attendanceDto), id);
         ResponseEntity.ok().build();
     }

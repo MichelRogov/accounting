@@ -39,7 +39,15 @@ public class AttendanceControllerTest {
     @MockBean
     private AttendanceService attendanceService;
 
-    private static String NEW_ATTENDACE_JSON_STRING = "{\"id\":1,\"lesson\":{\"id\":4,\"thema\":\"Angular\"," +
+    private static String NEW_ATTENDACE_JSON_STRING = "{\"lesson\":{\"id\":4,\"thema\":\"Angular\"," +
+            "\"subjects\":[{\"name\":\"QA\"},{\"name\":\"FRONTEND\"}]," +
+            "\"group\":{\"startDate\":1556928000000,\"module\":{\"name\":\"Basic_Java\",\"hours\":70,\"subjects\":[{\"name\":\"QA\"},{\"name\":\"FRONTEND\"}],\"price\":300.0}," +
+            "\"userList\":[{\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}," +
+            "{\"firstName\":\"Friedrich\",\"lastName\":\"Mauer\",\"birthDate\":\"2019-05-04\",\"email\":\"mauer@email.com\",\"phoneNumber\":\"12345678\"}]}," +
+            "\"teacher\":{\"firstName\":\"Niko\",\"lastName\":\"Teacher\",\"birthDate\":\"2019-05-04\",\"email\":\"teacher@email.com\",\"phoneNumber\":\"12345678\"}}," +
+            "\"user\":{\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}," +
+            "\"isPresent\":true}";
+    private static String NEW_ATTENDACE_JSON_STRING_WITH_ID = "{\"id\":1,\"lesson\":{\"id\":4,\"thema\":\"Angular\"," +
             "\"subjects\":[{\"name\":\"QA\"},{\"name\":\"FRONTEND\"}]," +
             "\"group\":{\"startDate\":1556928000000,\"module\":{\"name\":\"Basic_Java\",\"hours\":70,\"subjects\":[{\"name\":\"QA\"},{\"name\":\"FRONTEND\"}],\"price\":300.0}," +
             "\"userList\":[{\"firstName\":\"Sergey\",\"lastName\":\"Petrov\",\"birthDate\":\"2019-05-04\",\"email\":\"petrov@email.com\",\"phoneNumber\":\"12345678\"}," +
@@ -97,7 +105,7 @@ public class AttendanceControllerTest {
     @Test
     public void testUpdate() throws Exception {
         mvc.perform(put("/attendances/" + 1L)
-                .content(NEW_ATTENDACE_JSON_STRING)
+                .content(NEW_ATTENDACE_JSON_STRING_WITH_ID)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andDo(print());
