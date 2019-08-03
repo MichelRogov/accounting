@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDto {
+public class SubjectDto implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private Long id;

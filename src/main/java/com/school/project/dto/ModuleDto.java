@@ -9,12 +9,13 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModuleDto {
+public class ModuleDto implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private Long id;
