@@ -9,13 +9,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LessonDto {
+public class LessonDto implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private Long id;
