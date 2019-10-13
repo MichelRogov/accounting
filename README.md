@@ -19,14 +19,15 @@
 git clone https://github.com/tel-ran-de/Accounting
 ```
 ### Install and run MySQL 
-####Linux
+
+#### Linux
 ```
 $ sudo apt update
 $ sudo apt install mysql-server
 $ sudo mysql_secure_installation
 ```
 
-#####Authentication Setup in MySQL
+##### Authentication Setup in MySQL
 ```
 $ sudo mysql
 
