@@ -117,6 +117,10 @@ java -jar target/project-0.0.1-SNAPSHOT.jar
 
 ![runProject.png](documentation/readmeFiles/runProject.png) 
 
+#####After running the project, you can see the documentation through Swagger UI : 
+```
+http://localhost:8099/swagger-ui.html#/
+```
 Or with Docker:
 ```
 docker-compose up -d
