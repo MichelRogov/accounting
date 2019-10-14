@@ -10,7 +10,7 @@
     
     -ubuntu sudo apt install maven ,
     
-    -windows https://maven.apache.org/download.cgi)
+    -[windows](https://maven.apache.org/download.cgi)
 3) jdk 
 4) IDE
 
@@ -20,12 +20,13 @@ git clone https://github.com/tel-ran-de/Accounting
 ```
 ### Install and run MySQL 
 
-#### Linux
+#### Linux (In Console )
 ```
 $ sudo apt update
 $ sudo apt install mysql-server
 $ sudo mysql_secure_installation
 ```
+
 
 ##### Authentication Setup in MySQL
 ```
@@ -48,11 +49,45 @@ mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
 
 ```
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-
-`password `- instead you must enter your password;
- password and username must be identical with those specified in 'aplication.properties'
 ```
+`password `- instead you must enter your password;
+
+ password and username must be identical with those specified in 'aplication.properties'
+
+
+#### Windows (In IDE)
+
+[Download and Install MySQL](https://dev.mysql.com/downloads/file/?id=488055)
+
+Caution!
+You will need the password that you enter during installation in the future when you start the application (application.properties)
+
+##### Authentication Setup in MySQL(Workbench)
+ 1.Log in with your username and password that you specified during
+ installation :
+
+
+![mySQLlogin](documentation/readmeFiles/mySQLlogin.png )
+
+ 2.Create a new scheme that you will use later in the project :
+ 
+ ![creationNewScheme](documentation/readmeFiles/mySQLsetup-4.png)
+ 
+ Now go to the IDE(example from IntelliJ IDEA) and on the right side of
+ the screen click on the tab Database> Data Source Properties :
+
+![creationNewScheme](documentation/readmeFiles/mySQLsetup-1.png)
+
+
+Change the driver version to 5.1 (if you are asked to download them, agree)
+and enter username and password
+
+![creationNewScheme](documentation/readmeFiles/mySQLsetup-2.png)
+ 
+
 ### Build project 
+
+#### Linux (In Console )
 ```
  mvn -f pom.xml clean package 
 ```
@@ -60,19 +95,28 @@ mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'p
 ```
 And you should get:
 ```
-![Alttext](documentation/mvnBuildResult.png "Title")
+![Alttext](documentation/readmeFiles/mvnBuildResult.png "Title")
 
 This is the name of your ```jar``` file that you need when you run the project in the next step
 ```
 target/project-0.0.1-SNAPSHOT.jar
 ```
+#### Windows (In IDE)
+
+![build.png](documentation/readmeFiles/build.png)
 ### Run the project 
+
+#### Linux (In Console )
 
 Run in the project directory:
 
 ```
 java -jar target/project-0.0.1-SNAPSHOT.jar
 ```
+#### Windows (In IDE)
+
+![runProject.png](documentation/readmeFiles/runProject.png) 
+
 Or with Docker:
 ```
 docker-compose up -d
@@ -96,8 +140,8 @@ It will use 2 step-build in Dockerfile and create docker image accounting:lastes
 ### Tests 
 Tests are removed in dockerfile during build with -Dmaven.test.skip=true to compile with no DB
 
-###Project Status
+### Project Status
 
-###Technologies 
+### Technologies 
 
-###Sources
+### Sources
